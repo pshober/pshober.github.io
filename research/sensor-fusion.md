@@ -58,7 +58,7 @@ jointly across events.
 
 <figure class="fig" data-lightbox data-full="/assets/img/research/decametric-gap.png" data-cap="Observational coverage of small bodies by size: telescopes constrain the large end, fireball networks the small end, leaving a poorly-sampled 10–100 m “gap in knowledge.”">
   <img src="/assets/img/research/decametric-gap.png" alt="Plot of peak dynamic pressure and albedo versus diameter showing meteors, fireballs and asteroids, with a 10-100 m gap in knowledge" loading="lazy" width="632" height="380">
-  <figcaption>The 10–100&nbsp;m “decametric gap” between what fireball networks and telescopic surveys each sample. <span class="muted">Data: FRIPON, GMN, CAMS + NEO surveys.</span></figcaption>
+  <figcaption>The 10–100&nbsp;m “decametric gap” between what fireball networks and telescopic surveys each sample. <span class="muted">P.&nbsp;Shober; compiled from FRIPON, GMN, CAMS and NEO-survey data.</span></figcaption>
 </figure>
 
 The **10–100 m size range** is the worst-characterised in the whole small-body
@@ -71,11 +71,6 @@ decametric NEO population revealed by upcoming infrared surveys (**NEO Surveyor*
 **NEOMIR**) is the path to closing this gap.
 
 ## From discovery to recovery
-
-<figure class="fig" data-lightbox data-full="/assets/img/research/dark-flight.png" data-cap="From orbit to the ground: a meteoroid pre-heats, ablates as a meteor or fireball, then falls dark to become a meteorite, with each phase seen by a different sensor.">
-  <img src="/assets/img/research/dark-flight.png" alt="Diagram of a meteoroid entering the atmosphere: orbit, pre-heating, meteor, fireball, dark flight, and meteorite on the ground" loading="lazy" width="1150" height="767">
-  <figcaption>The atmospheric entry sequence (orbit → meteor/fireball → dark flight → meteorite), with each phase observed by a different sensor.</figcaption>
-</figure>
 
 With 11 asteroids already detected *before* impact, the endgame is **full-chain,
 "telescope-to-ground" events**: telescopic discovery and spectroscopy → predicted
