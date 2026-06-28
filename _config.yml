@@ -24,7 +24,8 @@ twitter:
 links:
   email: "mailto:planetarypat@gmail.com"
   orcid: "https://orcid.org/0000-0003-4766-2098"
-  scholar: "https://scholar.google.com/citations?user=pshober"
+  # TODO: replace with your Google Scholar profile URL; this is a name-search fallback
+  scholar: "https://scholar.google.com/scholar?q=Patrick+M.+Shober"
   github: "https://github.com/pshober"
 
 # ── Build ───────────────────────────────────────────────────────────────────
