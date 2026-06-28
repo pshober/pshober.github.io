@@ -301,6 +301,14 @@
 .keypaper h2 { font-size: 1rem; margin: 0 0 0.7rem; }
 .keypaper .pub:first-of-type { border-top: 0; }
 
+// ── Inline figures (research prose) ──────────────────────────────────────────
+.fig { margin: 2rem 0; }
+.fig img { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); background: #0a0f1d; display: block; }
+.fig[data-lightbox] { cursor: zoom-in; }
+.fig figcaption { color: var(--muted); font-size: 0.85rem; margin-top: 0.6rem; text-align: center; }
+.fig figcaption .muted { color: var(--faint); }
+.fig--portrait { max-width: 430px; margin-left: auto; margin-right: auto; }
+
 // ── Asteroid page ────────────────────────────────────────────────────────────
 .ast-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.6rem; align-items: start; }
 .ast-canvas-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.6rem; }

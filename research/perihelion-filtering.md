@@ -37,6 +37,11 @@ flux, no robust streams, and only ~4 % carbonaceous samples.
 
 ## A two-step filter near the Sun
 
+<figure class="fig fig--portrait" data-lightbox data-full="/assets/img/research/perihelion-two-filter.png" data-cap="The two-step filter: thermal fragmentation near the Sun, then atmospheric entry, set what reaches the ground.">
+  <img src="/assets/img/research/perihelion-two-filter.png" alt="Schematic of the two-step filter — thermal fragmentation near the Sun (Filter 1) and atmospheric entry (Filter 2) — determining which material reaches meteorite collections" loading="lazy" width="421" height="628">
+  <figcaption>The two-step filter shaping the meteorite record — thermal fragmentation near the Sun, then atmospheric survival. <span class="muted">Illustration: P.&nbsp;Shober.</span></figcaption>
+</figure>
+
 To test whether the **atmosphere** preferentially destroys this weak material, I led
 a synthesis of decades of data from **19 fireball networks across 39 countries** —
 a debiased top-of-atmosphere sample of nearly 8,000 meteors above 10 g and more than
