@@ -4,6 +4,10 @@ title: "Sensor fusion & radar meteorite detection"
 permalink: /research/sensor-fusion/
 eyebrow: "NASA · MetDetect · planetary defense"
 lede: "Fusing radar, optical, infrasound and seismic data into one sequential estimate of a falling body, so we can follow an event from the first telescopic detection through to the meteorite on the ground."
+hero_image: /assets/img/research/multisensor-observation.jpg
+hero_alt: "Schematic of the many sensors that observe a meteorite fall: telescope, fireball cameras, infrasound array, seismometer, Doppler weather radar, lightning-mapper satellite and casual footage"
+hero_caption: "The many ways a single fall is recorded: an asteroid caught pre-impact, the luminous fireball and its fragmentation, then ground and space sensors (fireball cameras, infrasound arrays, seismometers, Doppler weather radar, lightning-mapper satellites and casual footage). Illustration: P. Shober."
+hero_full: true
 description: "MetDetect: machine-learning detection of meteorite falls in NEXRAD Doppler radar, Kalman-filter multi-sensor fusion, closing the decametric gap, and full-chain characterization for planetary defense and recovery."
 papers:
   - title: "Comparing the data-reduction pipelines of FRIPON, DFN, WMPL, and AMOS: a case study of the Geminids"
