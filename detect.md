@@ -3,17 +3,17 @@ layout: page
 title: "Detection viewer"
 permalink: /detect/
 eyebrow: "Tools"
-lede: "An in-browser tool to upload and explore automatically detected radar fall signatures — coming soon."
+lede: "An in-browser tool to upload and explore automatically detected radar fall signatures (coming soon)."
 description: "Planned interactive viewer for MetDetect radar meteorite-fall detections."
 ---
 
-This page will host an interactive viewer for **MetDetect** — upload an
+This page will host an interactive viewer for **MetDetect**: upload an
 automatically detected radar fall file and explore the flagged debris gates,
 reflectivity sweeps, and search footprint in your browser.
 
-<figure class="fig" data-lightbox data-full="/assets/img/research/metdetect-gui.png" data-cap="The MetDetect desktop application — loading NEXRAD radar windows, running detection, and inspecting candidate debris gates.">
+<figure class="fig" data-lightbox data-full="/assets/img/research/metdetect-gui.png" data-cap="The MetDetect desktop application: loading NEXRAD radar windows, running detection, and inspecting candidate debris gates.">
   <img src="/assets/img/research/metdetect-gui.png" alt="Screenshot of the MetDetect desktop application showing radar workspace, detection controls and gate inspection" loading="lazy" width="1000" height="617">
-  <figcaption>The current MetDetect desktop tool — the browser viewer will bring this workflow online.</figcaption>
+  <figcaption>The current MetDetect desktop tool; the browser viewer will bring this workflow online.</figcaption>
 </figure>
 
 Because this site is served as static pages, the interactive tool itself will run

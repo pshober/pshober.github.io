@@ -9,7 +9,7 @@ Usage:
     python3 scripts/make_qr.py https://example.com/  # any URL
 
 Outputs (high error-correction = H, survives print smudging / a logo overlay):
-    assets/img/acm2026_qr.svg   # vector — use this for the printed poster
+    assets/img/acm2026_qr.svg   # vector, use this for the printed poster
     assets/img/acm2026_qr.png   # 1000+ px raster fallback
 """
 import sys

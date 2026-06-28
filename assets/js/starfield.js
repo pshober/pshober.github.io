@@ -1,4 +1,4 @@
-/* Lightweight canvas starfield — a few hundred stars, gentle twinkle.
+/* Lightweight canvas starfield: a few hundred stars, gentle twinkle.
    No dependencies. Honors prefers-reduced-motion (renders static). */
 (function () {
   "use strict";

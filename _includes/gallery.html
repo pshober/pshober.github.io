@@ -8,7 +8,7 @@
 <div class="grid grid--gallery gallery">
   {% for it in include.items %}
   {% assign src = it.image | relative_url %}
-  {% capture cap %}{{ it.location }}{% if it.date %} — {{ it.date }}{% endif %}{% if it.note %} · {{ it.note }}{% endif %}{% endcapture %}
+  {% capture cap %}{{ it.location }}{% if it.date %} · {{ it.date }}{% endif %}{% if it.note %} · {{ it.note }}{% endif %}{% endcapture %}
   <figure class="gallery__item" data-lightbox data-full="{{ src }}" data-cap="{{ cap | strip }}">
     <img src="{{ src }}" alt="{{ it.alt | default: cap | strip }}" loading="lazy">
     <figcaption class="gallery__cap">
@@ -21,6 +21,6 @@
 {% else %}
 <div class="callout">
   <strong>Result figures are being curated.</strong> Detection results will appear
-  here shortly — check back during the poster session.
+  here shortly, check back during the poster session.
 </div>
 {% endif %}

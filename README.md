@@ -23,7 +23,7 @@ points to. The URL never changes; edit `_data/acm2026.yml` to update its content
 ## Editing from anywhere
 
 You can edit any `_data/*.yml` file directly on github.com (pencil icon → commit)
-and the site rebuilds automatically — no laptop or build tools needed.
+and the site rebuilds automatically, no laptop or build tools needed.
 
 ## Custom domain / DNS
 

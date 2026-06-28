@@ -7,18 +7,18 @@ contact:
 summary: >-
   Planetary scientist specializing in meteorite-fall detection, fireball
   dynamics, and the orbital link between meteorites and asteroids. 28 refereed
-  publications (14 first-author), h-index 13, and ~€280k in competitive funding won
-  as PI. Asteroid (33964) Patrickshober named in 2023.
+  publications (14 first-author), h-index 13, and about €280,000 in competitive
+  funding won as PI. Asteroid (33964) Patrickshober named in 2023.
 
 sections:
   - title: Education
     entries:
       - date: "2022"
-        title: "Ph.D., Curtin University — Perth, Australia"
-        sub: "Thesis: Meteoroid Orbital Analysis — Connecting Meteorites and Asteroids"
+        title: "Ph.D., Curtin University, Perth, Australia"
+        sub: "Thesis: “Meteoroid Orbital Analysis: Connecting Meteorites and Asteroids”"
         note: "Supervisors: Prof. P. A. Bland, Prof. G. Benedix, Dr. E. K. Sansom"
       - date: "2017"
-        title: "B.S. Geological Sciences, Case Western Reserve University — Cleveland, OH"
+        title: "B.S. Geological Sciences, Case Western Reserve University, Cleveland, OH"
         sub: "Senior thesis: Characterization of Cohesion/Adhesion in Asteroidal Regolith Simulants"
       - date: "2013"
         title: "Intensive Russian Program, University of Pittsburgh"
@@ -26,85 +26,85 @@ sections:
 
   - title: Appointments
     entries:
-      - date: "2024–27"
-        title: "NASA Postdoctoral Program Fellow — NASA Johnson Space Center"
+      - date: "2024–2027"
+        title: "NASA Postdoctoral Program Fellow, NASA Johnson Space Center"
         sub: "Automating Doppler weather-radar reduction to detect meteoritic and satellite debris falls (ARES Division)."
-      - date: "2022–24"
-        title: "Marie Curie Postdoctoral Fellow — Paris Observatory (LTE), France"
+      - date: "2022–2024"
+        title: "Marie Curie Postdoctoral Fellow, Paris Observatory (LTE), France"
         sub: "Orbital and irradiation histories of meteoritic samples."
-      - date: "2021–22"
-        title: "Astrodynamics Specialist — InTrack Solutions, Adelaide, Australia"
+      - date: "2021–2022"
+        title: "Astrodynamics Specialist, InTrack Solutions, Adelaide, Australia"
         sub: "Geosynchronous-satellite modeling, maneuver planning, and detection algorithms for space domain awareness."
-      - date: "2017–22"
-        title: "Doctoral Candidate — Space Science & Technology Centre, Curtin University"
+      - date: "2017–2022"
+        title: "Doctoral Candidate, Space Science & Technology Centre, Curtin University"
         sub: "Orbital modeling and statistical analysis of Desert Fireball Network data."
-      - date: "2016–17"
-        title: "NASA Intern — NASA Glenn Research Center, Cleveland, OH"
+      - date: "2016–2017"
+        title: "NASA Intern, NASA Glenn Research Center, Cleveland, OH"
         sub: "Adhesion/cohesion measurements of meteoritic materials; SEM, XRD, UV-nIR, IR & Raman characterization."
-      - date: "2015–16"
-        title: "Laboratory Assistant — Case Western Reserve University"
+      - date: "2015–2016"
+        title: "Laboratory Assistant, Case Western Reserve University"
         sub: "Planetary Interiors Research Group: Fe–Si and Fe–C alloy synthesis and eutectic characterization."
 
   - title: Leadership & projects
     entries:
-      - date: "2024–26"
-        title: "Principal Investigator — Next-Generation Meteorite Tracking (NASA NPP)"
+      - date: "2024–2026"
+        title: "Principal Investigator, Next-Generation Meteorite Tracking (NASA NPP)"
         sub: "Machine-learning detection and characterization of meteorite falls in the U.S. NEXRAD network."
-      - date: "2022–"
-        title: "Core Team Member — FRIPON (Fireball Recovery & InterPlanetary Observation Network)"
+      - date: "2022–present"
+        title: "Core Team Member, FRIPON (Fireball Recovery & InterPlanetary Observation Network)"
         sub: "Advancing data-reduction techniques and pipeline development."
-      - date: "2022–24"
-        title: "Principal Investigator — MASSED (Marie Skłodowska-Curie / Île-de-France)"
+      - date: "2022–2024"
+        title: "Principal Investigator, MASSED (Marie Skłodowska-Curie / Île-de-France)"
         sub: "Mapping arrival times of extraterrestrial debris via meteorite irradiation ages and N-body models."
-      - date: "2019–"
-        title: "Team Member — Global Fireball Observatory"
+      - date: "2019–present"
+        title: "Team Member, Global Fireball Observatory"
         sub: "Scientific utilization of the orbital dataset; observatory installation and upkeep."
 
   - title: Selected awards & honors
     entries:
       - date: "2024"
-        title: "NASA Postdoctoral Fellowship — $180,000 (PI)"
+        title: "NASA Postdoctoral Fellowship, $180,000 (PI)"
       - date: "2023"
         title: "Asteroid (33964) Patrickshober named by the IAU"
         sub: "Following the 2023 Asteroids, Comets, Meteors conference, for contributions to planetary science."
       - date: "2022"
-        title: "Paris Région Fellowship — €128,880 (PI)"
+        title: "Paris Région Fellowship, €128,880 (PI)"
         sub: "Domaines d'Intérêt Majeur framework, supporting MASSED at LTE."
       - date: "2017"
-        title: "Curtin International Postgraduate Research Scholarship — $158,600"
+        title: "Curtin International Postgraduate Research Scholarship, $158,600"
       - date: "2017"
-        title: "Curtin Research Stipend Scholarship — $93,387"
+        title: "Curtin Research Stipend Scholarship, $93,387"
       - date: "2017"
         title: "Charles S. Bacon Award, Case Western Reserve University"
       - date: "2013"
-        title: "Case Western Reserve University Academic Scholarship — $92,000"
+        title: "Case Western Reserve University Academic Scholarship, $92,000"
 
   - title: Selected invited talks
     entries:
       - date: "2025"
-        title: "EPSC–DPS Joint Meeting — Helsinki, Finland"
+        title: "EPSC–DPS Joint Meeting, Helsinki, Finland"
       - date: "2025"
-        title: "Invited Plenary — Meteoroids Conference, Perth, Australia"
+        title: "Invited Plenary, Meteoroids Conference, Perth, Australia"
       - date: "2025"
-        title: "87th Meeting of the Meteoritical Society — Perth, Australia"
+        title: "87th Meeting of the Meteoritical Society, Perth, Australia"
       - date: "2025"
-        title: "Brown University — Providence, USA"
-      - date: "2024–25"
-        title: "Astronomical Institute of the Romanian Academy — Bucharest, Romania"
+        title: "Brown University, Providence, USA"
+      - date: "2024–2025"
+        title: "Astronomical Institute of the Romanian Academy, Bucharest, Romania"
       - date: "2019"
-        title: "Western University Meteor Physics Group — London, Canada"
+        title: "Western University Meteor Physics Group, London, Canada"
 
   - title: Service
     entries:
-      - date: "2022–"
-        title: "FRIPON — scientific core team (national observation service, ANO6)"
+      - date: "2022–present"
+        title: "FRIPON scientific core team (national observation service, ANO6)"
         sub: "Daily bolide validation, reduction-pipeline maintenance and inter-network comparison, and meteorite-recovery campaigns coordinated with Vigie-Ciel."
       - date: "Reviewer"
         title: "Peer reviewer"
         sub: "MNRAS · Astrophysics & Space Science · Planetary & Space Science · Meteoritics & Planetary Science · Astronomy & Astrophysics · The Astronomical Journal · Icarus · NASA ROSES (YORPD, FINESST)."
       - date: "Member"
         title: "Professional memberships"
-        sub: "American Astronomical Society — Division for Planetary Sciences; European Geosciences Union."
+        sub: "American Astronomical Society, Division for Planetary Sciences; European Geosciences Union."
 
   - title: Outreach & media
     entries:
@@ -112,7 +112,7 @@ sections:
         title: "Popular-science features"
         sub: "Authored for American Scientist (“Unrepresentative Meteorites”) and The Conversation; republished by Phys.org, Space.com, EarthSky and others."
       - date: "Radio"
-        title: "The Academic Minute — “The Case of the Missing Meteorites” (2025)"
+        title: "The Academic Minute, “The Case of the Missing Meteorites” (2025)"
       - date: "Press"
         title: "Research covered by The New York Times, New Scientist, USA Today, Popular Mechanics and BBC Science Focus."
 
@@ -120,7 +120,7 @@ sections:
     entries:
       - date: "Code"
         title: "Programming"
-        sub: "Python · MATLAB · Java · Bash · R · C++ · LaTeX — NumPy/SciPy/Astropy, scikit-learn, multiprocessing, Docker, supercomputing, GUI development."
+        sub: "Python · MATLAB · Java · Bash · R · C++ · LaTeX; with NumPy/SciPy/Astropy, scikit-learn, multiprocessing, Docker, supercomputing and GUI development."
       - date: "Domains"
         title: "Methods"
         sub: "Orbital N-body modeling · orbit determination · Bayesian statistics · unsupervised machine learning · impact-fragmentation modeling · data visualization."

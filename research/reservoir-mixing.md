@@ -6,7 +6,7 @@ eyebrow: "Small-body dynamics"
 lede: "Most “comet-like” fireballs aren't comets at all. Long-term integrations show the near-Earth “Jupiter-family” population is dominated by asteroidal interlopers."
 hero_image: /assets/img/research/tisserand-ae.jpg
 hero_alt: "Eccentricity versus semi-major axis, with asteroids and comets separated by Tisserand parameter lines"
-hero_caption: "Asteroids (blue) and comets (red) in eccentricity–semi-major-axis space, split by the Tisserand parameter (T_J = 2, 3). The “comet-like” region is heavily contaminated by asteroidal interlopers."
+hero_caption: "Asteroids (blue) and comets (red) in eccentricity–semi-major-axis space, split by the Tisserand parameter (values of 2 and 3). The “comet-like” region is heavily contaminated by asteroidal interlopers."
 hero_full: true
 description: "How volatile-rich cometary material mixes with refractory asteroidal material in near-Earth space, and why simple Tisserand proxies overcount comets. Shober et al."
 papers:
@@ -30,29 +30,30 @@ How does volatile-rich material from the outer reservoirs blend with more refrac
 inner-solar-system material in near-Earth space? That mixing controls the composition
 gradient of the young solar system and the delivery of water and organics to the
 terrestrial planets. In the classical picture, **Jupiter-family comets (JFCs)** arrive
-from the Kuiper belt and scattered disk on chaotic, low-inclination orbits with
-Tisserand parameter 2 < T_J < 3, while near-Earth asteroids are fed from the main belt
-through resonances and evolve more regularly.
+from the Kuiper belt and scattered disk on chaotic, low-inclination orbits with a
+Tisserand parameter between 2 and 3, while near-Earth asteroids are fed from the main
+belt through resonances and evolve more regularly.
 
 ## What the fireballs actually show
 
-During my PhD I used observed close encounters to quantify this mixing — first
+During my PhD I used observed close encounters to quantify this mixing, first
 analysing the **longest well-observed grazing fireball** on record, in which an
 Apollo-type asteroidal meteoroid was scattered by Earth onto a JFC-type orbit. That
 motivated an observationally-anchored **steady-state model of Earth close encounters**:
 a small but persistent flux (~2.5 × 10⁸ objects yr⁻¹, ~0.1 % of the population in this
-size range) is transferred from asteroidal (T_J > 3) onto JFC-type orbits.
+size range) is transferred from asteroidal orbits (Tisserand parameter above 3) onto
+JFC-type orbits.
 
 In my thesis's final paper, long-term integrations of 50 sporadic DFN fireballs on
 JFC-type orbits found that only **~4 % show recent Jupiter encounters and genuinely
 cometary evolution**, while **96 % behave as stable asteroidal bodies**. During my
-Marie Curie postdoc I scaled this up — 646 well-observed "JFC-like" fireballs from
-French, Australian, Czech and American sensors versus 661 catalogued JFCs — and
+Marie Curie postdoc I scaled this up, comparing 646 well-observed "JFC-like" fireballs
+from French, Australian, Czech and American sensors against 661 catalogued JFCs, and
 confirmed it: only about **1–5 % of cm–m bodies on JFC-type orbits are dynamically
 cometary**, while roughly **22 % of NEOs classified as JFCs** actually follow
 surprisingly stable, asteroid-like orbits.
 
-The lesson: simple proxies like T_J are not enough at these sizes — **dynamical
+Simple proxies like the Tisserand parameter are not enough at these sizes: **dynamical
 stability diagnostics are essential** to separate the reservoirs. The genuinely
 cometary material is mostly ground to dust, feeding the zodiacal cloud. I'm now
 finalising a study of **>2,200 "asteroids on cometary orbits"**, combining long-term

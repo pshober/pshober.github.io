@@ -1,14 +1,14 @@
 # Projects shown on the Research page. Those with `featured: true` also appear
-# as cards on the home page. Edit freely — no HTML changes needed.
+# as cards on the home page. Edit freely; no HTML changes needed.
 projects:
-  - name: "MetDetect — radar meteorite detection"
+  - name: "MetDetect: radar meteorite detection"
     kicker: "Flagship · NASA NPP"
-    period: "2024 – present"
+    period: "2024–present"
     featured: true
     summary: >-
       Machine-learning pipeline that scans NEXRAD Doppler weather radar to
       automatically detect and characterize the debris cloud of freshly fallen
-      meteorites across the continental U.S. — turning the national radar
+      meteorites across the continental U.S., turning the national radar
       network into a meteorite-recovery instrument.
     links:
       - { label: "Paper (in prep.)", url: "" }
@@ -19,14 +19,14 @@ projects:
     featured: true
     summary: >-
       Using orbits, cosmic-ray exposure ages and N-body models to work out which
-      regions of the asteroid belt deliver the meteorites we recover — and what
+      regions of the asteroid belt deliver the meteorites we recover, and what
       that bias means for the meteorite record (Nature Astronomy, 2025).
     links:
       - { label: "Nature Astronomy 2025", url: "https://doi.org/10.1038/s41550-025-02526-6" }
 
   - name: "FRIPON & the Global Fireball Observatory"
     kicker: "Fireball networks"
-    period: "2019 – present"
+    period: "2019–present"
     featured: true
     summary: >-
       Core-team work on the data-reduction pipelines behind two international
@@ -35,9 +35,9 @@ projects:
     links:
       - { label: "GFO (Planet. Space Sci. 2020)", url: "https://doi.org/10.1016/j.pss.2020.105036" }
 
-  - name: "MASSED — mapping debris arrival times"
+  - name: "MASSED: mapping debris arrival times"
     kicker: "Marie Skłodowska-Curie"
-    period: "2022 – 2024"
+    period: "2022–2024"
     featured: false
     summary: >-
       Compared meteorite cosmic-ray irradiation ages against dynamical N-body

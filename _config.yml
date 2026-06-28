@@ -1,12 +1,12 @@
 # ── Site settings ───────────────────────────────────────────────────────────
 title: Patrick M. Shober
-tagline: "Planetary scientist — meteorites, fireballs & radar detection"
+tagline: "Planetary scientist: meteorites, fireballs & radar detection"
 description: >-
   Patrick M. Shober, NASA Postdoctoral Fellow at Johnson Space Center.
   Automatic detection of meteorite falls in NEXRAD Doppler weather radar
   (MetDetect), fireball dynamics, and the meteorite–asteroid connection.
 url: "https://planetarypat.com"
-# baseurl intentionally omitted — this is a user site served at the domain root.
+# baseurl intentionally omitted; this is a user site served at the domain root.
 
 author:
   name: Patrick M. Shober

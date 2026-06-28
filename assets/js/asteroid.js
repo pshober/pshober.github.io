@@ -1,4 +1,4 @@
-/* (33964) Patrickshober — compute the asteroid's current heliocentric position
+/* (33964) Patrickshober: compute the asteroid's current heliocentric position
    from baked JPL elements, derive its geocentric sky position + apparent
    magnitude, and draw a top-down orbit diagram. All client-side; no API calls.
    astronomy-engine (if loaded) is used only for the constellation name. */
@@ -38,7 +38,7 @@
     };
   }
 
-  // Earth heliocentric ecliptic (AU) — low-precision Sun model (Meeus), z~0.
+  // Earth heliocentric ecliptic (AU), low-precision Sun model (Meeus), z~0.
   function earthEcliptic(jd) {
     var T = (jd - 2451545.0) / 36525;
     var L0 = 280.46646 + 36000.76983 * T + 0.0003032 * T * T;
@@ -98,7 +98,7 @@
     set("dist", delta.toFixed(2) + " AU");
     set("mag", "≈ " + V.toFixed(1));
 
-    var cons = "—";
+    var cons = "n/a";
     if (window.Astronomy && Astronomy.Constellation) {
       try { cons = Astronomy.Constellation(raDeg / 15, decDeg).name; } catch (e) {}
     }
@@ -130,7 +130,7 @@
         var s = update();
         var aa = altAz(s.raDeg, s.decDeg, s.jd, pos.coords.latitude, pos.coords.longitude);
         var out = document.getElementById("ast-look");
-        if (aa.alt > 0) out.textContent = "Up now — look " + compass(aa.az) + ", " +
+        if (aa.alt > 0) out.textContent = "Up now, look " + compass(aa.az) + ", " +
           aa.alt.toFixed(0) + "° above the horizon (telescope needed).";
         else out.textContent = "Below your horizon right now (" + compass(aa.az) + " side). Try again later.";
         locBtn.textContent = "Use my location";

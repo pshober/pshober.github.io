@@ -1,4 +1,4 @@
-# Asteroid (33964) Patrickshober — orbital + physical data.
+# Asteroid (33964) Patrickshober: orbital + physical data.
 # Elements baked from JPL Small-Body Database (ssd-api.jpl.nasa.gov/sbdb.api?des=33964)
 # solution dated 2026-06-05. The orbit is essentially fixed; assets/js/asteroid.js
 # propagates the mean anomaly to "now" in the browser to show the live position.

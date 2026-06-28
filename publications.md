@@ -2,7 +2,7 @@
 layout: default
 title: Publications
 permalink: /publications/
-description: "Peer-reviewed publications of Patrick M. Shober — 28 refereed papers (14 first-author), with DOI and arXiv links."
+description: "Peer-reviewed publications of Patrick M. Shober: 28 refereed papers (14 first-author), with DOI and arXiv links."
 ---
 <div class="container">
   <header class="page-head">

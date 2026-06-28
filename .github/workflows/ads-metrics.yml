@@ -25,7 +25,7 @@ jobs:
         run: |
           set -euo pipefail
           if [ -z "${ADS_TOKEN:-}" ]; then
-            echo "ADS_TOKEN not set — skipping (seeded numbers stay in _data/metrics.yml)."
+            echo "ADS_TOKEN not set; skipping (seeded numbers stay in _data/metrics.yml)."
             exit 0
           fi
           AUTH="Authorization: Bearer ${ADS_TOKEN}"

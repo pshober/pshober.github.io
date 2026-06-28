@@ -14,7 +14,7 @@ deep_dives:
     link: /research/perihelion-filtering/
     blurb: >-
       Why meteorite collections are a thermally- and atmospherically-filtered
-      subset of what actually reaches Earth — and where the carbonaceous
+      subset of what actually reaches Earth, and where the carbonaceous
       chondrites went.
 
   - title: "Cometary ↔ asteroidal reservoir mixing"
@@ -37,5 +37,5 @@ deep_dives:
     kicker: "FRIPON · GFO · DFN"
     link: /research/meteorite-recovery/
     blurb: >-
-      End-to-end fireball-network science — from astrometry and orbits to drone-
-      and ML-assisted recovery of fresh, orbit-bearing meteorites.
+      Fireball-network science across the full chain, from astrometry and orbits to
+      drone- and ML-assisted recovery of fresh, orbit-bearing meteorites.

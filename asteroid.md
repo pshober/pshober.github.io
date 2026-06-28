@@ -8,8 +8,8 @@ description: "Where is asteroid (33964) Patrickshober right now? A live orbit di
   <header class="page-head">
     <div class="eyebrow">Named by the IAU · 2023</div>
     <h1>Asteroid (33964)&nbsp;Patrickshober</h1>
-    <p class="lede">A ~2.4&nbsp;km main-belt asteroid — provisional designation
-      <em>2000&nbsp;NS<sub>10</sub></em> — named after me by the International
+    <p class="lede">A 2.4&nbsp;km main-belt asteroid (provisional designation
+      <em>2000&nbsp;NS10</em>), named after me by the International
       Astronomical Union in 2023. Here's where it is <em>right now</em>, computed in
       your browser from JPL orbital elements.</p>
   </header>
@@ -38,7 +38,7 @@ description: "Where is asteroid (33964) Patrickshober right now? A live orbit di
         <dt>Apparent magnitude</dt><dd id="ast-mag">…</dd>
       </dl>
       <p class="ast-now-look" style="margin:1rem 0 0.6rem; color:var(--muted); font-size:0.92rem">
-        <span id="ast-look">Far too faint for the naked eye — a telescope's needed.</span>
+        <span id="ast-look">Far too faint for the naked eye; you'll need a telescope.</span>
       </p>
       <button id="ast-locate" class="btn btn--ghost" type="button">Use my location</button>
     </div>

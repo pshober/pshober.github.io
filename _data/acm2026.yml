@@ -1,12 +1,12 @@
 # ── ACM 2026 conference page content (https://planetarypat.com/acm2026/) ──────
-# The QR code on the poster points to this URL. The URL never changes — edit the
+# The QR code on the poster points to this URL. The URL never changes; edit the
 # content here freely (even from github.com on your phone) right up to and during
 # the poster session.
 
 event: "Poster · Asteroids, Comets, Meteors 2026 · Poznań, Poland"
 title: "Finding meteorites in weather radar"
 tagline: >-
-  MetDetect — automatically detecting freshly fallen meteorites in the U.S.
+  MetDetect: automatically detecting freshly fallen meteorites in the U.S.
   NEXRAD Doppler weather-radar network.
 
 # Optional "updated <date>" stamp shown above the gallery. Bump it when you add
@@ -17,13 +17,13 @@ intro:
   - >-
     When a fireball drops meteorites, the surviving stones fall through the
     atmosphere as a dispersed cloud of debris. As they pass through the beam of a
-    nearby weather radar they briefly light up the lowest scan elevations — a
+    nearby weather radar they briefly light up the lowest scan elevations, a
     faint, falling signature buried in the same data meteorologists use to track
     storms.
   - >-
     The U.S. NEXRAD network archives every sweep from 150+ radars, going back
     decades. Searching it by hand is how several meteorite falls have already been
-    recovered — but it's slow and easy to miss. <strong>MetDetect</strong> automates
+    recovered, but it's slow and easy to miss. <strong>MetDetect</strong> automates
     that search: a machine-learning pipeline that scans the archive around
     candidate fall times and flags the radar signature of falling meteorites, so we
     can point recovery teams to a fall while the meteorites are still fresh.
