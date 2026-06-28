@@ -1,0 +1,96 @@
+.container {
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.container--narrow { max-width: $content-width; }
+
+main { display: block; }
+
+.section { padding: 3rem 0; }
+.section--tight { padding: 2rem 0; }
+
+// ── Site header / nav ────────────────────────────────────────────────────────
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  background: rgba(11, 16, 32, 0.72);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 60px;
+}
+
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: $font-head;
+  font-weight: 600;
+  font-size: 1.02rem;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.nav__brand:hover { color: var(--text); text-decoration: none; }
+.nav__brand .glyph { color: var(--accent); font-size: 1.15rem; }
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.nav__links a {
+  color: var(--muted);
+  padding: 0.4rem 0.7rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.nav__links a:hover { color: var(--text); background: var(--surface); text-decoration: none; }
+.nav__links a.is-active { color: var(--accent); }
+
+// ── Footer ───────────────────────────────────────────────────────────────────
+.site-footer {
+  border-top: 1px solid var(--border);
+  margin-top: 4rem;
+  padding: 2.25rem 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+.site-footer__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.site-footer a { color: var(--muted); }
+.site-footer a:hover { color: var(--accent); }
+.footer-social {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: 0; padding: 0;
+}
+
+// ── Generic grids ────────────────────────────────────────────────────────────
+.grid {
+  display: grid;
+  gap: 1.1rem;
+}
+.grid--cards { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.grid--gallery { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }

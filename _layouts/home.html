@@ -1,0 +1,63 @@
+---
+layout: default
+---
+<section class="container hero">
+  <div class="hero__intro">
+    <div class="eyebrow">ARES · NASA Johnson Space Center</div>
+    <h1 class="hero__name">Patrick&nbsp;M.&nbsp;Shober</h1>
+    <p class="hero__role">{{ page.role }}</p>
+    <p class="lede">{{ page.lead | default: site.description }}</p>
+    <div class="hero__cta">
+      <a class="btn btn--primary" href="{{ '/acm2026/' | relative_url }}">MetDetect · ACM&nbsp;2026 &rarr;</a>
+      <a class="btn btn--ghost" href="{{ '/cv/' | relative_url }}">View CV</a>
+    </div>
+    <div class="hero__topics">
+      {% for t in page.topics %}<span class="pill">{{ t }}</span>{% endfor %}
+    </div>
+  </div>
+  <div class="headshot-wrap">
+    <img class="headshot" src="{{ '/assets/img/headshot.jpg' | relative_url }}"
+         alt="Patrick M. Shober" width="290" height="290">
+  </div>
+</section>
+
+{% if content != "" %}
+<section class="container section section--tight">
+  <div class="container--narrow prose" style="padding:0;margin:0">
+    {{ content }}
+  </div>
+</section>
+{% endif %}
+
+<section class="container section">
+  <div class="section-head">
+    <h2>Research</h2>
+    <a href="{{ '/research/' | relative_url }}">All projects &rarr;</a>
+  </div>
+  <div class="grid grid--cards">
+    {% assign feat = site.data.projects.projects | where_exp: "p", "p.featured" %}
+    {% for p in feat %}
+    <article class="card">
+      <div class="card__kicker">{{ p.kicker }}</div>
+      <h3>{{ p.name }}</h3>
+      <p>{{ p.summary }}</p>
+      <div class="card__meta">{{ p.period }}</div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="container section">
+  <div class="section-head">
+    <h2>Selected publications</h2>
+    <a href="{{ '/cv/#publications' | relative_url }}">Full list &rarr;</a>
+  </div>
+  {% for it in site.data.publications.selected %}
+  <p class="pub">
+    <span class="pub__authors">{{ it.authors | replace: 'Shober', '<strong class="me">Shober</strong>' }}</span>
+    {% if it.year %}({{ it.year }}) {% endif %}
+    {% if it.link %}<a class="pub__title" href="{{ it.link }}">{{ it.title }}</a>{% else %}<span class="pub__title">{{ it.title }}</span>{% endif %}
+    {% if it.venue %}<span class="pub__venue">{{ it.venue }}</span>{% endif %}
+  </p>
+  {% endfor %}
+</section>

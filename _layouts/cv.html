@@ -1,0 +1,43 @@
+---
+layout: default
+---
+<div class="container">
+  <header class="page-head">
+    <div class="eyebrow">Curriculum Vitae</div>
+    <h1>{{ site.author.name }}</h1>
+    <p class="lede">{{ site.data.cv.contact.title }}</p>
+    <div class="cv-toolbar">
+      <a class="btn btn--primary" href="{{ '/assets/pdf/SHOBER_CV_2026.pdf' | relative_url }}" download>&darr;&nbsp;Download PDF</a>
+      <a class="btn btn--ghost" href="{{ site.links.orcid }}">ORCID</a>
+      <a class="btn btn--ghost" href="{{ site.links.scholar }}">Google Scholar</a>
+      <a class="btn btn--ghost" href="{{ site.links.email }}">Email</a>
+    </div>
+    {% if site.data.cv.summary %}<p class="lede" style="margin-top:1rem">{{ site.data.cv.summary }}</p>{% endif %}
+  </header>
+
+  {% for sec in site.data.cv.sections %}
+  <section class="cv-section"{% if sec.id %} id="{{ sec.id }}"{% endif %}>
+    <h2>{{ sec.title }}</h2>
+    {% for e in sec.entries %}
+    <div class="cv-entry">
+      <div class="cv-entry__date">{{ e.date }}</div>
+      <div class="cv-entry__body">
+        <div class="cv-entry__title">{{ e.title }}</div>
+        {% if e.sub %}<div class="cv-entry__sub">{{ e.sub }}</div>{% endif %}
+        {% if e.note %}<div class="cv-entry__note">{{ e.note }}</div>{% endif %}
+        {% if e.bullets %}
+        <div class="cv-entry__note"><ul>
+          {% for b in e.bullets %}<li>{{ b }}</li>{% endfor %}
+        </ul></div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+  {% endfor %}
+
+  <section class="cv-section" id="publications">
+    <h2>Publications</h2>
+    {% include pub-list.html sections=site.data.publications.sections %}
+  </section>
+</div>

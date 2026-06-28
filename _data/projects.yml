@@ -1,0 +1,56 @@
+# Projects shown on the Research page. Those with `featured: true` also appear
+# as cards on the home page. Edit freely — no HTML changes needed.
+projects:
+  - name: "MetDetect — radar meteorite detection"
+    kicker: "Flagship · NASA NPP"
+    period: "2024 – present"
+    featured: true
+    summary: >-
+      Machine-learning pipeline that scans NEXRAD Doppler weather radar to
+      automatically detect and characterize the debris cloud of freshly fallen
+      meteorites across the continental U.S. — turning the national radar
+      network into a meteorite-recovery instrument.
+    links:
+      - { label: "Paper (in prep.)", url: "" }
+
+  - name: "The asteroid–meteorite connection"
+    kicker: "Orbital dynamics"
+    period: "ongoing"
+    featured: true
+    summary: >-
+      Using orbits, cosmic-ray exposure ages and N-body models to work out which
+      regions of the asteroid belt deliver the meteorites we recover — and what
+      that bias means for the meteorite record (Nature Astronomy, 2025).
+    links:
+      - { label: "Nature Astronomy 2025", url: "" }   # TODO: add DOI
+
+  - name: "FRIPON & the Global Fireball Observatory"
+    kicker: "Fireball networks"
+    period: "2019 – present"
+    featured: true
+    summary: >-
+      Core-team work on the data-reduction pipelines behind two international
+      fireball-camera networks, improving how observed atmospheric trajectories
+      become orbits and predicted fall positions.
+    links:
+      - { label: "GFO (Planet. Space Sci. 2020)", url: "" }   # TODO: add DOI
+
+  - name: "MASSED — mapping debris arrival times"
+    kicker: "Marie Skłodowska-Curie"
+    period: "2022 – 2024"
+    featured: false
+    summary: >-
+      Compared meteorite cosmic-ray irradiation ages against dynamical N-body
+      models to predict meteorite source regions, at the Paris Observatory (LTE).
+    links: []
+
+  - name: "Meteor-shower statistics & stream decoherence"
+    kicker: "Methods"
+    period: "ongoing"
+    featured: false
+    summary: >-
+      Generalizable methods for estimating false positives in meteor-shower
+      identification and for testing meteorite–asteroid pairings using geocentric
+      parameters.
+    links:
+      - { label: "A&A 686 (2024)", url: "" }   # TODO: add DOI

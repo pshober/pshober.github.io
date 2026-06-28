@@ -1,0 +1,49 @@
+# ── ACM 2026 conference page content (https://planetarypat.com/acm2026/) ──────
+# The QR code on the poster points to this URL. The URL never changes — edit the
+# content here freely (even from github.com on your phone) right up to and during
+# the poster session.
+
+event: "Poster · Asteroids, Comets, Meteors 2026 · Poznań, Poland"
+title: "Finding meteorites in weather radar"
+tagline: >-
+  MetDetect — automatically detecting freshly fallen meteorites in the U.S.
+  NEXRAD Doppler weather-radar network.
+
+# Optional "updated <date>" stamp shown above the gallery. Bump it when you add
+# figures so visitors know it's fresh, e.g. updated: "11 Jul 2026".
+updated: ""
+
+intro:
+  - >-
+    When a fireball drops meteorites, the surviving stones fall through the
+    atmosphere as a dispersed cloud of debris. As they pass through the beam of a
+    nearby weather radar they briefly light up the lowest scan elevations — a
+    faint, falling signature buried in the same data meteorologists use to track
+    storms.
+  - >-
+    The U.S. NEXRAD network archives every sweep from 150+ radars, going back
+    decades. Searching it by hand is how several meteorite falls have already been
+    recovered — but it's slow and easy to miss. <strong>MetDetect</strong> automates
+    that search: a machine-learning pipeline that scans the archive around
+    candidate fall times and flags the radar signature of falling meteorites, so we
+    can point recovery teams to a fall while the meteorites are still fresh.
+
+how_it_works:
+  - "Pull archived NEXRAD Level-II sweeps around a candidate fall's time and location."
+  - "Isolate low-altitude reflectivity gates consistent with falling debris, rejecting weather and clutter."
+  - "Score and cluster the surviving gates to localize the fall and estimate a search footprint."
+  - "Flag the strongest candidates for human review and field recovery."
+
+# ── Result gallery ────────────────────────────────────────────────────────────
+# Empty for now → the page shows a tasteful "results coming" note. To add a
+# figure: (1) drop a web-optimized image into assets/img/acm2026/, then
+# (2) add an entry below. Example (copy, uncomment, edit):
+#
+# gallery:
+#   - image: /assets/img/acm2026/CA_SuttersMill_22Apr2012.jpg
+#     location: "Sutter's Mill, California"
+#     date: "22 Apr 2012"
+#     note: "Detected falling debris vs. recovered strewn field"
+#     alt: "NEXRAD reflectivity over the Sutter's Mill fall with detected debris gates"
+#
+gallery: []

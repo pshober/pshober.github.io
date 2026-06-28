@@ -1,0 +1,41 @@
+// ── Tablet / phone ───────────────────────────────────────────────────────────
+@media (max-width: $bp-md) {
+  body { font-size: 16px; }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
+    padding-top: 2.25rem;
+  }
+  .hero__cta, .hero__topics { justify-content: center; }
+  .headshot-wrap { order: -1; }
+  .headshot { max-width: 200px; }
+
+  .nav { flex-wrap: wrap; min-height: 0; padding: 0.6rem 0; }
+  .nav__links { gap: 0.15rem; }
+  .nav__links a { padding: 0.35rem 0.55rem; font-size: 0.9rem; }
+
+  .cv-entry { grid-template-columns: 1fr; gap: 0.2rem; }
+  .cv-entry__date { color: var(--accent-2); font-weight: 600; }
+
+  .section { padding: 2.25rem 0; }
+}
+
+@media (max-width: $bp-sm) {
+  .nav__brand { font-size: 0.95rem; }
+  .site-footer__row { flex-direction: column; align-items: flex-start; }
+}
+
+// ── Respect reduced-motion (also enforced in JS for the starfield) ───────────
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+// ── Print (helps if anyone prints the CV page) ───────────────────────────────
+@media print {
+  #starfield, .site-header, .site-footer, .cv-toolbar, .skip-link { display: none !important; }
+  body { background: #fff; color: #000; }
+  a { color: #000; text-decoration: underline; }
+}

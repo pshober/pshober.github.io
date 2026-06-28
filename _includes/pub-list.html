@@ -1,0 +1,26 @@
+{% comment %}
+  Renders publication sections from _data/publications.yml.
+  Usage: {% include pub-list.html sections=site.data.publications.sections %}
+  Section: { title, badge (optional), by_year (bool), items: [...] }
+  Item: { year, authors, title, venue, link (optional) }
+  Author name "Shober" is emphasized automatically.
+{% endcomment %}
+{% for sec in include.sections %}
+<div class="pub-group">
+  <h3 class="pub-group__title">{{ sec.title }}{% if sec.badge %} <span class="badge">{{ sec.badge }}</span>{% endif %}</h3>
+
+  {% assign prevyear = "" %}
+  {% for it in sec.items %}
+    {% if sec.by_year and it.year and it.year != prevyear %}
+      <div class="pub-year">{{ it.year }}</div>
+      {% assign prevyear = it.year %}
+    {% endif %}
+    <p class="pub">
+      <span class="pub__authors">{{ it.authors | replace: 'Shober', '<strong class="me">Shober</strong>' }}</span>
+      {% unless sec.by_year %}{% if it.year %}({{ it.year }}) {% endif %}{% endunless %}
+      {% if it.link %}<a class="pub__title" href="{{ it.link }}">{{ it.title }}</a>{% else %}<span class="pub__title">{{ it.title }}</span>{% endif %}
+      {% if it.venue %}<span class="pub__venue">{{ it.venue }}</span>{% endif %}
+    </p>
+  {% endfor %}
+</div>
+{% endfor %}

@@ -1,0 +1,182 @@
+# Publications. Rendered on /cv/ (and the "selected" list on the home page).
+# To add a paper: drop a new item under the right section. Set `link:` to a DOI
+# URL when you have one (leave empty to omit the link). Author "Shober" is
+# auto-emphasized.
+
+# ── Highlights shown on the home page ────────────────────────────────────────
+selected:
+  - year: 2025
+    authors: "Shober PM, Devillepoix HAR, Vaubaillon J, et al."
+    title: "Perihelion history and atmospheric survival as primary drivers of the Earth's meteorite record"
+    venue: "Nature Astronomy"
+    link: ""
+  - year: 2026
+    authors: "Shober PM, Vaubaillon J, Anghel S, et al."
+    title: "Comparing the data-reduction pipelines of FRIPON, DFN, WMPL, and AMOS: the Geminids"
+    venue: "Astronomy & Astrophysics, 705, A65"
+    link: ""
+  - year: 2025
+    authors: "Shober PM, Devillepoix HAR, Vaubaillon J, et al."
+    title: "What falls versus what we recover: quantifying search and recovery bias for orbital meteorites"
+    venue: "Meteoritics & Planetary Science, 60(10), 2488–2503"
+    link: ""
+  - year: 2025
+    authors: "Shober PM"
+    title: "Statistical significance of meteorite–asteroid pairs using geocentric parameters"
+    venue: "Astronomy & Astrophysics, 702, A36"
+    link: ""
+  - year: 2019
+    authors: "Shober PM, Jansen-Sturgeon T, Sansom EK, et al."
+    title: "Identification of a Minimoon Fireball"
+    venue: "The Astronomical Journal, 158(5), 183"
+    link: ""
+
+# ── Full list (CV) ───────────────────────────────────────────────────────────
+sections:
+  - title: "In preparation"
+    badge: "in prep"
+    by_year: false
+    items:
+      - authors: "Silber EA et al. (incl. Shober PM)"
+        title: "Multimodal analysis of a large daytime bolide near Cleveland, Ohio on March 17, 2026"
+        venue: "Meteoritics & Planetary Science"
+      - authors: "Shober PM, Fries MD, Abell PA"
+        title: "MetDetect: an automatic detection software for meteorite signatures in NEXRAD weather radar"
+        venue: "Meteoritics & Planetary Science"
+      - authors: "Shober PM"
+        title: "A dynamic analysis of 2,200 asteroids on cometary orbits"
+        venue: "The Astronomical Journal"
+
+  - title: "In review"
+    badge: "in review"
+    by_year: false
+    items:
+      - authors: "Anderson S, Anghel S, Shober PM et al."
+        title: "Fresh from space: the Ménétréol meteorite, an exceptional case of rapid recovery and pristine analysis"
+        venue: "Meteoritics & Planetary Science"
+      - authors: "Devillepoix HAR et al. (incl. Shober PM)"
+        title: "Minimoon Still on the Loose"
+        venue: "Meteoritics & Planetary Science"
+
+  - title: "Refereed publications"
+    badge: "28 · 14 first-author"
+    by_year: true
+    items:
+      - year: 2026
+        authors: "Shober PM"
+        title: "Confirmed new \"rock-comet\" stream and search for a tidal disruption signature"
+        venue: "The Astrophysical Journal, 1000(2), 254"
+      - year: 2026
+        authors: "Lebreton M et al. (incl. Shober PM)"
+        title: "FRIPONMeter: a high-resolution radiometer for fireballs"
+        venue: "WGN (in press)"
+      - year: 2026
+        authors: "Deam S, Devillepoix HAR, Nesvorný D, Shober PM, et al."
+        title: "A Near-Earth Object Model Calibrated to Earth Impactors"
+        venue: "The Astronomical Journal, 171(3), 126"
+      - year: 2026
+        authors: "Courtot A, Shober PM, Vaubaillon J"
+        title: "Orbit dissimilarity criteria in meteor showers: a comparative review"
+        venue: "Planetary & Space Science, 106231"
+      - year: 2026
+        authors: "Shober PM, Vaubaillon J, Anghel S, Devillepoix HAR, Sansom EK, Vida D, Colas F, Malgoyre A, Deam S"
+        title: "Comparing the data-reduction pipelines of FRIPON, DFN, WMPL, and AMOS: a case study of the Geminids"
+        venue: "Astronomy & Astrophysics, 705, A65"
+
+      - year: 2025
+        authors: "Shober PM, Devillepoix HAR, Vaubaillon J, Anghel S, Deam SE, Sansom EK, Colas F, Zanda B, Vernazza P, Bland P"
+        title: "What falls versus what we recover: quantifying search and recovery bias for orbital meteorites"
+        venue: "Meteoritics & Planetary Science, 60(10), 2488–2503"
+      - year: 2025
+        authors: "Egal A et al. (incl. Shober PM)"
+        title: "Catastrophic disruption of asteroid 2023 CX1 and implications for planetary defense"
+        venue: "Nature Astronomy"
+      - year: 2025
+        authors: "Shober PM"
+        title: "Statistical significance of meteorite–asteroid pairs using geocentric parameters"
+        venue: "Astronomy & Astrophysics, 702, A36"
+      - year: 2025
+        authors: "Shober PM, Devillepoix HAR, Vaubaillon J, Anghel S, Deam SE, Sansom EK, Colas F, Zanda B, Vernazza P, Bland P"
+        title: "Perihelion history and atmospheric survival as primary drivers of the Earth's meteorite record"
+        venue: "Nature Astronomy"
+      - year: 2025
+        authors: "Shober PM, Courtot A, Vaubaillon J"
+        title: "Near-Earth stream decoherence revisited: the limits of orbital similarity"
+        venue: "Astronomy & Astrophysics, 693, A23"
+
+      - year: 2024
+        authors: "Shober PM, Vaubaillon J, Tancredi G, Devillepoix HAR, Sansom EK, Martino S, Anghel S, Colas F, Deam S"
+        title: "Comparing the dynamics of Jupiter-family comets and comet-like fireballs"
+        venue: "Astronomy & Astrophysics, 687, A181"
+      - year: 2024
+        authors: "Shober PM, Vaubaillon J"
+        title: "A generalizable method for estimating meteor shower false positives"
+        venue: "Astronomy & Astrophysics, 686, A130"
+      - year: 2024
+        authors: "Shober PM, Caffee MW, Bland PA"
+        title: "Cosmic-ray exposure age accumulated in near-Earth space: a carbonaceous chondrite case study"
+        venue: "Meteoritics & Planetary Science, 59(10), 2695–2717"
+      - year: 2024
+        authors: "Lagain A, Devillepoix HAR, Vernazza P, Robertson D, Granvik M, Pokorný P, Ozerov A, Shober PM, Jorda L, Servis K, Fairweather JH"
+        title: "Recalibration of the lunar chronology due to spatial cratering-rate variability"
+        venue: "Icarus, 115956"
+      - year: 2024
+        authors: "McMullan S et al. (incl. Shober PM)"
+        title: "The Winchcombe fireball — that lucky survivor"
+        venue: "Meteoritics & Planetary Science, 59(5), 927–947"
+
+      - year: 2022
+        authors: "King AJ et al. (incl. Shober PM)"
+        title: "The Winchcombe meteorite, a unique and pristine witness from the outer solar system"
+        venue: "Science Advances, 8(46), eabq3925"
+      - year: 2022
+        authors: "Anderson SL, Towner MC, Fairweather J, Bland P, Devillepoix HAR, Sansom EK, Cupak M, Shober PM, Benedix G"
+        title: "Successful recovery of an observed meteorite fall using drones and machine learning"
+        venue: "The Astrophysical Journal Letters, 930(2), L25"
+      - year: 2022
+        authors: "Devillepoix HAR, Sansom EK, Shober PM, et al."
+        title: "Trajectory, recovery, and orbital history of the Madura Cave meteorite"
+        venue: "Meteoritics & Planetary Science, 57(7), 1328–1338"
+      - year: 2022
+        authors: "Shober PM, Devillepoix HAR, Sansom EK, Towner MC, Cupak M, Anderson SL, Benedix G, Laubenstein M, Forman L, Bland PA, Howie RM, Hartig BAD, Cary F, Langendam A"
+        title: "Arpu Kuilpu: an H5 from the outer main belt"
+        venue: "Meteoritics & Planetary Science, 57(6), 1146–1157"
+
+      - year: 2021
+        authors: "Devillepoix HAR, Jenniskens P, Bland PA, Sansom EK, Towner MC, Shober PM, Cupak M, Howie RM, Hartig BAD, Jansen-Sturgeon T, Cox MA"
+        title: "Taurid meteoroid stream #628: a reservoir of large impactors"
+        venue: "The Planetary Science Journal, 2(6), 223"
+      - year: 2021
+        authors: "Anderson SL, Sansom EK, Shober PM, Hartig BAD, Devillepoix HAR"
+        title: "The silicate–sulfuric acid process: mineral processing for in situ resource utilization (ISRU)"
+        venue: "Acta Astronautica, 188, 57–63"
+      - year: 2021
+        authors: "Shober PM, Sansom EK, Bland PA, Devillepoix HAR, Towner MC, Cupak M, Howie RM, Hartig BAD, Anderson SL"
+        title: "The main asteroid belt: the primary source of debris on comet-like orbits"
+        venue: "The Planetary Science Journal, 2(3), 98"
+
+      - year: 2020
+        authors: "Anderson SL, Towner MC, Bland PA, Haikings C, Volante W, Sansom EK, Devillepoix HAR, Shober PM, Hartig BAD, Cupak M, Jansen-Sturgeon T, Howie RM, Benedix G"
+        title: "Machine learning for semi-automated meteorite recovery"
+        venue: "Meteoritics & Planetary Science, 55(11), 2461–2471"
+      - year: 2020
+        authors: "Shober PM, Jansen-Sturgeon T, Bland PA, Devillepoix HAR, Sansom EK, Towner MC, Cupak M, Howie RM, Hartig BAD"
+        title: "Using atmospheric impact data to model meteoroid close encounters"
+        venue: "Monthly Notices of the Royal Astronomical Society, 498(4), 5240–5250"
+      - year: 2020
+        authors: "Devillepoix HAR, Cupak M, Bland PA, Sansom EK, Towner MC, Howie RM, Hartig BAD, Jansen-Sturgeon T, Shober PM, et al."
+        title: "A Global Fireball Observatory"
+        venue: "Planetary and Space Science, 191, 105036"
+      - year: 2020
+        authors: "Shober PM, Jansen-Sturgeon T, Devillepoix HAR, Towner MC, Sansom EK, Bland PA, Cupak M, Howie RM, Hartig BAD"
+        title: "Where did they come from, where did they go? Grazing fireballs"
+        venue: "The Astronomical Journal, 159(5), 191"
+
+      - year: 2019
+        authors: "Shober PM, Jansen-Sturgeon T, Sansom EK, Devillepoix HAR, Bland PA, Towner MC, Cupak M, Howie RM, Hartig BAD"
+        title: "Identification of a Minimoon Fireball"
+        venue: "The Astronomical Journal, 158(5), 183"
+      - year: 2019
+        authors: "Sansom EK, Gritsevich M, Devillepoix HAR, Jansen-Sturgeon T, Shober PM, Bland PA, Towner MC, Cupak M, Howie RM, Hartig BAD"
+        title: "Determining fireball fates using the α–β criterion"
+        venue: "The Astrophysical Journal, 885(2), 115"
