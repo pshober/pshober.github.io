@@ -4,6 +4,10 @@ title: "Meteorite recovery & fireball networks"
 permalink: /research/meteorite-recovery/
 eyebrow: "FRIPON · GFO · DFN"
 lede: "End-to-end fireball-network science: from multi-station astrometry and orbits to drone- and machine-learning-assisted recovery of fresh, orbit-bearing meteorites."
+hero_image: /assets/img/research/recovery-networks.png
+hero_alt: "World map of major fireball and meteorite-tracking camera networks"
+hero_caption: "Major fireball & meteorite-tracking networks worldwide — the wide-field camera systems behind orbit-bearing meteorite recovery."
+hero_full: true
 description: "Fireball-network science across FRIPON, the Global Fireball Observatory and the Desert Fireball Network — pipelines, inter-network comparison, and notable recovered falls."
 papers:
   - title: "Comparing the data-reduction pipelines of FRIPON, DFN, WMPL, and AMOS: a case study of the Geminids"

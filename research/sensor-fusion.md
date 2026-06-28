@@ -77,6 +77,11 @@ decametric NEO population revealed by upcoming infrared surveys (**NEO Surveyor*
 
 ## Toward end-to-end events
 
+<figure class="fig" data-lightbox data-full="/assets/img/research/dark-flight.png" data-cap="From orbit to the ground: a meteoroid pre-heats, ablates as a meteor/fireball, then falls dark to become a meteorite — each phase seen by a different sensor.">
+  <img src="/assets/img/research/dark-flight.png" alt="Diagram of a meteoroid entering the atmosphere — orbit, pre-heating, meteor, fireball, dark flight, and meteorite on the ground" loading="lazy" width="1150" height="767">
+  <figcaption>The atmospheric entry sequence — orbit → meteor/fireball → dark flight → meteorite — with each phase observed by a different sensor.</figcaption>
+</figure>
+
 With 11 asteroids already detected *before* impact, the endgame is **full-chain,
 "telescope-to-ground" events**: telescopic discovery and spectroscopy → predicted
 trajectory and impact energy → luminous flight in the camera networks → fragmentation

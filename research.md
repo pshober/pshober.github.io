@@ -17,6 +17,11 @@ description: "Research interests of Patrick M. Shober — planetary defense, sen
     </div>
   </header>
 
+  <figure class="fig" data-lightbox data-full="{{ '/assets/img/research/fall-sequence.jpg' | relative_url }}" data-cap="From asteroid to meteorite: the size and survival sequence that turns a small body into a sample on the ground.">
+    <img src="{{ '/assets/img/research/fall-sequence.jpg' | relative_url }}" alt="Illustration of the progression from asteroid to meteoroid to meteor to fireball to meteorite" loading="lazy" width="1200" height="904">
+    <figcaption>From asteroid to meteorite — the sequence my work follows, from small-body dynamics to the sample on the ground. <span class="muted">Illustration: P.&nbsp;Shober.</span></figcaption>
+  </figure>
+
   <div class="grid grid--cards">
     {% for d in site.data.research.deep_dives %}
     <article class="card">

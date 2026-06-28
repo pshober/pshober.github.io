@@ -4,6 +4,10 @@ title: "Cometary ↔ asteroidal reservoir mixing"
 permalink: /research/reservoir-mixing/
 eyebrow: "Small-body dynamics"
 lede: "Most “comet-like” fireballs aren't comets at all. Long-term integrations show the near-Earth “Jupiter-family” population is dominated by asteroidal interlopers."
+hero_image: /assets/img/research/tisserand-ae.jpg
+hero_alt: "Eccentricity versus semi-major axis, with asteroids and comets separated by Tisserand parameter lines"
+hero_caption: "Asteroids (blue) and comets (red) in eccentricity–semi-major-axis space, split by the Tisserand parameter (T_J = 2, 3). The “comet-like” region is heavily contaminated by asteroidal interlopers."
+hero_full: true
 description: "How volatile-rich cometary material mixes with refractory asteroidal material in near-Earth space, and why simple Tisserand proxies overcount comets. Shober et al."
 papers:
   - title: "Comparing the dynamics of Jupiter-family comets and comet-like fireballs"
