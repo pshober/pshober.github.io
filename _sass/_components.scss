@@ -239,3 +239,84 @@
 .prose h2 { margin-top: 2rem; }
 .prose ul { padding-left: 1.2rem; }
 .prose li { margin-bottom: 0.35rem; }
+
+// ── Stats strip (home) ───────────────────────────────────────────────────────
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem 2.6rem;
+  justify-content: center;
+  align-items: flex-end;
+  list-style: none;
+  margin: 0;
+  padding: 1.3rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.stat { text-align: center; }
+.stat__num {
+  display: block;
+  font-family: $font-head;
+  font-weight: 600;
+  font-size: clamp(1.7rem, 4.2vw, 2.4rem);
+  line-height: 1;
+  color: var(--accent-2);
+  font-variant-numeric: tabular-nums;
+}
+.stat__label { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 0.4rem; }
+.stats__note { text-align: center; color: var(--faint); font-size: 0.78rem; margin: 0.7rem 0 0; }
+
+// ── Publication DOI/arXiv links ──────────────────────────────────────────────
+.pub__links { white-space: nowrap; }
+.pub__links a {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  border: 1px solid var(--border-strong);
+  border-radius: 5px;
+  padding: 0.05rem 0.35rem;
+  margin-left: 0.35rem;
+}
+.pub__links a:hover { text-decoration: none; border-color: var(--accent); color: var(--accent-2); }
+
+// ── Research deep pages ──────────────────────────────────────────────────────
+.backlink { margin: 1.5rem 0 -0.5rem; font-size: 0.9rem; }
+.backlink a { color: var(--muted); }
+.backlink a:hover { color: var(--accent); }
+.research-hero { margin: 0 0 2rem; }
+.research-hero img { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); background: #0a0f1d; }
+.research-hero[data-lightbox] { cursor: zoom-in; }
+.research-hero figcaption { color: var(--muted); font-size: 0.85rem; margin-top: 0.6rem; }
+.keypaper {
+  margin-top: 2.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 1.1rem 1.3rem;
+}
+.keypaper h2 { font-size: 1rem; margin: 0 0 0.7rem; }
+.keypaper .pub:first-of-type { border-top: 0; }
+
+// ── Asteroid page ────────────────────────────────────────────────────────────
+.ast-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.6rem; align-items: start; }
+.ast-canvas-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.6rem; }
+#orbit { width: 100%; height: auto; display: block; }
+.ast-now { background: linear-gradient(180deg, var(--surface-2), var(--surface)); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.3rem; }
+.ast-now h2 { font-size: 1.05rem; margin: 0 0 0.8rem; }
+.ast-now dl { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1rem; margin: 0; }
+.ast-now dt { color: var(--muted); font-size: 0.9rem; }
+.ast-now dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.ast-now .muted { color: var(--faint); font-weight: 400; }
+.ast-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.8rem; margin: 1.6rem 0; }
+.ast-fact { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.8rem 0.9rem; }
+.ast-fact .v { display: block; font-family: $font-head; font-size: 1.2rem; color: var(--accent-2); }
+.ast-fact .k { color: var(--muted); font-size: 0.78rem; }
+.ast-embed { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: var(--radius); overflow: hidden; background: #05070f; }
+@media (max-width: $bp-md) {
+  .ast-grid { grid-template-columns: 1fr; }
+  .ast-now dd { text-align: left; }
+}

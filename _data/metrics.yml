@@ -1,0 +1,12 @@
+# Manually-maintained headline numbers (accurate as of 2026-06; from the CNAP dossier).
+# Citation/read counts and a live h-index come from NASA ADS via the weekly
+# GitHub Action, written to _data/ads_metrics.yml. _includes/stats.html prefers
+# the ADS values when present and falls back to these.
+papers: 28          # refereed publications
+first_author: 14
+h_index: 13
+invited_talks: 8
+presentations: 30   # conference talks/posters (">30")
+funding_keuro: 280  # competitive funding won as PI (€k)
+fellowships: 2      # postdoctoral fellowships held as PI (MSCA, NASA NPP)
+countries: 20       # countries among co-authors

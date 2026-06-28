@@ -5,9 +5,11 @@
       <span style="color:var(--faint)">© {{ site.time | date: '%Y' }} · built with Jekyll on GitHub&nbsp;Pages</span>
     </div>
     <ul class="footer-social">
+      <li><a href="{{ '/asteroid/' | relative_url }}">Asteroid</a></li>
+      <li><a href="{{ '/acm2026/' | relative_url }}">ACM&nbsp;2026</a></li>
       <li><a href="{{ site.links.email }}">Email</a></li>
+      <li><a href="https://ui.adsabs.harvard.edu/search/q=orcid:{{ site.author.orcid }}">ADS</a></li>
       <li><a href="{{ site.links.orcid }}" rel="me">ORCID</a></li>
-      <li><a href="{{ site.links.scholar }}">Scholar</a></li>
       <li><a href="{{ site.links.github }}" rel="me">GitHub</a></li>
     </ul>
   </div>

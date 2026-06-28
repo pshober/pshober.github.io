@@ -1,0 +1,81 @@
+name: Update ADS metrics
+
+# Refreshes _data/ads_metrics.yml (citations, h-index, reads) from NASA ADS.
+# Requires a repo secret ADS_TOKEN (free: ADS → Account → API Token).
+# This only commits a data file; GitHub Pages then rebuilds the site normally.
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"   # every Monday 06:17 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch metrics from ADS
+        env:
+          ADS_TOKEN: ${{ secrets.ADS_TOKEN }}
+          ORCID: "0000-0003-4766-2098"
+        run: |
+          set -euo pipefail
+          if [ -z "${ADS_TOKEN:-}" ]; then
+            echo "ADS_TOKEN not set — skipping (seeded numbers stay in _data/metrics.yml)."
+            exit 0
+          fi
+          AUTH="Authorization: Bearer ${ADS_TOKEN}"
+          BASE="https://api.adsabs.harvard.edu/v1"
+
+          # 1) all bibcodes for this ORCID
+          curl -sS -H "$AUTH" \
+            "${BASE}/search/query?q=orcid:${ORCID}&fl=bibcode&rows=2000" > search.json
+
+          python3 - <<'PY'
+          import json, datetime, urllib.request, os
+          tok = os.environ["ADS_TOKEN"]
+          docs = json.load(open("search.json")).get("response", {}).get("docs", [])
+          bibcodes = [d["bibcode"] for d in docs if d.get("bibcode")]
+          if not bibcodes:
+              raise SystemExit("No bibcodes returned from ADS")
+
+          req = urllib.request.Request(
+              "https://api.adsabs.harvard.edu/v1/metrics",
+              data=json.dumps({"bibcodes": bibcodes}).encode(),
+              headers={"Authorization": "Bearer " + tok,
+                       "Content-Type": "application/json"})
+          m = json.load(urllib.request.urlopen(req))
+
+          basic   = m.get("basic stats", {})
+          ref     = m.get("basic stats refereed", {})
+          cites   = m.get("citation stats", {})
+          ind     = m.get("indicators", {})
+
+          out = {
+              "updated":   datetime.date.today().isoformat(),
+              "refereed":  int(ref.get("number of papers") or basic.get("number of papers") or 0),
+              "citations": int(cites.get("total number of citations") or 0),
+              "h_index":   int(ind.get("h") or 0),
+              "reads":     int(basic.get("total number of reads") or 0),
+          }
+          with open("_data/ads_metrics.yml", "w") as f:
+              f.write("# Auto-generated weekly by .github/workflows/ads-metrics.yml from NASA ADS.\n")
+              for k, v in out.items():
+                  f.write(f'{k}: {json.dumps(v) if k=="updated" else v}\n')
+          print("Wrote _data/ads_metrics.yml:", out)
+          PY
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- _data/ads_metrics.yml; then
+            echo "No change."; exit 0
+          fi
+          git config user.name "ads-metrics-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add _data/ads_metrics.yml
+          git commit -m "chore: refresh ADS metrics"
+          git push

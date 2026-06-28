@@ -1,0 +1,23 @@
+{% comment %}
+  Headline stats. Prefers live ADS values (_data/ads_metrics.yml, written by the
+  weekly GitHub Action) and falls back to manual numbers (_data/metrics.yml).
+{% endcomment %}
+{% assign ads = site.data.ads_metrics %}
+{% assign m = site.data.metrics %}
+<section class="container section--tight" aria-label="Research at a glance">
+  <ul class="stats">
+    <li class="stat"><span class="stat__num">{{ ads.refereed | default: m.papers }}</span><span class="stat__label">refereed papers</span></li>
+    <li class="stat"><span class="stat__num">{{ m.first_author }}</span><span class="stat__label">first-author</span></li>
+    <li class="stat"><span class="stat__num">{{ ads.h_index | default: m.h_index }}</span><span class="stat__label">h-index</span></li>
+    {% if ads.citations %}
+    <li class="stat"><span class="stat__num">{{ ads.citations }}</span><span class="stat__label">citations</span></li>
+    {% else %}
+    <li class="stat"><span class="stat__num">{{ m.invited_talks }}</span><span class="stat__label">invited talks</span></li>
+    {% endif %}
+    <li class="stat"><span class="stat__num">€{{ m.funding_keuro }}k</span><span class="stat__label">funding as PI</span></li>
+  </ul>
+  {% if ads.updated and ads.updated != "" %}
+  <p class="stats__note">citations &amp; h-index updated {{ ads.updated }} from
+    <a href="https://ui.adsabs.harvard.edu/search/q=orcid:{{ site.author.orcid }}">NASA ADS</a></p>
+  {% endif %}
+</section>

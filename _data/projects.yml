@@ -22,7 +22,7 @@ projects:
       regions of the asteroid belt deliver the meteorites we recover — and what
       that bias means for the meteorite record (Nature Astronomy, 2025).
     links:
-      - { label: "Nature Astronomy 2025", url: "" }   # TODO: add DOI
+      - { label: "Nature Astronomy 2025", url: "https://doi.org/10.1038/s41550-025-02526-6" }
 
   - name: "FRIPON & the Global Fireball Observatory"
     kicker: "Fireball networks"
@@ -33,7 +33,7 @@ projects:
       fireball-camera networks, improving how observed atmospheric trajectories
       become orbits and predicted fall positions.
     links:
-      - { label: "GFO (Planet. Space Sci. 2020)", url: "" }   # TODO: add DOI
+      - { label: "GFO (Planet. Space Sci. 2020)", url: "https://doi.org/10.1016/j.pss.2020.105036" }
 
   - name: "MASSED — mapping debris arrival times"
     kicker: "Marie Skłodowska-Curie"
@@ -53,4 +53,4 @@ projects:
       identification and for testing meteorite–asteroid pairings using geocentric
       parameters.
     links:
-      - { label: "A&A 686 (2024)", url: "" }   # TODO: add DOI
+      - { label: "A&A 686 (2024)", url: "https://doi.org/10.1051/0004-6361/202349024" }

@@ -8,9 +8,10 @@ layout: default
     <p class="lede">{{ site.data.cv.contact.title }}</p>
     <div class="cv-toolbar">
       <a class="btn btn--primary" href="{{ '/assets/pdf/SHOBER_CV_2026.pdf' | relative_url }}" download>&darr;&nbsp;Download PDF</a>
+      <a class="btn btn--ghost" href="{{ '/publications/' | relative_url }}">Publications</a>
+      <a class="btn btn--ghost" href="https://ui.adsabs.harvard.edu/search/q=orcid:{{ site.author.orcid }}">ADS</a>
       <a class="btn btn--ghost" href="{{ site.links.orcid }}">ORCID</a>
-      <a class="btn btn--ghost" href="{{ site.links.scholar }}">Google Scholar</a>
-      <a class="btn btn--ghost" href="{{ site.links.email }}">Email</a>
+      <a class="btn btn--ghost" href="{{ site.links.scholar }}">Scholar</a>
     </div>
     {% if site.data.cv.summary %}<p class="lede" style="margin-top:1rem">{{ site.data.cv.summary }}</p>{% endif %}
   </header>

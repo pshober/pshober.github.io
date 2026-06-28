@@ -1,0 +1,35 @@
+---
+layout: default
+---
+<div class="container container--narrow">
+  <p class="backlink"><a href="{{ '/research/' | relative_url }}">&larr;&nbsp;Research</a></p>
+  <header class="page-head">
+    {% if page.eyebrow %}<div class="eyebrow">{{ page.eyebrow }}</div>{% endif %}
+    <h1>{{ page.title }}</h1>
+    {% if page.lede %}<p class="lede">{{ page.lede }}</p>{% endif %}
+  </header>
+
+  {% if page.hero_image %}
+  <figure class="research-hero" {% if page.hero_full %}data-lightbox data-full="{{ page.hero_image | relative_url }}" data-cap="{{ page.hero_caption | strip_html }}"{% endif %}>
+    <img src="{{ page.hero_image | relative_url }}" alt="{{ page.hero_alt | default: page.title }}" loading="lazy">
+    {% if page.hero_caption %}<figcaption>{{ page.hero_caption }}</figcaption>{% endif %}
+  </figure>
+  {% endif %}
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  {% if page.papers %}
+  <aside class="keypaper">
+    <h2>Key papers</h2>
+    {% for p in page.papers %}
+    <p class="pub">
+      {% if p.doi %}<a class="pub__title" href="https://doi.org/{{ p.doi }}">{{ p.title }}</a>{% else %}<span class="pub__title">{{ p.title }}</span>{% endif %}
+      {% if p.venue %}<span class="pub__venue">{{ p.venue }}</span>{% endif %}
+      {% if p.doi or p.arxiv %}<span class="pub__links">{% if p.doi %}<a href="https://doi.org/{{ p.doi }}">DOI</a>{% endif %}{% if p.arxiv %}<a href="https://arxiv.org/abs/{{ p.arxiv }}">arXiv</a>{% endif %}</span>{% endif %}
+    </p>
+    {% endfor %}
+  </aside>
+  {% endif %}
+</div>

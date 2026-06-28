@@ -15,11 +15,14 @@
       <div class="pub-year">{{ it.year }}</div>
       {% assign prevyear = it.year %}
     {% endif %}
+    {% assign href = "" %}
+    {% if it.doi %}{% assign href = "https://doi.org/" | append: it.doi %}{% elsif it.url %}{% assign href = it.url %}{% endif %}
     <p class="pub">
       <span class="pub__authors">{{ it.authors | replace: 'Shober', '<strong class="me">Shober</strong>' }}</span>
       {% unless sec.by_year %}{% if it.year %}({{ it.year }}) {% endif %}{% endunless %}
-      {% if it.link %}<a class="pub__title" href="{{ it.link }}">{{ it.title }}</a>{% else %}<span class="pub__title">{{ it.title }}</span>{% endif %}
+      {% if href != "" %}<a class="pub__title" href="{{ href }}">{{ it.title }}</a>{% else %}<span class="pub__title">{{ it.title }}</span>{% endif %}
       {% if it.venue %}<span class="pub__venue">{{ it.venue }}</span>{% endif %}
+      {% if it.doi or it.arxiv %}<span class="pub__links">{% if it.doi %}<a href="https://doi.org/{{ it.doi }}" aria-label="DOI">DOI</a>{% endif %}{% if it.arxiv %}<a href="https://arxiv.org/abs/{{ it.arxiv }}" aria-label="arXiv preprint">arXiv</a>{% endif %}</span>{% endif %}
     </p>
   {% endfor %}
 </div>
