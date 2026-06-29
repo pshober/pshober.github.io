@@ -21,8 +21,8 @@ papers:
 ## The carbonaceous paradox
 
 Dark, primitive, water- and organic-rich **carbonaceous bodies** dominate the
-small-body reservoirs and, by debiased impact-flux models, should supply *at least
-half* of the macroscopic objects striking Earth. Yet only about **4 % of recovered
+small-body reservoirs and, by [debiased impact-flux models](https://doi.org/10.1051/0004-6361/202450532),
+should supply *at least half* of the macroscopic objects striking Earth. Yet only about **4 % of recovered
 meteorites are carbonaceous chondrites**. These same materials also have the
 *shortest* cosmic-ray exposure ages of any meteorite class, meaning they were
 liberated recently, while already on near-Earth orbits.
@@ -56,17 +56,17 @@ orbits (excesses up to ~11×). The natural reading is a **two-step filter**: rep
 heating/cooling cycles at small perihelion fracture friable, hydrated material, and
 atmospheric entry then removes the remaining porous fragments. Meteorite collections
 are thus enriched in compact survivors and depleted in fragile primitive matter. That
-picture is consistent with the rubble-pile structure and thermal-fatigue cracking seen
-on carbonaceous asteroids, and with the carbonaceous impact fragments returned by
-Chang'e-6.
+picture is consistent with the rubble-pile structure and [thermal-fatigue cracking](https://doi.org/10.1038/s41467-020-16528-7)
+seen on carbonaceous asteroids, and with the [carbonaceous impactor fragments found in
+Chang'e-6 lunar samples](https://doi.org/10.1073/pnas.2501614122).
 
 ## Where it's going
 
-As a NASA Postdoctoral Fellow I'm extending this with the **NEO Surveyor** science
-team: its mid-infrared survey is especially sensitive to dark, low-albedo asteroids,
-and will let us test thermal fatigue near the Sun as the driver of carbonaceous
-fragmentation, which directly informs models of how water and organics are delivered to
-the inner solar system.
+I want to push this further. Upcoming infrared surveys will be key: NASA's
+[**NEO Surveyor**](https://doi.org/10.3847/PSJ/ad0468) will be especially sensitive to the
+dark, low-albedo asteroids this filter implicates, and I'd like to use its data to test
+thermal fatigue near the Sun as the driver of carbonaceous fragmentation, which feeds
+models of how water and organics are delivered to the inner solar system.
 
 **In the press:** *American Scientist*, "Unrepresentative Meteorites"; *The
 Conversation*; and the *Academic Minute*, "The Case of the Missing Meteorites."

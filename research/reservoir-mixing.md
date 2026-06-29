@@ -37,18 +37,20 @@ belt through resonances and evolve more regularly.
 ## What the fireballs actually show
 
 During my PhD I used observed close encounters to quantify this mixing, first
-analysing the **longest well-observed grazing fireball** on record, in which an
-Apollo-type asteroidal meteoroid was scattered by Earth onto a JFC-type orbit. That
-motivated an observationally-anchored **steady-state model of Earth close encounters**:
+analysing the [**longest well-observed grazing fireball**](https://doi.org/10.3847/1538-3881/ab8002)
+on record, in which an Apollo-type asteroidal meteoroid was scattered by Earth onto a
+JFC-type orbit. That motivated an observationally-anchored
+[**steady-state model of Earth close encounters**](https://doi.org/10.1093/mnras/staa2559):
 a small but persistent flux (~2.5 × 10⁸ objects yr⁻¹, ~0.1 % of the population in this
 size range) is transferred from asteroidal orbits (Tisserand parameter above 3) onto
 JFC-type orbits.
 
-In my thesis's final paper, long-term integrations of 50 sporadic DFN fireballs on
-JFC-type orbits found that only **~4 % show recent Jupiter encounters and genuinely
-cometary evolution**, while **96 % behave as stable asteroidal bodies**. During my
-Marie Curie postdoc I scaled this up, comparing 646 well-observed "JFC-like" fireballs
-from French, Australian, Czech and American sensors against 661 catalogued JFCs, and
+In [my thesis's final paper](https://doi.org/10.3847/PSJ/abde4b), long-term integrations
+of 50 sporadic DFN fireballs on JFC-type orbits found that only **~4 % show recent Jupiter
+encounters and genuinely cometary evolution**, while **96 % behave as stable asteroidal
+bodies**. During my Marie Curie postdoc I [scaled this up](https://doi.org/10.1051/0004-6361/202449635),
+comparing 646 well-observed "JFC-like" fireballs from French, Australian, Czech and
+American sensors against 661 catalogued JFCs, and
 confirmed it: only about **1–5 % of cm–m bodies on JFC-type orbits are dynamically
 cometary**, while roughly **22 % of NEOs classified as JFCs** actually follow
 surprisingly stable, asteroid-like orbits.
@@ -56,6 +58,6 @@ surprisingly stable, asteroid-like orbits.
 Simple proxies like the Tisserand parameter are not enough at these sizes: **dynamical
 stability diagnostics are essential** to separate the reservoirs. The genuinely
 cometary material is mostly ground to dust, feeding the zodiacal cloud. I'm now
-finalising a study of **>2,200 "asteroids on cometary orbits"**, combining long-term
+finalising a study of **>2,200 "asteroids on cometary orbits"** (in preparation), combining long-term
 integrations, unsupervised clustering and physical properties (albedo, taxonomy) to
 map the mixing interface more finely.

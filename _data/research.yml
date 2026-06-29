@@ -30,8 +30,8 @@ deep_dives:
     link: /research/sensor-fusion/
     blurb: >-
       Turning the NEXRAD weather-radar network into an automatic meteorite-fall
-      detector, and fusing radar, optical & infrasound to close the 10–100 m
-      “decametric gap.”
+      detector, and working toward fusing radar, optical & infrasound to close the
+      10–100 m “decametric gap.”
 
   - title: "Meteorite recovery & fireball networks"
     kicker: "FRIPON · GFO · DFN"

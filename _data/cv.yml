@@ -96,9 +96,6 @@ sections:
 
   - title: Service
     entries:
-      - date: "2022–present"
-        title: "FRIPON scientific core team (national observation service, ANO6)"
-        sub: "Daily bolide validation, reduction-pipeline maintenance and inter-network comparison, and meteorite-recovery campaigns coordinated with Vigie-Ciel."
       - date: "Reviewer"
         title: "Peer reviewer"
         sub: "MNRAS · Astrophysics & Space Science · Planetary & Space Science · Meteoritics & Planetary Science · Astronomy & Astrophysics · The Astronomical Journal · Icarus · NASA ROSES (YORPD, FINESST)."

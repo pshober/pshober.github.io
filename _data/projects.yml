@@ -7,8 +7,8 @@ projects:
     featured: true
     summary: >-
       Machine-learning pipeline that scans NEXRAD Doppler weather radar to
-      automatically detect and characterize the debris cloud of freshly fallen
-      meteorites across the continental U.S., turning the national radar
+      automatically detect the debris cloud of freshly fallen meteorites across the
+      continental U.S., with the longer-term goal of turning the national radar
       network into a meteorite-recovery instrument.
     links:
       - { label: "Paper (in prep.)", url: "" }
