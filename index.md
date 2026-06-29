@@ -26,5 +26,5 @@ by thermal fragmentation near the Sun and atmospheric survival ([Nature Astronom
 2025](https://doi.org/10.1038/s41550-025-02526-6)), and that most
 ["comet-like" fireballs are in fact asteroidal interlopers](/research/reservoir-mixing/).
 I earned my PhD at Curtin University
-(2022), have authored 28 peer-reviewed papers, and asteroid
+(2022), have authored {{ site.data.metrics.papers }} peer-reviewed papers, and asteroid
 [**(33964) Patrickshober**](/asteroid/) is named in recognition of this work.

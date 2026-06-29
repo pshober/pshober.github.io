@@ -2,13 +2,13 @@
 layout: default
 title: Publications
 permalink: /publications/
-description: "Peer-reviewed publications of Patrick M. Shober: 28 refereed papers (14 first-author), with DOI and arXiv links."
+description: "Peer-reviewed publications of Patrick M. Shober, with DOI and arXiv links."
 ---
 <div class="container">
   <header class="page-head">
     <div class="eyebrow">Peer-reviewed work</div>
     <h1>Publications</h1>
-    <p class="lede">28 refereed publications (14 first-author), including papers in
+    <p class="lede">{{ site.data.metrics.papers }} refereed publications ({{ site.data.metrics.first_author }} first-author), including papers in
       <em>Nature Astronomy</em>, <em>Science Advances</em>, <em>A&amp;A</em>,
       <em>MNRAS</em>, <em>AJ</em>, <em>ApJ</em> and <em>MAPS</em>.</p>
     <div class="cv-toolbar">

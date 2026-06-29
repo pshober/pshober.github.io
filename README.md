@@ -25,6 +25,28 @@ points to. The URL never changes; edit `_data/acm2026.yml` to update its content
 You can edit any `_data/*.yml` file directly on github.com (pencil icon → commit)
 and the site rebuilds automatically, no laptop or build tools needed.
 
+## Automated publication sync (NASA ADS)
+
+[`scripts/update_publications.py`](scripts/update_publications.py), run every ~2 weeks by
+[`.github/workflows/update-publications.yml`](.github/workflows/update-publications.yml),
+pulls your **refereed** papers from NASA ADS (ORCID ∪ author name) and:
+
+- **new paper found →** opens a **pull request** with the auto-formatted entry added to
+  `_data/publications.yml` and the counts bumped — review the author list / title casing /
+  venue against the house style, then merge.
+- **no new paper →** commits the refreshed citation / h-index / read counts
+  (`_data/ads_metrics.yml`) straight to `main`.
+
+Paper counts live in one place — `_data/metrics.yml` (`papers`, `first_author`) — and the
+pages read them via Liquid, so the script only updates that file (plus the refereed badge
+and the CV summary line).
+
+**Setup:** add a free **ADS API token** (ADS → Account → API Token) as the repo secret
+`ADS_TOKEN` (Settings → Secrets and variables → Actions). Without it the workflow no-ops.
+Run it on demand from the Actions tab ("Run workflow"), or locally:
+`ADS_TOKEN=… python3 scripts/update_publications.py --dry-run`. Edit the config block at the
+top of the script (journal-name map, protected proper nouns, exclude-list) to tune formatting.
+
 ## Custom domain / DNS
 
 The custom domain is bound by the [`CNAME`](CNAME) file (`planetarypat.com`) plus
