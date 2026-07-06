@@ -1,0 +1,41 @@
+{
+  "id": "ONT_2022WJ1_19Nov2022",
+  "slug": "ont_2022wj1",
+  "title": "Asteroid 2022 WJ1 over Lake Erie",
+  "date_label": "19 November 2022",
+  "scene_time_utc": "2022-11-19 08:28:44.661000",
+  "radar_icao": "KBUF",
+  "radar_lat": 42.94861,
+  "radar_lon": -78.73694,
+  "era": "dualpol",
+  "event_confidence": 0.997,
+  "event_detected": true,
+  "z_range": [
+    -11.0,
+    1.0
+  ],
+  "n_points": 217,
+  "roles": {
+    "TP": 133,
+    "FP": 83,
+    "FN": 1
+  },
+  "best_cluster": {
+    "centroid_lat": 43.20439,
+    "centroid_lon": -79.36676,
+    "centroid_alt_m": 2914.0,
+    "detection_prob": 0.997,
+    "n_gates": 216
+  },
+  "bounds": [
+    [
+      42.9086,
+      -79.5077
+    ],
+    [
+      43.2727,
+      -78.6969
+    ]
+  ],
+  "narrative": "Asteroid 2022 WJ1 was discovered only hours before it entered the atmosphere over Lake Erie on 19 November 2022 \u2014 one of a handful of asteroids ever detected before impact. As its fragments fell they drifted on the wind and were swept by the KBUF (Buffalo) NEXRAD weather radar. With no human in the loop, MetDetect automatically flagged the elongated \u201cdebris streak\u201d shown here \u2014 the falling meteorites \u2014 at 1.00 confidence."
+}
