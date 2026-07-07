@@ -28,6 +28,7 @@ sitemap: false
     border-radius:8px; padding:0.35rem 0.9rem; font:inherit; font-size:0.9rem; cursor:pointer;
   }
   .mtd-tab.is-active { background:var(--surface-2); color:var(--text); border-color:var(--accent); }
+  .mtd-hint { color:var(--faint); font-size:0.8rem; align-self:center; }
   #mtd-map, #mtd-3d {
     height:520px; width:100%; border-radius:14px; border:1px solid var(--border);
     background:var(--surface); z-index:0;
@@ -97,6 +98,7 @@ sitemap: false
       <div class="mtd-tabs" role="tablist">
         <button id="mtd-tab-2d" class="mtd-tab is-active" type="button" role="tab">2D map</button>
         <button id="mtd-tab-3d" class="mtd-tab" type="button" role="tab">3D view</button>
+        <span id="mtd-3d-hint" class="mtd-hint" style="display:none">drag to rotate · scroll or pinch to zoom</span>
       </div>
       <div id="mtd-map" role="img" aria-label="Map of automatically detected meteorite-fall debris gates in weather radar"></div>
       <div id="mtd-3d" style="display:none" role="img" aria-label="3D view of the debris gates at their real altitudes"></div>

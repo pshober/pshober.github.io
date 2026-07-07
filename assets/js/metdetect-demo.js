@@ -156,8 +156,16 @@
         camera: { eye: { x: 1.4, y: -1.6, z: 0.7 } }
       },
       legend: { font: { color: "#9fb0c7" }, x: 0, y: 1 },
-      margin: { l: 0, r: 0, t: 8, b: 0 }
-    }, { displayModeBar: false, responsive: true });
+      margin: { l: 0, r: 0, t: 8, b: 0 },
+      modebar: { color: "#9fb0c7", activecolor: "#ff9e3d", bgcolor: "rgba(0,0,0,0)",
+                 orientation: "v" }
+    }, {
+      // Zoom must always work: scroll/pinch over the scene, plus a visible
+      // toolbar (zoom / pan / orbit / reset / save-image) for poster visitors.
+      responsive: true, scrollZoom: true, displaylogo: false,
+      displayModeBar: true,
+      modeBarButtonsToRemove: ["resetCameraLastSave3d", "tableRotation", "hoverClosest3d"]
+    });
     plotDrawnFor = ev.slug;
   }
 
@@ -166,6 +174,7 @@
     var is3d = which === "3d";
     $("mtd-map").style.display = is3d ? "none" : "";
     $("mtd-3d").style.display = is3d ? "" : "none";
+    var hint = $("mtd-3d-hint"); if (hint) hint.style.display = is3d ? "" : "none";
     $("mtd-tab-2d").classList.toggle("is-active", !is3d);
     $("mtd-tab-3d").classList.toggle("is-active", is3d);
     if (is3d && current) {
