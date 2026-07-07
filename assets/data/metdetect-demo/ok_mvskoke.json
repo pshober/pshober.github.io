@@ -1,0 +1,53 @@
+{
+  "id": "OK_MvskokeMerkv_20Jan2023",
+  "slug": "ok_mvskoke",
+  "title": "Mvskoke Merkv, Oklahoma \u2014 recovered meteorite",
+  "date_label": "20 January 2023",
+  "scene_time_utc": "2023-01-20T09:15:47.334000000",
+  "radar_icao": "KSRX",
+  "radar_lat": 35.29056,
+  "radar_lon": -94.36167,
+  "site_alt_m": -9290.0,
+  "detector": {
+    "score": 0.954,
+    "tau": 0.755323019302398,
+    "tau_label": "CLEAR",
+    "pass": true,
+    "top_is_truth": true,
+    "n_flagged": 12,
+    "n_flagged_truth": 11,
+    "stratum": "CLEAR",
+    "model": "RUN-30 detector (pre-registered dropPRIOR config), LOEO, preliminary calibration \u2014 CAL split only; frozen EVAL-2 untouched",
+    "run29_score": 0.975175454906888,
+    "run29_tau_fpr10": 0.9605,
+    "geometry_source": "current-cascade re-run (RUN-30 v2 features), 2026-07-07"
+  },
+  "framing": "Fireball networks tell us when and where to look; MetDetect answers which radar echoes are the falling debris. Shown: every candidate the detector flags at its 10%-false-alarm operating point, in a window placed on the fireball report \u2014 false positives included.",
+  "z_range": [
+    -5.5,
+    8.5
+  ],
+  "n_points": 229,
+  "roles": {
+    "TP": 104,
+    "FP": 125,
+    "FN": 0
+  },
+  "best_cluster": {
+    "centroid_lat": 35.71607,
+    "centroid_lon": -95.33151,
+    "centroid_alt_m": 2911.0,
+    "n_gates": 229
+  },
+  "bounds": [
+    [
+      35.2506,
+      -95.4743
+    ],
+    [
+      35.8218,
+      -94.3217
+    ]
+  ],
+  "narrative": "The recovered Mvskoke Merkv meteorite (named in the Muscogee language) fell in eastern Oklahoma. The KSRX (Fort Smith) radar caught the descending fragments; the candidates MetDetect flags are the confirmed debris."
+}

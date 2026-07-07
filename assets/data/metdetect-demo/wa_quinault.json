@@ -1,0 +1,53 @@
+{
+  "id": "WA_Quinault_08Mar2018",
+  "slug": "wa_quinault",
+  "title": "Washington coast \u2014 an honest hard case",
+  "date_label": "8 March 2018",
+  "scene_time_utc": "2018-03-08T03:07:14.118000000",
+  "radar_icao": "KLGX",
+  "radar_lat": 47.1158,
+  "radar_lon": -124.1069,
+  "site_alt_m": 23.0,
+  "detector": {
+    "score": 0.8729,
+    "tau": 0.9017137321286604,
+    "tau_label": "global",
+    "pass": false,
+    "top_is_truth": false,
+    "n_flagged": 0,
+    "n_flagged_truth": 0,
+    "stratum": "STRATIFORM",
+    "model": "RUN-30 detector (pre-registered dropPRIOR config), LOEO, preliminary calibration \u2014 CAL split only; frozen EVAL-2 untouched",
+    "run29_score": 0.5756984029770659,
+    "run29_tau_fpr10": 0.9605,
+    "geometry_source": "current-cascade re-run (RUN-30 v2 features), 2026-07-07"
+  },
+  "framing": "Fireball networks tell us when and where to look; MetDetect answers which radar echoes are the falling debris. Shown: every candidate the detector flags at its 10%-false-alarm operating point, in a window placed on the fireball report \u2014 false positives included.",
+  "z_range": [
+    -5.0,
+    18.5
+  ],
+  "n_points": 1131,
+  "roles": {
+    "TP": 0,
+    "FP": 6,
+    "FN": 1125
+  },
+  "best_cluster": {
+    "centroid_lat": 47.46541,
+    "centroid_lon": -124.64356,
+    "centroid_alt_m": 8102.0,
+    "n_gates": 6
+  },
+  "bounds": [
+    [
+      47.0758,
+      -124.7667
+    ],
+    [
+      47.5483,
+      -124.0669
+    ]
+  ],
+  "narrative": "A fireball off the Washington coast, observed by the KLGX radar through steady stratiform rain. Here the method honestly struggles: nothing clears the detection threshold, and the top-ranked candidate is a rain cluster \u2014 with the real, manually verified debris ranked a hair behind it (2nd of ~2,000 candidates in this scene). Weather-embedded falls remain the hard frontier; the hollow rings mark where the debris really is."
+}

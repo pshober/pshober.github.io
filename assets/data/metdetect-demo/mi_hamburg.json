@@ -1,0 +1,53 @@
+{
+  "id": "MI_Hamburg_17Jan2018",
+  "slug": "mi_hamburg",
+  "title": "Hamburg, Michigan \u2014 recovered meteorite",
+  "date_label": "17 January 2018",
+  "scene_time_utc": "2018-01-17T01:07:26.656000000",
+  "radar_icao": "KDTX",
+  "radar_lat": 42.69972,
+  "radar_lon": -83.47167,
+  "site_alt_m": 100.0,
+  "detector": {
+    "score": 0.8586,
+    "tau": 0.9080719078772572,
+    "tau_label": "CONVECTIVE",
+    "pass": false,
+    "top_is_truth": true,
+    "n_flagged": 0,
+    "n_flagged_truth": 0,
+    "stratum": "CONVECTIVE",
+    "model": "RUN-30 detector (pre-registered dropPRIOR config), LOEO, preliminary calibration \u2014 CAL split only; frozen EVAL-2 untouched",
+    "run29_score": 0.9349130317636508,
+    "run29_tau_fpr10": 0.9605,
+    "geometry_source": "current-cascade re-run (RUN-30 v2 features), 2026-07-07"
+  },
+  "framing": "Fireball networks tell us when and where to look; MetDetect answers which radar echoes are the falling debris. Shown: every candidate the detector flags at its 10%-false-alarm operating point, in a window placed on the fireball report \u2014 false positives included.",
+  "z_range": [
+    -17.5,
+    -2.0
+  ],
+  "n_points": 23,
+  "roles": {
+    "TP": 2,
+    "FP": 6,
+    "FN": 15
+  },
+  "best_cluster": {
+    "centroid_lat": 42.44509,
+    "centroid_lon": -83.83361,
+    "centroid_alt_m": 2991.0,
+    "n_gates": 8
+  },
+  "bounds": [
+    [
+      42.3957,
+      -83.9137
+    ],
+    [
+      42.7397,
+      -83.4317
+    ]
+  ],
+  "narrative": "The Hamburg (H4) meteorites were recovered from frozen lakes near Ann Arbor after a brilliant evening fireball. The KDTX (Detroit) radar saw the stones fall, and the detector's top-ranked candidate IS the confirmed debris \u2014 but embedded in winter weather echo its score falls just below the 10%-false-alarm threshold. An honest near-miss."
+}

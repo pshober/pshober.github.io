@@ -3,39 +3,51 @@
   "slug": "ont_2022wj1",
   "title": "Asteroid 2022 WJ1 over Lake Erie",
   "date_label": "19 November 2022",
-  "scene_time_utc": "2022-11-19 08:28:44.661000",
+  "scene_time_utc": "2022-11-19T08:21:44.767000000",
   "radar_icao": "KBUF",
   "radar_lat": 42.94861,
   "radar_lon": -78.73694,
-  "era": "dualpol",
-  "event_confidence": 0.97,
-  "event_detected": true,
+  "site_alt_m": 64.0,
+  "detector": {
+    "score": 0.9778,
+    "tau": 0.9080719078772572,
+    "tau_label": "CONVECTIVE",
+    "pass": true,
+    "top_is_truth": true,
+    "n_flagged": 9,
+    "n_flagged_truth": 9,
+    "stratum": "CONVECTIVE",
+    "model": "RUN-30 detector (pre-registered dropPRIOR config), LOEO, preliminary calibration \u2014 CAL split only; frozen EVAL-2 untouched",
+    "run29_score": 0.9504253313984086,
+    "run29_tau_fpr10": 0.9605,
+    "geometry_source": "current-cascade re-run (RUN-30 v2 features), 2026-07-07"
+  },
+  "framing": "Fireball networks tell us when and where to look; MetDetect answers which radar echoes are the falling debris. Shown: every candidate the detector flags at its 10%-false-alarm operating point, in a window placed on the fireball report \u2014 false positives included.",
   "z_range": [
     -11.0,
-    1.0
+    7.5
   ],
-  "n_points": 217,
+  "n_points": 275,
   "roles": {
-    "TP": 133,
-    "FP": 83,
-    "FN": 1
+    "TP": 44,
+    "FP": 91,
+    "FN": 140
   },
   "best_cluster": {
-    "centroid_lat": 43.20439,
-    "centroid_lon": -79.36676,
-    "centroid_alt_m": 2914.0,
-    "detection_prob": 0.97,
-    "n_gates": 216
+    "centroid_lat": 43.20904,
+    "centroid_lon": -79.42229,
+    "centroid_alt_m": 15378.0,
+    "n_gates": 135
   },
   "bounds": [
     [
       42.9086,
-      -79.5077
+      -79.5914
     ],
     [
-      43.2727,
+      43.27,
       -78.6969
     ]
   ],
-  "narrative": "Asteroid 2022 WJ1 was discovered only hours before it entered the atmosphere over Lake Erie on 19 November 2022 \u2014 one of a handful of asteroids ever detected before impact. Fireball observations told us when and where to look; MetDetect then picked out WHICH radar echoes are the falling debris. Its top-ranked candidate \u2014 the elongated streak shown here, false positives included \u2014 is the confirmed debris, scoring 0.97 against a detection threshold of 0.91 set at a 10% false-alarm rate (RUN-30 detector, preliminary calibration). Gate geometry is from the June analysis run; a refresh with the current pipeline is in progress."
+  "narrative": "Asteroid 2022 WJ1 was discovered only hours before it entered the atmosphere over Lake Erie \u2014 one of a handful of asteroids ever detected before impact. Its fragments drifted on the wind through the KBUF (Buffalo) radar's beams. Every candidate MetDetect flags here at its operating point is a piece of that manually verified debris streak."
 }

@@ -1,11 +1,54 @@
 {
   "events": [
     {
+      "id": "FL_Osceola_24Jan2016",
+      "slug": "fl_osceola_2016",
+      "title": "Osceola, Florida \u2014 recovered meteorite",
+      "date_label": "24 January 2016",
+      "order": 0,
+      "score": 0.9881,
+      "pass": true,
+      "top_is_truth": true
+    },
+    {
       "id": "ONT_2022WJ1_19Nov2022",
       "slug": "ont_2022wj1",
       "title": "Asteroid 2022 WJ1 over Lake Erie",
       "date_label": "19 November 2022",
-      "confidence": 0.97
+      "order": 1,
+      "score": 0.9778,
+      "pass": true,
+      "top_is_truth": true
+    },
+    {
+      "id": "OK_MvskokeMerkv_20Jan2023",
+      "slug": "ok_mvskoke",
+      "title": "Mvskoke Merkv, Oklahoma \u2014 recovered meteorite",
+      "date_label": "20 January 2023",
+      "order": 3,
+      "score": 0.954,
+      "pass": true,
+      "top_is_truth": true
+    },
+    {
+      "id": "MI_Hamburg_17Jan2018",
+      "slug": "mi_hamburg",
+      "title": "Hamburg, Michigan \u2014 recovered meteorite",
+      "date_label": "17 January 2018",
+      "order": 4,
+      "score": 0.8586,
+      "pass": false,
+      "top_is_truth": true
+    },
+    {
+      "id": "WA_Quinault_08Mar2018",
+      "slug": "wa_quinault",
+      "title": "Washington coast \u2014 an honest hard case",
+      "date_label": "8 March 2018",
+      "order": 5,
+      "score": 0.8729,
+      "pass": false,
+      "top_is_truth": false
     }
   ]
 }

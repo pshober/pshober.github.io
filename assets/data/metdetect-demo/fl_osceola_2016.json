@@ -1,0 +1,53 @@
+{
+  "id": "FL_Osceola_24Jan2016",
+  "slug": "fl_osceola_2016",
+  "title": "Osceola, Florida \u2014 recovered meteorite",
+  "date_label": "24 January 2016",
+  "scene_time_utc": "2016-01-24T15:07:49.847000000",
+  "radar_icao": "KJAX",
+  "radar_lat": 30.48444,
+  "radar_lon": -81.70194,
+  "site_alt_m": 3.0,
+  "detector": {
+    "score": 0.9881,
+    "tau": 0.9017137321286604,
+    "tau_label": "global",
+    "pass": true,
+    "top_is_truth": true,
+    "n_flagged": 5,
+    "n_flagged_truth": 5,
+    "stratum": "WEATHER",
+    "model": "RUN-30 detector (pre-registered dropPRIOR config), LOEO, preliminary calibration \u2014 CAL split only; frozen EVAL-2 untouched",
+    "run29_score": 0.984583293967075,
+    "run29_tau_fpr10": 0.9605,
+    "geometry_source": "current-cascade re-run (RUN-30 v2 features), 2026-07-07"
+  },
+  "framing": "Fireball networks tell us when and where to look; MetDetect answers which radar echoes are the falling debris. Shown: every candidate the detector flags at its 10%-false-alarm operating point, in a window placed on the fireball report \u2014 false positives included.",
+  "z_range": [
+    -14.0,
+    6.0
+  ],
+  "n_points": 94,
+  "roles": {
+    "TP": 48,
+    "FP": 37,
+    "FN": 9
+  },
+  "best_cluster": {
+    "centroid_lat": 30.46825,
+    "centroid_lon": -82.49068,
+    "centroid_alt_m": 2304.0,
+    "n_gates": 85
+  },
+  "bounds": [
+    [
+      30.4001,
+      -82.6002
+    ],
+    [
+      30.6152,
+      -81.6619
+    ]
+  ],
+  "narrative": "A daytime fireball over northern Florida dropped the recovered Osceola meteorites (L6 chondrite). The KJAX (Jacksonville) radar swept the falling stones. The candidates MetDetect flags here trace the confirmed debris, recovering nearly every manually identified gate."
+}
