@@ -81,7 +81,7 @@
       divMarker([bc.centroid_lat, bc.centroid_lon], "&#x25C6;", "mtd-centroid",
         "fall centroid").addTo(layer)
         .bindPopup("<b>Detected fall</b><br>" + (bc.centroid_alt_m != null ? Math.round(bc.centroid_alt_m) + " m altitude<br>" : "")
-          + (bc.detection_prob != null ? "cluster confidence " + bc.detection_prob : ""));
+          + (bc.detection_prob != null ? "detector score " + bc.detection_prob : ""));
     }
 
     if (ev.bounds) { map.fitBounds(ev.bounds, { padding: [24, 24] }); }
@@ -103,7 +103,7 @@
     var badge = $("mtd-badge"), conf = ev.event_confidence;
     var strong = ev.event_detected && conf != null && conf >= 0.8;
     badge.className = "mtd-badge " + (strong ? "is-hit" : "is-weak");
-    badge.textContent = (ev.event_detected ? "DETECTED" : "WEAK") + " · confidence " + fmtPct(conf);
+    badge.textContent = (ev.event_detected ? "DETECTED" : "BELOW THRESHOLD") + " · score " + fmtPct(conf) + " (preliminary)";
 
     // Legend gradient + range labels.
     var stops = [];

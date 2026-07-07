@@ -58,9 +58,10 @@ sitemap: false
     <div class="eyebrow">Interactive demo · MetDetect</div>
     <h1>See a meteorite fall in the radar</h1>
     <p class="lede">When a meteorite fall's debris drifts to the ground it briefly shows up in
-      NEXRAD Doppler weather radar. <strong>MetDetect</strong> finds that signature
-      automatically. Below is a real, automatically detected fall — pan and zoom the map to
-      explore the flagged debris gates. Everything runs in your browser.</p>
+      NEXRAD Doppler weather radar. Fireball networks tell us <em>when and where</em> to look;
+      <strong>MetDetect</strong> answers <em>which</em> radar echoes are the falling debris.
+      Below is its top-ranked candidate for a real fall — false positives included — pan and
+      zoom the map to explore. Everything runs in your browser.</p>
   </header>
 
   <div class="mtd-controls">
@@ -79,7 +80,7 @@ sitemap: false
         <div><span class="k">Radar</span><span class="v" id="mtd-radar">—</span></div>
         <div><span class="k">Debris gates</span><span class="v" id="mtd-gates">—</span></div>
         <div><span class="k">Cluster altitude</span><span class="v" id="mtd-alt">—</span></div>
-        <div><span class="k">Confidence</span><span class="v" id="mtd-conf">—</span></div>
+        <div><span class="k">Detector score</span><span class="v" id="mtd-conf">—</span></div>
       </div>
       <p id="mtd-narrative" class="mtd-narrative"></p>
       <div class="mtd-legend">
@@ -100,8 +101,10 @@ sitemap: false
       likely falling-meteorite debris, coloured by its reflectivity. Real falls appear as an
       elongated <em>streak</em> — the fragments strung out along the wind as they descend. The
       radar site is marked with a ✳; the ◆ marks the centroid of the detected fall.</p>
-    <p>MetDetect scans public NEXRAD Level-II radar around a fireball's reported time and location
-      and reports candidate falls with a calibrated confidence — no human in the loop. Read more on
+    <p>MetDetect scans public NEXRAD Level-II radar in a window placed on a fireball's reported
+      time and location, and ranks candidate debris clusters with a null-trained detector — scores
+      are reported against a detection threshold set at a 10% false-alarm rate on real no-fall
+      radar windows (preliminary calibration). Read more on
       the <a href="{{ '/detect/' | relative_url }}">MetDetect</a> and
       <a href="{{ '/research/' | relative_url }}">research</a> pages.</p>
     <p class="mtd-note">This is a preloaded demo of a precomputed detection (the site is served as

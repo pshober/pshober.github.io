@@ -8,7 +8,7 @@
   "radar_lat": 42.94861,
   "radar_lon": -78.73694,
   "era": "dualpol",
-  "event_confidence": 0.997,
+  "event_confidence": 0.97,
   "event_detected": true,
   "z_range": [
     -11.0,
@@ -24,7 +24,7 @@
     "centroid_lat": 43.20439,
     "centroid_lon": -79.36676,
     "centroid_alt_m": 2914.0,
-    "detection_prob": 0.997,
+    "detection_prob": 0.97,
     "n_gates": 216
   },
   "bounds": [
@@ -37,5 +37,5 @@
       -78.6969
     ]
   ],
-  "narrative": "Asteroid 2022 WJ1 was discovered only hours before it entered the atmosphere over Lake Erie on 19 November 2022 \u2014 one of a handful of asteroids ever detected before impact. As its fragments fell they drifted on the wind and were swept by the KBUF (Buffalo) NEXRAD weather radar. With no human in the loop, MetDetect automatically flagged the elongated \u201cdebris streak\u201d shown here \u2014 the falling meteorites \u2014 at 1.00 confidence."
+  "narrative": "Asteroid 2022 WJ1 was discovered only hours before it entered the atmosphere over Lake Erie on 19 November 2022 \u2014 one of a handful of asteroids ever detected before impact. Fireball observations told us when and where to look; MetDetect then picked out WHICH radar echoes are the falling debris. Its top-ranked candidate \u2014 the elongated streak shown here, false positives included \u2014 is the confirmed debris, scoring 0.97 against a detection threshold of 0.91 set at a 10% false-alarm rate (RUN-30 detector, preliminary calibration). Gate geometry is from the June analysis run; a refresh with the current pipeline is in progress."
 }
