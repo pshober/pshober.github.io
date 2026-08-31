@@ -25,7 +25,7 @@
         y: Math.random() * h,
         r: Math.random() * 1.3 + 0.2,
         base: Math.random() * 0.5 + 0.35,
-        // a few warm "meteor amber" stars for theme cohesion
+        // a few warm brand-yellow stars for theme cohesion
         warm: Math.random() < 0.08,
         tw: Math.random() * Math.PI * 2,
         sp: Math.random() * 0.012 + 0.004
@@ -42,8 +42,8 @@
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
       ctx.fillStyle = s.warm
-        ? "rgba(255,190,120," + a + ")"
-        : "rgba(228,236,255," + a + ")";
+        ? "rgba(255,197,50," + a + ")"
+        : "rgba(240,234,255," + a + ")";
       ctx.fill();
     }
   }

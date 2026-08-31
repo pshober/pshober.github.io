@@ -154,7 +154,7 @@
       .forEach(function (p) {
         ctx.beginPath(); ctx.arc(cx, cy, p[1] * k, 0, 2 * Math.PI);
         ctx.strokeStyle = "rgba(255,255,255,0.14)"; ctx.lineWidth = 1; ctx.stroke();
-        ctx.fillStyle = "rgba(159,176,199,0.6)"; ctx.font = "11px system-ui";
+        ctx.fillStyle = "rgba(207,195,224,0.6)"; ctx.font = "11px system-ui";
         ctx.fillText(p[0], cx + 3, cy - p[1] * k - 3);
       });
     // asteroid orbit (projected to ecliptic x-y)
@@ -166,21 +166,21 @@
       var y = rr * (Math.sin(om) * Math.cos(u) + Math.cos(om) * Math.sin(u) * Math.cos(inc));
       var pt = px(x, y); nu === 0 ? ctx.moveTo(pt[0], pt[1]) : ctx.lineTo(pt[0], pt[1]);
     }
-    ctx.closePath(); ctx.strokeStyle = "#ff9e3d"; ctx.lineWidth = 1.6; ctx.stroke();
+    ctx.closePath(); ctx.strokeStyle = "#ff6c40"; ctx.lineWidth = 1.6; ctx.stroke();
 
     // Sun
     var jd = nowJD();
-    ctx.beginPath(); ctx.arc(cx, cy, 4, 0, 2 * Math.PI); ctx.fillStyle = "#ffd27a"; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy, 4, 0, 2 * Math.PI); ctx.fillStyle = "#ffc532"; ctx.fill();
     // current Earth
     var ea = earthEcliptic(jd), ep = px(ea.x, ea.y);
     dot(ctx, ep, 3.5, "#5aa0e0", "Earth");
     // current asteroid
     var as = astEcliptic(jd), ap = px(as.x, as.y);
-    dot(ctx, ap, 4.5, "#ff9e3d", "(33964)");
+    dot(ctx, ap, 4.5, "#ff6c40", "(33964)");
   }
   function dot(ctx, p, r, color, label) {
     ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 2 * Math.PI); ctx.fillStyle = color; ctx.fill();
-    ctx.fillStyle = "rgba(230,236,245,0.85)"; ctx.font = "11px system-ui";
+    ctx.fillStyle = "rgba(255,255,255,0.88)"; ctx.font = "11px system-ui";
     ctx.fillText(label, p[0] + 6, p[1] - 5);
   }
 

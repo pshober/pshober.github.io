@@ -3,7 +3,6 @@ layout: default
 title: "MetDetect: see a meteorite fall in the radar"
 permalink: /metdetect-demo/
 description: "Explore real, automatically detected meteorite falls in NEXRAD Doppler weather radar — interactive 2D + 3D, in your browser, no install."
-sitemap: false
 ---
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
@@ -19,7 +18,7 @@ sitemap: false
     padding:0.3rem 0.7rem; border-radius:999px; border:1px solid var(--border-strong);
   }
   .mtd-badge.is-hit  { color:#8ef0b0; border-color:rgba(142,240,176,0.4); background:rgba(142,240,176,0.08); }
-  .mtd-badge.is-weak { color:var(--accent-2); border-color:rgba(255,192,122,0.4); background:rgba(255,192,122,0.08); }
+  .mtd-badge.is-weak { color:var(--accent-2); border-color:rgba(255,197,50,0.4); background:rgba(255,197,50,0.08); }
   .mtd-grid { display:grid; grid-template-columns:1.5fr 1fr; gap:1.25rem; align-items:start; }
   @media (max-width:820px){ .mtd-grid { grid-template-columns:1fr; } }
   .mtd-tabs { display:flex; gap:0.4rem; margin:0 0 0.6rem; }
@@ -121,7 +120,7 @@ sitemap: false
         <div class="mtd-roles">
           <span><i class="mtd-dot" style="background:#33d17a;border:2px solid #eef"></i> matches ground truth (TP)</span>
           <span><i class="mtd-dot" style="background:#f6a"></i> false positive (FP)</span>
-          <span><i class="mtd-dot" style="background:transparent;border:2px solid #9fb0c7"></i> missed truth (FN)</span>
+          <span><i class="mtd-dot" style="background:transparent;border:2px solid var(--muted)"></i> missed truth (FN)</span>
         </div>
       </div>
     </aside>

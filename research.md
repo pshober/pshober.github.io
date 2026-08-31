@@ -36,10 +36,11 @@ description: "Research interests of Patrick M. Shober: planetary defense, sensor
   <section class="section">
     <div class="section-head"><h2>Tools &amp; demos</h2></div>
     <div class="callout">
-      <strong>MetDetect</strong>: live detection results for the ACM&nbsp;2026 poster are at
-      <a href="{{ '/acm2026/' | relative_url }}">/acm2026</a>; an interactive in-browser
-      viewer is planned at <a href="{{ '/detect/' | relative_url }}">/detect</a>. And for
-      fun, see where my namesake asteroid is right now at
+      <strong>MetDetect</strong>: <a href="{{ '/metdetect-demo/' | relative_url }}">see a
+      meteorite fall appear in weather radar &rarr;</a> — an interactive in-browser viewer of
+      real, automatically detected falls (2D map + 3D scatter). Live results for the
+      ACM&nbsp;2026 poster are at <a href="{{ '/acm2026/' | relative_url }}">/acm2026</a>.
+      And for fun, see where my namesake asteroid is right now at
       <a href="{{ '/asteroid/' | relative_url }}">/asteroid</a>.
     </div>
   </section>

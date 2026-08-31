@@ -21,7 +21,7 @@
     return "rgb(" + (r * 255 | 0) + "," + (g * 255 | 0) + "," + (b * 255 | 0) + ")";
   }
   function zColor(z, lo, hi) {
-    if (z === null || z === undefined || isNaN(z)) return "#9fb0c7";
+    if (z === null || z === undefined || isNaN(z)) return "#cfc3e0";
     return jet(hi > lo ? (z - lo) / (hi - lo) : 0.5);
   }
 
@@ -56,7 +56,7 @@
       var p = f.properties || {}, latlng = [c[1], c[0]];
       var role = p.role || "TP", col = zColor(p.z, lo, hi), style;
       if (role === "FN") {
-        style = { radius: 6, color: "#9fb0c7", weight: 2, fill: false };
+        style = { radius: 6, color: "#cfc3e0", weight: 2, fill: false };
       } else if (role === "FP") {
         style = { radius: 5, color: col, weight: 0, fillColor: col, fillOpacity: 0.9 };
       } else {
@@ -128,36 +128,36 @@
       { name: "missed truth (FN)", x: groups.FN.x, y: groups.FN.y, z: groups.FN.z,
         text: groups.FN.t, hoverinfo: "text", type: "scatter3d", mode: "markers",
         marker: { size: 4.5, color: "rgba(0,0,0,0)",
-                  line: { color: "#9fb0c7", width: 2 }, symbol: "circle-open" } },
+                  line: { color: "#cfc3e0", width: 2 }, symbol: "circle-open" } },
     ];
     if (ev.radar_lat != null) {
       traces.push({ name: "radar " + (ev.radar_icao || ""),
         x: [ev.radar_lon], y: [ev.radar_lat], z: [(ev.site_alt_m || 0) / 1000],
         type: "scatter3d", mode: "markers+text", text: ["✳ " + (ev.radar_icao || "radar")],
-        textposition: "top center", textfont: { color: "#ff9e3d", size: 12 },
-        hoverinfo: "name", marker: { size: 6, color: "#ff9e3d", symbol: "diamond" } });
+        textposition: "top center", textfont: { color: "#ff6c40", size: 12 },
+        hoverinfo: "name", marker: { size: 6, color: "#ff6c40", symbol: "diamond" } });
     }
     // Translucent ground plane over the event bounds.
     if (ev.bounds) {
       var s = ev.bounds[0], n = ev.bounds[1];
       traces.push({ type: "mesh3d", name: "ground",
         x: [s[1], n[1], n[1], s[1]], y: [s[0], s[0], n[0], n[0]], z: [0, 0, 0, 0],
-        i: [0, 0], j: [1, 2], k: [2, 3], color: "#16213b", opacity: 0.45,
+        i: [0, 0], j: [1, 2], k: [2, 3], color: "#361259", opacity: 0.45,
         hoverinfo: "skip", showlegend: false });
     }
     Plotly.newPlot(el, traces, {
       paper_bgcolor: "rgba(0,0,0,0)",
       scene: {
-        xaxis: { title: "lon", color: "#9fb0c7", gridcolor: "#26314b", zerolinecolor: "#26314b" },
-        yaxis: { title: "lat", color: "#9fb0c7", gridcolor: "#26314b", zerolinecolor: "#26314b" },
-        zaxis: { title: "alt km", color: "#9fb0c7", gridcolor: "#26314b", zerolinecolor: "#26314b" },
+        xaxis: { title: "lon", color: "#cfc3e0", gridcolor: "#3d2a55", zerolinecolor: "#3d2a55" },
+        yaxis: { title: "lat", color: "#cfc3e0", gridcolor: "#3d2a55", zerolinecolor: "#3d2a55" },
+        zaxis: { title: "alt km", color: "#cfc3e0", gridcolor: "#3d2a55", zerolinecolor: "#3d2a55" },
         aspectmode: "manual", aspectratio: { x: 1.4, y: 1, z: 0.55 },
         bgcolor: "rgba(0,0,0,0)",
         camera: { eye: { x: 1.4, y: -1.6, z: 0.7 } }
       },
-      legend: { font: { color: "#9fb0c7" }, x: 0, y: 1 },
+      legend: { font: { color: "#cfc3e0" }, x: 0, y: 1 },
       margin: { l: 0, r: 0, t: 8, b: 0 },
-      modebar: { color: "#9fb0c7", activecolor: "#ff9e3d", bgcolor: "rgba(0,0,0,0)",
+      modebar: { color: "#cfc3e0", activecolor: "#ff6c40", bgcolor: "rgba(0,0,0,0)",
                  orientation: "v" }
     }, {
       // Zoom must always work: scroll/pinch over the scene, plus a visible

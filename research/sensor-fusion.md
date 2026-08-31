@@ -37,8 +37,8 @@ winds, multi-scan persistence). Candidates get a confidence score, and the stron
 are flagged for rapid follow-up. A planned next step is a **radar-fall simulator** to
 generate annotated synthetic data, both to train a convolutional neural network for
 more robust detection and to provide a forward model for parameter inference.
-*See live results at [/acm2026](/acm2026/) and the planned in-browser viewer at
-[/detect](/detect/).*
+*Try the [interactive in-browser demo](/metdetect-demo/) — real detected falls in
+2D and 3D — and see live ACM 2026 results at [/acm2026](/acm2026/).*
 
 ## Sensor fusion & sequential estimation
 
