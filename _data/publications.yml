@@ -1,9 +1,11 @@
-# Publications. Rendered on /publications/ and /cv/ (and the "selected" list on the
-# home page). Each refereed item has a `doi` (and `arxiv` where available); the
-# template links the title to the DOI and adds [arXiv] when present. Author
-# "Shober" is auto-emphasized. To add a paper, drop a new item under the right year.
+# Publications. `sections:` renders the full record on /publications/; the
+# `selected:` shortlist renders on /cv/#publications (homepage capsule cards use
+# _data/highlights.yml instead). The ADS sync (scripts/update_publications.py)
+# also reads `selected:` for de-duplication — keep both top-level keys. Each
+# refereed item has a `doi` (and `arxiv` where available); author "Shober" is
+# auto-emphasized. To add a paper, drop a new item under the right year.
 
-# ── Highlights shown on the home page ────────────────────────────────────────
+# ── Curated shortlist (rendered on /cv/) ─────────────────────────────────────
 selected:
   - year: 2025
     authors: "Shober PM, Devillepoix HAR, Vaubaillon J, et al."

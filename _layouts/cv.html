@@ -42,7 +42,20 @@ layout: default
   {% endfor %}
 
   <section class="cv-section" id="publications">
-    <h2>Publications</h2>
-    {% include pub-list.html sections=site.data.publications.sections %}
+    <h2>Selected publications</h2>
+    <p class="cv-section__note">Five representative papers — the complete record
+      ({{ site.data.metrics.papers }} refereed publications) lives on the
+      <a href="{{ '/publications/' | relative_url }}">publications page</a>.</p>
+    {% for it in site.data.publications.selected %}
+    {% assign href = "" %}
+    {% if it.doi %}{% assign href = "https://doi.org/" | append: it.doi %}{% elsif it.url %}{% assign href = it.url %}{% endif %}
+    <p class="pub">
+      <span class="pub__authors">{{ it.authors | replace: 'Shober', '<strong class="me">Shober</strong>' }}</span>
+      {% if it.year %}({{ it.year }}) {% endif %}
+      {% if href != "" %}<a class="pub__title" href="{{ href }}">{{ it.title }}</a>{% else %}<span class="pub__title">{{ it.title }}</span>{% endif %}
+      {% if it.venue %}<span class="pub__venue">{{ it.venue }}</span>{% endif %}
+      {% if it.doi or it.arxiv %}<span class="pub__links">{% if it.doi %}<a href="https://doi.org/{{ it.doi }}" aria-label="DOI">DOI</a>{% endif %}{% if it.arxiv %}<a href="https://arxiv.org/abs/{{ it.arxiv }}" aria-label="arXiv preprint">arXiv</a>{% endif %}</span>{% endif %}
+    </p>
+    {% endfor %}
   </section>
 </div>

@@ -10,11 +10,14 @@
   alt: "Looping all-sky video of the Winchcombe fireball fragmenting"
   credit: "Video: UK Fireball Alliance"
 
+# NOTE: Patrick is not in any of the field-recovery photos — he worked on the
+# papers behind these campaigns. Captions must describe the campaign, never
+# imply a personal find.
 - type: image
   src: /assets/img/media/recovery-outback-thumb.webp
   full: /assets/img/media/recovery-outback.webp
-  title: "Found one"
-  meta: "A fresh fall on the red dirt, Australian outback"
+  title: "Fresh from the sky"
+  meta: "A DFN team recovers a newly fallen meteorite in the Australian outback"
   alt: "Two researchers kneeling beside a freshly recovered meteorite in the outback"
   credit: "Photo: Desert Fireball Network, Curtin University"
 
@@ -39,19 +42,21 @@
   src: /assets/img/media/drone-search-thumb.webp
   full: /assets/img/media/drone-search.webp
   title: "Searching from above"
-  meta: "Drone-assisted meteorite searching on the strewn field"
+  meta: "Drone-assisted searching on a DFN strewn field"
   alt: "Drone view looking straight down at a researcher on an outback track"
   credit: "Photo: Desert Fireball Network, Curtin University"
 
-# Parked pending credit confirmation (green-field setting suggests a FRIPON
-# France campaign, not DFN — confirm photographer/venue before restoring):
+# Parked: this is the 2023 Saint-Pierre-le-Viger (2023 CX1) recovery in France
+# — Patrick worked on the paper but was not at the search, so it stays off the
+# personal media wall unless he decides otherwise. If restored, caption as the
+# campaign and credit FRIPON/Vigie-Ciel (confirm photographer).
 # - type: image
 #   src: /assets/img/media/team-selfie-thumb.webp
 #   full: /assets/img/media/team-selfie.webp
-#   title: "The recovery crew"
-#   meta: "A meteorite in hand minutes after the find"
+#   title: "The Saint-Pierre-le-Viger crew"
+#   meta: "FRIPON/Vigie-Ciel searchers with the 2023 CX1 meteorite"
 #   alt: "Search team group photo holding a freshly recovered meteorite on foil"
-#   credit: "CONFIRM — likely FRIPON/Vigie-Ciel campaign"
+#   credit: "Photo: FRIPON / Vigie-Ciel (confirm photographer)"
 - type: image
   src: /assets/img/media/dfn-station-thumb.webp
   full: /assets/img/media/dfn-station.webp

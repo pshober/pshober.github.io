@@ -135,6 +135,7 @@
 .section-title { margin: 0; font-size: var(--fs-h2); }
 .section-title--olive { color: var(--olive); }
 .section-title--orange { color: var(--orange); }
+.section-sub { color: var(--muted); font-size: 0.95rem; margin: 0.5rem auto 0; max-width: 56ch; }
 
 // ── Callout / notice ─────────────────────────────────────────────────────────
 .callout {
@@ -180,20 +181,32 @@
 }
 
 // ── Publications ─────────────────────────────────────────────────────────────
-.pub-group { margin-bottom: 2rem; }
+.pub-group { margin-bottom: 2.6rem; }
 .pub-group__title {
   font-family: $font-head;
-  font-size: 1.05rem;
-  color: var(--text);
-  margin: 0 0 0.4rem;
+  font-weight: 400;
+  font-size: 1.35rem;
+  color: var(--olive);
+  margin: 0 0 0.5rem;
 }
 .pub-group__title .badge { vertical-align: middle; margin-left: 0.4rem; }
-.pub-year { color: var(--accent-2); font-weight: 600; margin: 1.2rem 0 0.5rem; font-variant-numeric: tabular-nums; }
-.pub {
-  padding: 0.6rem 0;
-  border-top: 1px solid var(--border);
-  font-size: 0.97rem;
+.pub-year {
+  color: var(--accent-2);
+  font-family: $font-head;
+  font-weight: 400;
+  font-size: 1.05rem;
+  margin: 1.4rem 0 0.4rem;
+  font-variant-numeric: tabular-nums;
 }
+.pub {
+  padding: 0.6rem 0.7rem;
+  margin: 0 -0.7rem;
+  border-top: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.97rem;
+  transition: background 0.12s ease;
+}
+.pub:hover { background: rgba(255, 255, 255, 0.045); }
 .pub:first-of-type { border-top: 0; }
 .pub__authors { color: var(--muted); }
 .pub__authors .me { color: var(--text); font-weight: 600; }
