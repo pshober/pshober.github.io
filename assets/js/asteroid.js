@@ -1,7 +1,7 @@
 /* (33964) Patrickshober: compute the asteroid's current heliocentric position
    from baked JPL elements, derive its geocentric sky position + apparent
-   magnitude, and draw an interactive 3D orbit diagram (drag to tilt,
-   scroll/pinch to zoom). All client-side; no API calls.
+   magnitude, and draw an interactive orbit diagram (drag to tilt, scroll/pinch
+   to zoom) with the inner planets and Jupiter. All client-side; no API calls.
    astronomy-engine (if loaded) is used only for the constellation name. */
 (function () {
   "use strict";
@@ -22,38 +22,79 @@
     return E;
   }
 
+  // Orbital plane → J2000 ecliptic, for radius r at argument of latitude u.
+  function orbToEcl(r, u, om, i) {
+    return {
+      x: r * (Math.cos(om) * Math.cos(u) - Math.sin(om) * Math.sin(u) * Math.cos(i)),
+      y: r * (Math.sin(om) * Math.cos(u) + Math.cos(om) * Math.sin(u) * Math.cos(i)),
+      z: r * Math.sin(u) * Math.sin(i),
+      r: r
+    };
+  }
+
+  // ── planets ───────────────────────────────────────────────────────────────
+  // JPL "Approximate Positions of the Planets" (Standish), valid 1800–2050.
+  // Elements are referred to the J2000 ecliptic, matching the asteroid's, so
+  // heliocentric positions can be differenced directly.
+  // el = [a AU, e, I°, mean longitude L°, longitude of perihelion ϖ°, node Ω°]
+  // rt = the same quantities' rates per Julian century.
+  var PLANETS = [
+    { name: "Mercury", color: "#b9aeb0", size: 2.2,
+      el: [0.38709927, 0.20563593, 7.00497902, 252.25032350, 77.45779628, 48.33076593],
+      rt: [0.00000037, 0.00001906, -0.00594749, 149472.67411175, 0.16047689, -0.12534081] },
+    { name: "Venus", color: "#f0d9a8", size: 2.8,
+      el: [0.72333566, 0.00677672, 3.39467605, 181.97909950, 131.60246718, 76.67984255],
+      rt: [0.00000390, -0.00004107, -0.00078890, 58517.81538729, 0.00268329, -0.27769418] },
+    { name: "Earth", color: "#5aa0e0", size: 3.2,
+      el: [1.00000261, 0.01671123, -0.00001531, 100.46457166, 102.93768193, 0.0],
+      rt: [0.00000562, -0.00004392, -0.01294668, 35999.37244981, 0.32327364, 0.0] },
+    { name: "Mars", color: "#d1553a", size: 2.8,
+      el: [1.52371034, 0.09339410, 1.84969142, -4.55343205, -23.94362959, 49.55953891],
+      rt: [0.00001847, 0.00007882, -0.00813131, 19140.30268499, 0.44441088, -0.29257343] },
+    { name: "Jupiter", color: "#b8814a", size: 4.4,
+      el: [5.20288700, 0.04838624, 1.30439695, 34.39644051, 14.72847983, 100.47390909],
+      rt: [-0.00011607, -0.00013253, -0.00183714, 3034.74612775, 0.21252668, 0.20469106] }
+  ];
+  var EARTH = PLANETS[2];
+
+  function planetKepler(p, jd) {
+    var T = (jd - 2451545.0) / 36525;
+    var a = p.el[0] + p.rt[0] * T, e = p.el[1] + p.rt[1] * T;
+    var I = p.el[2] + p.rt[2] * T, L = p.el[3] + p.rt[3] * T;
+    var peri = p.el[4] + p.rt[4] * T, node = p.el[5] + p.rt[5] * T;
+    return { a: a, e: e, i: I * D2R, w: (peri - node) * D2R,
+             om: node * D2R, M: norm360(L - peri) * D2R };
+  }
+  function planetPos(p, jd) {
+    var k = planetKepler(p, jd);
+    var E = solveKepler(k.M, k.e);
+    var nu = Math.atan2(Math.sqrt(1 - k.e * k.e) * Math.sin(E), Math.cos(E) - k.e);
+    return orbToEcl(k.a * (1 - k.e * Math.cos(E)), k.w + nu, k.om, k.i);
+  }
+  function planetPath(p, jd) {
+    var k = planetKepler(p, jd), pts = [];
+    for (var nu = 0; nu <= 360; nu += 3) {
+      var rr = k.a * (1 - k.e * k.e) / (1 + k.e * Math.cos(nu * D2R));
+      pts.push(orbToEcl(rr, k.w + nu * D2R, k.om, k.i));
+    }
+    return pts;
+  }
+
   // Asteroid heliocentric position (AU) in J2000 ecliptic, at Julian day jd.
   function astEcliptic(jd) {
     var a = el.a_au, e = el.e;
     var M = norm360(el.ma_deg + el.n_deg_day * (jd - el.epoch_jd)) * D2R;
     var E = solveKepler(M, e);
     var nu = Math.atan2(Math.sqrt(1 - e * e) * Math.sin(E), Math.cos(E) - e);
-    var r = a * (1 - e * Math.cos(E));
-    var w = el.w_deg * D2R, om = el.om_deg * D2R, inc = el.i_deg * D2R;
-    var u = w + nu;
-    return {
-      x: r * (Math.cos(om) * Math.cos(u) - Math.sin(om) * Math.sin(u) * Math.cos(inc)),
-      y: r * (Math.sin(om) * Math.cos(u) + Math.cos(om) * Math.sin(u) * Math.cos(inc)),
-      z: r * (Math.sin(u) * Math.sin(inc)),
-      r: r
-    };
+    return orbToEcl(a * (1 - e * Math.cos(E)), el.w_deg * D2R + nu,
+                    el.om_deg * D2R, el.i_deg * D2R);
   }
 
-  // Earth heliocentric ecliptic (AU), low-precision Sun model (Meeus), z~0.
-  function earthEcliptic(jd) {
-    var T = (jd - 2451545.0) / 36525;
-    var L0 = 280.46646 + 36000.76983 * T + 0.0003032 * T * T;
-    var M = (357.52911 + 35999.05029 * T - 0.0001537 * T * T) * D2R;
-    var C = (1.914602 - 0.004817 * T - 0.000014 * T * T) * Math.sin(M)
-          + (0.019993 - 0.000101 * T) * Math.sin(2 * M)
-          + 0.000289 * Math.sin(3 * M);
-    var lon = (L0 + C) * D2R;           // Sun's geocentric ecliptic longitude
-    var v = M + C * D2R;
-    var ecc = 0.016708634 - 0.000042037 * T;
-    var R = 1.000001018 * (1 - ecc * ecc) / (1 + ecc * Math.cos(v));
-    // Earth heliocentric = opposite direction to Sun, distance R
-    return { x: -R * Math.cos(lon), y: -R * Math.sin(lon), z: 0, r: R };
-  }
+  // Earth heliocentric ecliptic (AU). Uses the same J2000 planet table as the
+  // diagram: an earlier low-precision Sun formula returned longitudes measured
+  // from the equinox of date, which is ~0.37° from J2000 and put the derived
+  // sky position out by ~12 arcminutes.
+  function earthEcliptic(jd) { return planetPos(EARTH, jd); }
 
   function eclToEqu(v) {
     return {
@@ -147,20 +188,18 @@
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var HOME = { az: 0, tilt: Math.PI / 2, zoom: 1 };
     var view = { az: HOME.az, tilt: HOME.tilt, zoom: HOME.zoom };
+    var AST_COLOR = "#ff6c40", SUN_COLOR = "#ffc532";
+    var ORBIT_COLOR = "rgba(255,255,255,0.14)";
+    var src = A.source || {};
 
-    // Precompute the asteroid's orbit path in 3D ecliptic coordinates (AU).
+    // Asteroid orbit path in 3D ecliptic coordinates (AU) — fixed, so precompute.
     var path = [];
     (function () {
       var a = el.a_au, e = el.e;
       var w = el.w_deg * D2R, om = el.om_deg * D2R, inc = el.i_deg * D2R;
       for (var nu = 0; nu <= 360; nu += 2) {
         var rr = a * (1 - e * e) / (1 + e * Math.cos(nu * D2R));
-        var u = w + nu * D2R;
-        path.push({
-          x: rr * (Math.cos(om) * Math.cos(u) - Math.sin(om) * Math.sin(u) * Math.cos(inc)),
-          y: rr * (Math.sin(om) * Math.cos(u) + Math.cos(om) * Math.sin(u) * Math.cos(inc)),
-          z: rr * Math.sin(u) * Math.sin(inc)
-        });
+        path.push(orbToEcl(rr, w + nu * D2R, om, inc));
       }
     })();
 
@@ -173,26 +212,34 @@
       var sy = y1 * Math.sin(view.tilt) + p.z * Math.cos(view.tilt);
       return [cx + x1 * k, cy - sy * k];
     }
-    function circle3(aAU, label) {
+    function strokePath(pts, color, width) {
       ctx.beginPath();
-      for (var t = 0; t <= 360; t += 3) {
-        var pt = project({ x: aAU * Math.cos(t * D2R), y: aAU * Math.sin(t * D2R), z: 0 });
-        if (t === 0) ctx.moveTo(pt[0], pt[1]); else ctx.lineTo(pt[0], pt[1]);
+      for (var i = 0; i < pts.length; i++) {
+        var pt = project(pts[i]);
+        if (i === 0) ctx.moveTo(pt[0], pt[1]); else ctx.lineTo(pt[0], pt[1]);
       }
-      ctx.closePath();
-      ctx.strokeStyle = "rgba(255,255,255,0.14)"; ctx.lineWidth = 1; ctx.stroke();
-      if (label) {
-        var lp = project({ x: 0, y: aAU, z: 0 });
-        ctx.fillStyle = "rgba(207,195,224,0.6)"; ctx.font = "11px system-ui";
-        ctx.fillText(label, lp[0] + 3, lp[1] - 3);
-      }
+      ctx.closePath(); ctx.strokeStyle = color; ctx.lineWidth = width; ctx.stroke();
     }
-    function dot(p, r, color, label) {
+    function dot(p, r, color) {
       ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 2 * Math.PI); ctx.fillStyle = color; ctx.fill();
-      if (label) {
-        ctx.fillStyle = "rgba(255,255,255,0.88)"; ctx.font = "11px system-ui";
-        ctx.fillText(label, p[0] + 6, p[1] - 5);
+    }
+    // Labels are drawn in priority order and skipped when they would collide,
+    // so a crowded inner system stays readable instead of overprinting.
+    var placed = [];
+    function label(p, text) {
+      ctx.font = "11px system-ui";
+      var x = p[0] + 6, y = p[1] - 5;
+      var box = [x - 2, y - 12, x + ctx.measureText(text).width + 2, y + 3];
+      for (var i = 0; i < placed.length; i++) {
+        var b = placed[i];
+        if (box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1]) return;
       }
+      placed.push(box);
+      ctx.lineWidth = 3;                       // dark halo for legibility
+      ctx.strokeStyle = "rgba(20,0,31,0.85)";
+      ctx.strokeText(text, x, y);
+      ctx.fillStyle = "rgba(255,255,255,0.9)";
+      ctx.fillText(text, x, y);
     }
     function drawOrbit() {
       S = cv.clientWidth || 600; cx = S / 2; cy = S / 2;
@@ -200,20 +247,53 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       k = ((S / 2 - 26) / 5.6) * view.zoom;
       ctx.clearRect(0, 0, S, S);
-      [["Earth", 1.0], ["Mars", 1.524], ["Jupiter", 5.203]].forEach(function (p) {
-        circle3(p[1], p[0]);
-      });
-      ctx.beginPath();
-      for (var i = 0; i < path.length; i++) {
-        var pt = project(path[i]);
-        if (i === 0) ctx.moveTo(pt[0], pt[1]); else ctx.lineTo(pt[0], pt[1]);
-      }
-      ctx.closePath(); ctx.strokeStyle = "#ff6c40"; ctx.lineWidth = 1.8; ctx.stroke();
       var jd = nowJD();
-      dot(project({ x: 0, y: 0, z: 0 }), 4.5, "#ffc532");
-      dot(project(earthEcliptic(jd)), 3.5, "#5aa0e0", "Earth");
-      dot(project(astEcliptic(jd)), 4.5, "#ff6c40", "(33964)");
+
+      PLANETS.forEach(function (p) { strokePath(planetPath(p, jd), ORBIT_COLOR, 1); });
+      strokePath(path, AST_COLOR, 1.8);
+
+      dot(project({ x: 0, y: 0, z: 0 }), 4.5, SUN_COLOR);
+      var marks = [];
+      PLANETS.forEach(function (p) {
+        var at = project(planetPos(p, jd));
+        dot(at, p.size, p.color);
+        // Only label a planet once its orbit is wide enough to read, so the
+        // inner planets don't pile up on the Sun at low zoom.
+        if (planetKepler(p, jd).a * k > 30) marks.push([at, p.name]);
+      });
+      var astAt = project(astEcliptic(jd));
+      dot(astAt, 4.8, AST_COLOR);
+
+      placed = [];
+      label(astAt, "(33964)");                 // the subject always gets its label
+      marks.forEach(function (m) { label(m[0], m[1]); });
+
+      // Source credit, bottom-right corner of the diagram.
+      if (src.short) {
+        var credit = src.short + (src.solution_date ? " · solution " + src.solution_date : "");
+        ctx.font = "10px system-ui";
+        ctx.textAlign = "right";
+        ctx.fillStyle = "rgba(168,147,194,0.75)";
+        ctx.fillText(credit, S - 10, S - 10);
+        ctx.textAlign = "left";
+      }
     }
+
+    // Legend is generated from the same colors the canvas draws with, so the
+    // two can never drift apart.
+    (function buildLegend() {
+      var host = document.getElementById("ast-legend");
+      if (!host) return;
+      var items = [{ name: "Sun", color: SUN_COLOR, kind: "dot" }];
+      PLANETS.forEach(function (p) { items.push({ name: p.name, color: p.color, kind: "dot" }); });
+      items.push({ name: "(33964) Patrickshober", color: AST_COLOR, kind: "dot" });
+      items.push({ name: "its orbit", color: AST_COLOR, kind: "line" });
+      items.push({ name: "planet orbits", color: "rgba(255,255,255,0.5)", kind: "line" });
+      host.innerHTML = items.map(function (it) {
+        return '<li><i class="ast-key ast-key--' + it.kind +
+               '" style="background:' + it.color + '"></i>' + it.name + '</li>';
+      }).join("");
+    })();
 
     // Interactions. touch-action none so pointer events own the gestures.
     cv.style.touchAction = "none";
@@ -264,6 +344,10 @@
     drawOrbit();
     setInterval(drawOrbit, 60000);      // keep current positions moving
   })();
+
+  window.__ASTEROID_TEST = { planetPos: planetPos, earthEcliptic: earthEcliptic,
+                             astEcliptic: astEcliptic, eclToEqu: eclToEqu,
+                             PLANETS: PLANETS, update: update };
 
   update();
   setInterval(update, 60000); // refresh the live panel each minute

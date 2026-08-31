@@ -28,8 +28,12 @@ description: "Where is asteroid (33964) Patrickshober right now? A live orbit di
   <div class="ast-grid">
     <div class="ast-canvas-wrap">
       <canvas id="orbit" width="600" height="600" role="img"
-        aria-label="Interactive 3D diagram of the orbit of asteroid 33964 Patrickshober relative to Earth, Mars and Jupiter"></canvas>
+        aria-label="Interactive diagram of the orbit of asteroid 33964 Patrickshober, shown with the Sun and the orbits of Mercury, Venus, Earth, Mars and Jupiter"></canvas>
       <p class="ast-hint">drag to tilt · scroll or pinch to zoom · double-click to reset</p>
+      <ul id="ast-legend" class="ast-legend" aria-label="Diagram legend"></ul>
+      <p class="ast-credit">Orbital elements: <a href="{{ site.data.asteroid.source.url }}">{{ site.data.asteroid.source.name }}</a>,
+        solution {{ site.data.asteroid.source.solution_date }} · planet positions from JPL's
+        approximate ephemeris · propagated live in your browser</p>
     </div>
     <div class="ast-now">
       <h2>Right now</h2>

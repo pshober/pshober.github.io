@@ -366,6 +366,31 @@
 .ast-grid { display: grid; grid-template-columns: 1.5fr 0.75fr; gap: 1.6rem; align-items: start; margin-top: 1.6rem; }
 .ast-canvas-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.6rem; }
 .ast-hint { color: var(--faint); font-size: 0.82rem; text-align: center; margin: 0.5rem 0 0.1rem; }
+.ast-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 1.05rem;
+  list-style: none;
+  margin: 0.9rem 0 0;
+  padding: 0.9rem 0.4rem 0;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.ast-legend li { display: inline-flex; align-items: center; gap: 0.4rem; }
+.ast-key { display: inline-block; flex: none; }
+.ast-key--dot { width: 10px; height: 10px; border-radius: 50%; }
+.ast-key--line { width: 16px; height: 3px; border-radius: 2px; }
+.ast-credit {
+  color: var(--faint);
+  font-size: 0.76rem;
+  text-align: center;
+  margin: 0.7rem 0 0.2rem;
+  line-height: 1.45;
+}
+.ast-credit a { color: var(--faint); text-decoration: underline; text-underline-offset: 2px; }
+.ast-credit a:hover { color: var(--accent-2); }
 #orbit { width: 100%; height: auto; display: block; }
 .ast-now { background: linear-gradient(180deg, var(--surface-2), var(--surface)); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.3rem; }
 .ast-now h2 { font-size: 1.05rem; margin: 0 0 0.8rem; }

@@ -2,6 +2,13 @@
 # Elements baked from JPL Small-Body Database (ssd-api.jpl.nasa.gov/sbdb.api?des=33964)
 # solution dated 2026-06-05. The orbit is essentially fixed; assets/js/asteroid.js
 # propagates the mean anomaly to "now" in the browser to show the live position.
+# Attribution shown in the diagram corner and under the legend.
+source:
+  name: "NASA/JPL Small-Body Database"
+  short: "NASA/JPL SBDB"
+  url: "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=33964"
+  solution_date: "2026-06-05"
+
 number: 33964
 name: "Patrickshober"
 fullname: "(33964) Patrickshober"
