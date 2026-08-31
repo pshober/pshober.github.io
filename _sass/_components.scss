@@ -14,36 +14,40 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.7rem 1.15rem;
+  padding: 0.95rem 2rem;
   border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.97rem;
+  font-weight: 700;
+  font-size: 1rem;
   line-height: 1;
-  border: 1px solid transparent;
+  border: 3px solid transparent;
   cursor: pointer;
   transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
 }
 .btn:hover { text-decoration: none; transform: translateY(-1px); }
 .btn--primary {
-  background: var(--accent);
+  background: var(--olive);
   color: var(--accent-ink);
-  box-shadow: 0 6px 18px rgba(255, 158, 61, 0.22);
+  border-color: var(--olive);
 }
-.btn--primary:hover { background: var(--accent-2); color: var(--accent-ink); }
+.btn--primary:hover { background: var(--olive-bright); border-color: var(--olive-bright); color: var(--accent-ink); }
+.btn--primary:focus-visible { outline-color: var(--accent-ink); }
 .btn--ghost {
   background: transparent;
-  color: var(--text);
-  border-color: var(--border-strong);
+  color: var(--orange);
+  border-color: var(--orange);
 }
-.btn--ghost:hover { color: var(--text); border-color: var(--accent); }
+.btn--ghost:hover { color: var(--accent-ink); background: var(--orange); border-color: var(--orange); }
+// Compact variant for toolbars (CV, funding, publications)
+.cv-toolbar .btn { padding: 0.55rem 1.2rem; font-size: 0.9rem; border-width: 2px; }
 
 // ── Eyebrow / lede / labels ──────────────────────────────────────────────────
 .eyebrow {
+  font-family: $font-head;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--accent);
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--accent-2);
   margin-bottom: 0.6rem;
 }
 .lede { font-size: 1.12rem; color: var(--muted); max-width: 60ch; }
@@ -51,41 +55,30 @@
 // ── Hero (home) ──────────────────────────────────────────────────────────────
 .hero {
   display: grid;
-  grid-template-columns: 1.4fr 0.9fr;
-  gap: 2.5rem;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3rem;
   align-items: center;
-  padding: 3.5rem 0 2.5rem;
+  padding: clamp(3rem, 7vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem);
 }
-.hero__name { margin: 0 0 0.25rem; }
-.hero__role { color: var(--muted); font-size: 1.15rem; margin-bottom: 1.1rem; }
-.hero__cta { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.6rem; }
-.hero__topics {
-  display: flex; flex-wrap: wrap; gap: 0.45rem;
-  margin-top: 1.4rem;
-}
+.hero .eyebrow { font-size: var(--fs-eyebrow); }
+.hero__name { margin: 0 0 0.4rem; }
+.hero__role { color: var(--text); font-weight: 700; font-size: var(--fs-lede); line-height: 1.45; margin-bottom: 1rem; }
+.hero .lede { color: var(--text); font-size: var(--fs-lede); line-height: 1.45; }
+.hero__cta { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.8rem; }
 
-.headshot-wrap { justify-self: center; position: relative; }
-.headshot {
+.hero__media { justify-self: center; }
+.hero__photo {
   width: 100%;
-  max-width: 290px;
+  max-width: 480px;
   aspect-ratio: 1 / 1;
-  border-radius: 22px;
   object-fit: cover;
-  border: 1px solid var(--border-strong);
-  box-shadow: var(--shadow);
-}
-// Soft amber halo behind the portrait
-.headshot-wrap::after {
-  content: "";
-  position: absolute;
-  inset: -14px -14px auto auto;
-  width: 120px; height: 120px;
-  background: radial-gradient(circle, rgba(255, 158, 61, 0.35), rgba(255, 158, 61, 0) 70%);
-  filter: blur(6px);
-  z-index: -1;
+  border: 6px solid var(--yellow);
+  border-radius: 4px;
+  display: block;
 }
 
 // ── Pills / badges ───────────────────────────────────────────────────────────
+.hero__topics { display: flex; flex-wrap: wrap; gap: 0.45rem; }
 .pill {
   display: inline-block;
   padding: 0.32rem 0.7rem;
@@ -102,9 +95,9 @@
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  background: rgba(255, 158, 61, 0.14);
+  background: rgba(255, 197, 50, 0.14);
   color: var(--accent-2);
-  border: 1px solid rgba(255, 158, 61, 0.25);
+  border: 1px solid rgba(255, 197, 50, 0.3);
 }
 
 // ── Cards ────────────────────────────────────────────────────────────────────
@@ -134,6 +127,13 @@
 }
 .section-head h2 { margin: 0; }
 .section-head a { font-size: 0.9rem; font-weight: 600; }
+
+// Centered section header with a brand icon above (homepage sections)
+.section-title-wrap { text-align: center; margin-bottom: 2.2rem; }
+.section-icon { display: inline-block; margin: 0 auto 0.6rem; height: 96px; width: auto; }
+.section-title { margin: 0; font-size: var(--fs-h2); }
+.section-title--olive { color: var(--olive); }
+.section-title--orange { color: var(--orange); }
 
 // ── Callout / notice ─────────────────────────────────────────────────────────
 .callout {
@@ -169,6 +169,14 @@
 .cv-entry__sub { color: var(--muted); font-size: 0.95rem; }
 .cv-entry__note { color: var(--faint); font-size: 0.9rem; margin-top: 0.2rem; }
 .cv-entry__note ul { margin: 0.3rem 0 0; padding-left: 1.1rem; }
+.cv-section__note { color: var(--muted); font-size: 0.9rem; margin: -0.5rem 0 1rem; }
+.funding-amount {
+  color: var(--accent-2);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  margin-left: 0.45rem;
+  white-space: nowrap;
+}
 
 // ── Publications ─────────────────────────────────────────────────────────────
 .pub-group { margin-bottom: 2rem; }
@@ -206,7 +214,7 @@
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
-  background: #0a0f1d;
+  background: var(--plate);
 }
 .gallery__cap { padding: 0.75rem 0.9rem; }
 .gallery__cap .loc { font-weight: 600; color: var(--text); font-size: 0.95rem; }
@@ -219,7 +227,7 @@
   display: none;
   align-items: center;
   justify-content: center;
-  background: rgba(4, 7, 16, 0.92);
+  background: var(--overlay);
   padding: 1.5rem;
   cursor: zoom-out;
 }
@@ -287,7 +295,7 @@
 .backlink a { color: var(--muted); }
 .backlink a:hover { color: var(--accent); }
 .research-hero { margin: 0 0 2rem; }
-.research-hero img { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); background: #0a0f1d; }
+.research-hero img { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); background: var(--plate); }
 .research-hero[data-lightbox] { cursor: zoom-in; }
 .research-hero figcaption { color: var(--muted); font-size: 0.85rem; margin-top: 0.6rem; }
 .keypaper {
@@ -303,7 +311,7 @@
 
 // ── Inline figures (research prose) ──────────────────────────────────────────
 .fig { margin: 2rem 0; }
-.fig img { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); background: #0a0f1d; display: block; }
+.fig img { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); background: var(--plate); display: block; }
 .fig[data-lightbox] { cursor: zoom-in; }
 .fig figcaption { color: var(--muted); font-size: 0.85rem; margin-top: 0.6rem; text-align: center; }
 .fig figcaption .muted { color: var(--faint); }
@@ -323,7 +331,7 @@
 .ast-fact { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.8rem 0.9rem; }
 .ast-fact .v { display: block; font-family: $font-head; font-size: 1.2rem; color: var(--accent-2); }
 .ast-fact .k { color: var(--muted); font-size: 0.78rem; }
-.ast-embed { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: var(--radius); overflow: hidden; background: #05070f; }
+.ast-embed { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: var(--radius); overflow: hidden; background: var(--plate); }
 @media (max-width: $bp-md) {
   .ast-grid { grid-template-columns: 1fr; }
   .ast-now dd { text-align: left; }

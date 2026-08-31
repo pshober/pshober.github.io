@@ -1,0 +1,60 @@
+// ── "A little about me and my work" ──────────────────────────────────────────
+.about {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.55fr) 1.45fr;
+  gap: 3rem;
+  align-items: start;
+}
+.about__aside img { width: 100%; max-width: 250px; height: auto; }
+.about__aside h2 { color: var(--orange); margin: 1rem 0 0; }
+.about__prose { font-size: var(--fs-prose-lg); line-height: 1.55; }
+.about__prose strong { color: var(--orange); font-weight: 700; }
+.about__prose a {
+  color: var(--orange);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.about__prose a:hover { color: var(--accent-2); }
+
+// ── "From the field" media wall ──────────────────────────────────────────────
+.media-wall {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.4rem;
+  text-align: left;
+}
+.media-tile {
+  margin: 0;
+  padding: 10px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 2px solid var(--yellow);
+  transition: transform 0.15s ease;
+}
+.media-tile:nth-child(3n + 2) { border-color: var(--orange); }
+.media-tile:nth-child(3n) { border-color: var(--olive); }
+.media-tile img,
+.media-tile video {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
+  background: var(--plate);
+}
+.media-tile figcaption, .media-tile .media-tile__cap { padding: 0.65rem 0.5rem 0.3rem; }
+.media-tile .loc { font-weight: 700; color: var(--text); font-size: 0.95rem; }
+.media-tile .meta { color: var(--muted); font-size: 0.85rem; }
+.media-tile .credit { color: var(--faint); font-size: 0.78rem; display: block; margin-top: 0.15rem; }
+.media-tile[data-lightbox] { cursor: zoom-in; }
+.media-tile[data-lightbox]:hover,
+a.media-tile:hover { transform: translateY(-3px); }
+a.media-tile { display: block; color: inherit; }
+a.media-tile:hover { text-decoration: none; }
+a.media-tile .loc { color: var(--accent-2); }
+
+@media (max-width: $bp-md) {
+  .about { grid-template-columns: 1fr; gap: 1.2rem; }
+  .about__aside img { width: 140px; }
+}

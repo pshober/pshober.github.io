@@ -1,0 +1,83 @@
+// ── Capsule cards ("Latest publications") ────────────────────────────────────
+// Two-part stadium: rounded-left image well + solid yellow text panel.
+.home-pubs { text-align: center; }
+.home-pubs__more { margin-top: 0.5rem; }
+.home-pubs__more a { font-weight: 700; }
+
+.capsule {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(200px, 23vw, 283px) 1fr;
+  min-height: 250px;
+  max-width: 1080px;
+  margin: 0 auto 1.6rem;
+  text-align: left;
+  transition: transform 0.15s ease;
+}
+.capsule:hover { transform: translateY(-3px); }
+
+.capsule__media {
+  border: 2px solid var(--yellow);
+  border-right: 0;
+  border-radius: 999px 0 0 999px;
+  overflow: hidden;
+  background: var(--plate);
+}
+.capsule__media img { width: 100%; height: 100%; object-fit: cover; }
+
+.capsule__body {
+  background: var(--yellow);
+  color: var(--accent-ink);
+  border-radius: 0 999px 999px 0;
+  padding: 1.7rem clamp(2rem, 5vw, 4.5rem) 1.5rem 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  justify-content: center;
+}
+// Yellow/orange focus rings are illegible on the yellow panel — use ink.
+.capsule__body :focus-visible { outline-color: var(--accent-ink); }
+
+.capsule__title { margin: 0; font-size: var(--fs-h3); line-height: 1.2; }
+.capsule__title a {
+  font-family: $font-head;
+  font-weight: 400;
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.capsule__title a:hover { color: var(--accent-ink); }
+.capsule:hover .capsule__title a { text-decoration-thickness: 3px; }
+// Stretched link — the whole capsule is clickable.
+.capsule__title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+}
+
+.capsule__kicker {
+  font-family: $font-head;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+}
+.capsule__blurb { font-size: 0.98rem; line-height: 1.45; margin: 0; }
+.capsule__date { font-size: 0.82rem; }
+
+@media (max-width: $bp-md) {
+  // Full-stadium ends look wrong stacked — collapse to a rounded rect.
+  .capsule { grid-template-columns: 1fr; min-height: 0; }
+  .capsule__media {
+    border-right: 2px solid var(--yellow);
+    border-bottom: 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  .capsule__media img { aspect-ratio: 16 / 9; }
+  .capsule__body {
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    padding: 1.4rem 1.5rem;
+  }
+  .capsule__title a::after { border-radius: var(--radius-lg); }
+}

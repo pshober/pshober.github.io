@@ -4,11 +4,11 @@ $bp-md: 768px;
 $bp-lg: 1024px;
 
 // Layout widths
-$max-width: 1080px;
+$max-width: 1200px;
 $content-width: 780px;
 
-// Font stacks. Space Grotesk is loaded in <head> (with system fallback) and is
-// on-theme; everything still renders fine if the web font fails to load.
-$font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-$font-head: "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+// Font stacks. Righteous (display) + Poppins (body/UI) are loaded in <head>;
+// everything still renders fine if the web fonts fail to load.
+$font-body: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+$font-head: "Righteous", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 $font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
