@@ -11,57 +11,82 @@ layout: default
       <a class="btn btn--primary" href="{{ '/research/' | relative_url }}">Explore the research</a>
       <a class="btn btn--ghost" href="{{ '/cv/' | relative_url }}">View CV</a>
     </div>
-    <div class="hero__topics">
-      {% for t in page.topics %}<span class="pill">{{ t }}</span>{% endfor %}
-    </div>
   </div>
-  <div class="headshot-wrap">
-    <img class="headshot" src="{{ '/assets/img/headshot.jpg' | relative_url }}"
-         alt="Patrick M. Shober" width="290" height="290">
+  <div class="hero__media">
+    <img class="hero__photo" src="{{ '/assets/img/headshot.jpg' | relative_url }}"
+         alt="Patrick M. Shober" width="522" height="522" fetchpriority="high">
   </div>
 </section>
 
-{% include stats.html %}
+<section class="container section home-pubs">
+  <div class="section-title-wrap">
+    <img class="section-icon" src="{{ '/assets/img/brand/icon-telescope.webp' | relative_url }}"
+         alt="" width="86" height="96" loading="lazy">
+    <h2 class="section-title section-title--olive">Latest publications</h2>
+  </div>
+  {% for h in site.data.highlights limit: 2 %}
+  <article class="capsule">
+    <div class="capsule__media">
+      <img src="{{ h.image | relative_url }}" alt="{{ h.alt }}" loading="lazy" width="800" height="600">
+    </div>
+    <div class="capsule__body">
+      <h3 class="capsule__title"><a href="{{ h.url }}">{{ h.title }}</a></h3>
+      <div class="capsule__kicker">{{ h.kicker }}</div>
+      <p class="capsule__blurb">{{ h.blurb }}</p>
+      <div class="capsule__date">{{ h.date_label }}</div>
+    </div>
+  </article>
+  {% endfor %}
+  <p class="home-pubs__more"><a href="{{ '/publications/' | relative_url }}">All publications &rarr;</a></p>
+</section>
 
-{% if content != "" %}
-<section class="container section section--tight">
-  <div class="container--narrow prose" style="padding:0;margin:0">
+<section class="container section about">
+  <div class="about__aside">
+    <img src="{{ '/assets/img/brand/icon-planet.webp' | relative_url }}"
+         alt="" width="245" height="250" loading="lazy">
+    <h2>A little about me<br>and my work</h2>
+  </div>
+  <div class="about__prose">
     {{ content }}
   </div>
 </section>
-{% endif %}
 
 <section class="container section">
-  <div class="section-head">
-    <h2>Research</h2>
-    <a href="{{ '/research/' | relative_url }}">All research &rarr;</a>
+  <div class="section-title-wrap">
+    <img class="section-icon" src="{{ '/assets/img/brand/icon-camera.webp' | relative_url }}"
+         alt="" width="100" height="96" loading="lazy">
+    <h2 class="section-title section-title--orange">From the field</h2>
   </div>
-  <div class="grid grid--cards">
-    {% for d in site.data.research.deep_dives %}
-    <article class="card">
-      <div class="card__kicker">{{ d.kicker }}</div>
-      <h3>{{ d.title }}</h3>
-      <p>{{ d.blurb }}</p>
-      <div class="card__links"><a href="{{ d.link | relative_url }}">Read more &rarr;</a></div>
-    </article>
+  <div class="media-wall">
+    {% for m in site.data.media %}
+    {% if m.type == 'video' %}
+    <figure class="media-tile">
+      {% include media-loop.html src=m.src poster=m.poster preload=m.preload alt=m.alt %}
+      <figcaption>
+        <span class="loc">{{ m.title }}</span>
+        <span class="meta">· {{ m.meta }}</span>
+        {% if m.credit %}<span class="credit">{{ m.credit }}</span>{% endif %}
+      </figcaption>
+    </figure>
+    {% elsif m.type == 'link' %}
+    <a class="media-tile" href="{{ m.url | relative_url }}">
+      <img src="{{ m.src | relative_url }}" alt="{{ m.alt }}" loading="lazy" width="800" height="500">
+      <span class="media-tile__cap">
+        <span class="loc">{{ m.title }}</span>
+        <span class="meta">· {{ m.meta }}</span>
+      </span>
+    </a>
+    {% else %}
+    <figure class="media-tile" data-lightbox data-full="{{ m.full | relative_url }}"
+            data-cap="{{ m.title }} — {{ m.meta }}{% if m.credit %} ({{ m.credit }}){% endif %}">
+      <img src="{{ m.src | relative_url }}" alt="{{ m.alt }}" loading="lazy" width="800" height="500">
+      <figcaption>
+        <span class="loc">{{ m.title }}</span>
+        <span class="meta">· {{ m.meta }}</span>
+        {% if m.credit %}<span class="credit">{{ m.credit }}</span>{% endif %}
+      </figcaption>
+    </figure>
+    {% endif %}
     {% endfor %}
   </div>
-</section>
-
-<section class="container section">
-  <div class="section-head">
-    <h2>Selected publications</h2>
-    <a href="{{ '/publications/' | relative_url }}">All publications &rarr;</a>
-  </div>
-  {% for it in site.data.publications.selected %}
-  {% assign href = "" %}
-  {% if it.doi %}{% assign href = "https://doi.org/" | append: it.doi %}{% elsif it.url %}{% assign href = it.url %}{% endif %}
-  <p class="pub">
-    <span class="pub__authors">{{ it.authors | replace: 'Shober', '<strong class="me">Shober</strong>' }}</span>
-    {% if it.year %}({{ it.year }}) {% endif %}
-    {% if href != "" %}<a class="pub__title" href="{{ href }}">{{ it.title }}</a>{% else %}<span class="pub__title">{{ it.title }}</span>{% endif %}
-    {% if it.venue %}<span class="pub__venue">{{ it.venue }}</span>{% endif %}
-    {% if it.doi or it.arxiv %}<span class="pub__links">{% if it.doi %}<a href="https://doi.org/{{ it.doi }}">DOI</a>{% endif %}{% if it.arxiv %}<a href="https://arxiv.org/abs/{{ it.arxiv }}">arXiv</a>{% endif %}</span>{% endif %}
-  </p>
-  {% endfor %}
 </section>

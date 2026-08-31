@@ -1,0 +1,66 @@
+# "From the field" media wall on the home page (rendered by _layouts/home.html).
+# type: video | image | link. Credits live here so they can never be dropped
+# when reshuffling tiles.
+- type: video
+  src: /assets/video/winchcombe-allsky.mp4
+  poster: /assets/img/media/winchcombe-poster.webp
+  preload: metadata
+  title: "The Winchcombe fireball"
+  meta: "All-sky camera view of the 2021 UK meteorite fall"
+  alt: "Looping all-sky video of the Winchcombe fireball fragmenting"
+  credit: "Video: UK Fireball Alliance"
+
+- type: image
+  src: /assets/img/media/recovery-outback-thumb.webp
+  full: /assets/img/media/recovery-outback.webp
+  title: "Found one"
+  meta: "A fresh fall on the red dirt, Australian outback"
+  alt: "Two researchers kneeling beside a freshly recovered meteorite in the outback"
+  credit: "Photo: Desert Fireball Network, Curtin University"
+
+- type: video
+  src: /assets/video/stream-topdown.mp4
+  poster: /assets/img/media/stream-poster.webp
+  preload: none
+  title: "M2026-A1, a brand-new meteor stream"
+  meta: "282 meteors traced back to a crumbling asteroid"
+  alt: "Animation of the M2026-A1 meteoroid stream orbiting through the inner solar system"
+  credit: "Animation: Shober 2026, ApJ"
+
+- type: image
+  src: /assets/img/media/fripon-summit-thumb.webp
+  full: /assets/img/media/fripon-summit.webp
+  title: "Eyes on the sky"
+  meta: "A FRIPON all-sky camera above the clouds at blue hour"
+  alt: "Gold FRIPON all-sky camera on a snowy mountain summit at dusk"
+  credit: "Photo: FRIPON / Vigie-Ciel"
+
+- type: image
+  src: /assets/img/media/drone-search-thumb.webp
+  full: /assets/img/media/drone-search.webp
+  title: "Searching from above"
+  meta: "Drone-assisted meteorite searching on the strewn field"
+  alt: "Drone view looking straight down at a researcher on an outback track"
+  credit: "Photo: Desert Fireball Network, Curtin University"
+
+- type: image
+  src: /assets/img/media/team-selfie-thumb.webp
+  full: /assets/img/media/team-selfie.webp
+  title: "The recovery crew"
+  meta: "A meteorite in hand minutes after the find"
+  alt: "Search team group photo holding a freshly recovered meteorite on foil"
+  credit: "Photo: Desert Fireball Network, Curtin University"
+
+- type: image
+  src: /assets/img/media/career-map.webp
+  full: /assets/img/media/career-map.webp
+  title: "Cleveland → Perth → Paris → Houston"
+  meta: "One career, four fireball networks"
+  alt: "World map showing career moves between Cleveland, Perth, Paris, and Houston with fireball-network logos"
+
+- type: link
+  url: /metdetect-demo/
+  src: /assets/img/metdetect-demo/osceola_vertical.png
+  title: "Interactive: see a fall in weather radar"
+  meta: "MetDetect finds falling meteorites in NEXRAD — try the live demo →"
+  alt: "Radar reflectivity map of meteorite fragments detected over Osceola, Florida"

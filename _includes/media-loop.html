@@ -1,0 +1,11 @@
+{% comment %}
+  Short autoplaying video loop (acts as an animated image).
+  Params: src, poster, alt, preload (default "metadata").
+  assets/js/media-loops.js pauses these under prefers-reduced-motion and
+  plays/pauses on viewport intersection.
+{% endcomment %}
+<video autoplay muted loop playsinline preload="{{ include.preload | default: 'metadata' }}"
+       poster="{{ include.poster | relative_url }}" width="1280" height="720"
+       aria-label="{{ include.alt }}">
+  <source src="{{ include.src | relative_url }}" type="video/mp4">
+</video>

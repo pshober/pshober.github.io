@@ -1,0 +1,24 @@
+# Homepage "Latest publications" capsule cards (rendered by _layouts/home.html).
+# Mix of papers and press — newest first, first two are shown.
+# `date_label` is a display string (not parsed); `image` should be ~800px wide.
+- title: "Perihelion filtering and the meteorite record"
+  kicker: "Flagship result · Nature Astronomy 2025"
+  blurb: >-
+    Meteorite collections aren't a fair sample of what hits Earth. What survives
+    to the ground is decided by an object's history close to the Sun, not only
+    where it came from.
+  date_label: "April 2025"
+  image: /assets/img/media/meteorite-macro-thumb.webp
+  alt: "A freshly fallen meteorite with black fusion crust resting on red outback soil"
+  url: https://doi.org/10.1038/s41550-025-02526-6
+
+- title: "I found a new meteor shower, and it comes from a crumbling asteroid"
+  kicker: "Flagship result · The Conversation"
+  blurb: >-
+    Across the Earth, every night, thousands of automated stargazers are waiting
+    to take pictures of shooting stars. I am one of the scientists who study
+    these meteors.
+  date_label: "April 10, 2026"
+  image: /assets/img/media/allsky-milkyway-thumb.webp
+  alt: "All-sky camera frame of a brilliant fireball crossing the Milky Way"
+  url: https://theconversation.com/i-found-a-new-meteor-shower-and-it-comes-from-an-asteroid-getting-broken-down-by-the-sun-277557
