@@ -10,7 +10,7 @@
   .hero__media { order: -1; }
   .hero__photo { max-width: 320px; }
 
-  .nav { flex-wrap: wrap; min-height: 0; padding: 0.6rem 0; justify-content: center; row-gap: 0.2rem; }
+  .nav { flex-wrap: wrap; min-height: 0; padding-top: 0.6rem; padding-bottom: 0.6rem; justify-content: center; row-gap: 0.2rem; }
   .nav__brand img { height: 56px; }
   .nav__links { gap: 1rem; justify-content: center; }
   .nav__links a { font-size: 0.8rem; }
@@ -18,7 +18,7 @@
   .cv-entry { grid-template-columns: 1fr; gap: 0.2rem; }
   .cv-entry__date { color: var(--accent-2); font-weight: 600; }
 
-  .section { padding: 2.25rem 0; }
+  .section { padding-top: 2.25rem; padding-bottom: 2.25rem; }
   .section-icon { height: 72px; }
 }
 

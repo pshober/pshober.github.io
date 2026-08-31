@@ -9,8 +9,10 @@
 
 main { display: block; }
 
-.section { padding: 3rem 0; }
-.section--tight { padding: 2rem 0; }
+// Top/bottom only — these often combine with .container, whose side padding
+// a two-value shorthand would clobber.
+.section { padding-top: 3rem; padding-bottom: 3rem; }
+.section--tight { padding-top: 2rem; padding-bottom: 2rem; }
 
 // ── Site header / nav — full-bleed yellow brand band ─────────────────────────
 .site-header {
@@ -26,7 +28,8 @@ main { display: block; }
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.7rem 0;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
   min-height: 96px;
 }
 
