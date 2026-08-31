@@ -12,6 +12,14 @@
     {{ content }}
   </main>
 
+  {% unless page.url == '/asteroid/' %}
+  <a class="asteroid-fab" href="{{ '/asteroid/' | relative_url }}"
+     title="Where is asteroid (33964) Patrickshober right now?">
+    <img src="{{ '/assets/img/brand/icon-asteroid.webp' | relative_url }}" alt="" width="216" height="224">
+    <span>My asteroid</span>
+  </a>
+  {% endunless %}
+
   {% include footer.html %}
 
   <script src="{{ '/assets/js/starfield.js' | relative_url }}" defer></script>

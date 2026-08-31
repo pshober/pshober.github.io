@@ -1,7 +1,7 @@
 {% assign url = page.url %}
 <header class="site-header">
   <nav class="nav container" aria-label="Primary">
-    <a class="nav__brand" href="{{ '/' | relative_url }}">
+    <a class="nav__brand{% if url == '/' %} nav__brand--home{% endif %}" href="{{ '/' | relative_url }}">
       <img src="{{ '/assets/img/brand/logo-purple.webp' | relative_url }}?v={{ site.time | date: '%s' }}"
            alt="Planetary Pat — Patrick M. Shober, home" width="250" height="140">
     </a>

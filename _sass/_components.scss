@@ -253,6 +253,37 @@
   font-size: 1.8rem; color: #fff; background: none; border: 0; cursor: pointer; line-height: 1;
 }
 
+// ── Floating "My asteroid" badge ─────────────────────────────────────────────
+.asteroid-fab {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  filter: drop-shadow(0 6px 14px rgba(10, 0, 20, 0.55));
+  transition: transform 0.15s ease;
+}
+.asteroid-fab img { width: 64px; height: auto; }
+.asteroid-fab span {
+  background: var(--yellow);
+  color: var(--accent-ink);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.65rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.asteroid-fab:hover { transform: translateY(-3px); text-decoration: none; }
+@media (max-width: $bp-md) {
+  .asteroid-fab { right: 0.7rem; bottom: 0.7rem; }
+  .asteroid-fab img { width: 46px; }
+}
+
 // ── Page header ──────────────────────────────────────────────────────────────
 .page-head { padding: 2.6rem 0 1.4rem; }
 .page-head h1 { margin-bottom: 0.5rem; }
@@ -332,8 +363,9 @@
 .fig--portrait { max-width: 430px; margin-left: auto; margin-right: auto; }
 
 // ── Asteroid page ────────────────────────────────────────────────────────────
-.ast-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.6rem; align-items: start; }
+.ast-grid { display: grid; grid-template-columns: 1.5fr 0.75fr; gap: 1.6rem; align-items: start; margin-top: 1.6rem; }
 .ast-canvas-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.6rem; }
+.ast-hint { color: var(--faint); font-size: 0.82rem; text-align: center; margin: 0.5rem 0 0.1rem; }
 #orbit { width: 100%; height: auto; display: block; }
 .ast-now { background: linear-gradient(180deg, var(--surface-2), var(--surface)); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.3rem; }
 .ast-now h2 { font-size: 1.05rem; margin: 0 0 0.8rem; }

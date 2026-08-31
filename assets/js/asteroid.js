@@ -1,6 +1,7 @@
 /* (33964) Patrickshober: compute the asteroid's current heliocentric position
    from baked JPL elements, derive its geocentric sky position + apparent
-   magnitude, and draw a top-down orbit diagram. All client-side; no API calls.
+   magnitude, and draw an interactive 3D orbit diagram (drag to tilt,
+   scroll/pinch to zoom). All client-side; no API calls.
    astronomy-engine (if loaded) is used only for the constellation name. */
 (function () {
   "use strict";
@@ -138,53 +139,132 @@
     });
   } else if (locBtn) { locBtn.style.display = "none"; }
 
-  // ── orbit diagram ───────────────────────────────────────────────────────────
-  function drawOrbit() {
+  // ── interactive orbit diagram (drag to tilt, scroll/pinch to zoom) ─────────
+  (function () {
     var cv = document.getElementById("orbit");
     if (!cv || !cv.getContext) return;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2), S = 600;
-    cv.width = S * dpr; cv.height = S * dpr;
-    var ctx = cv.getContext("2d"); ctx.scale(dpr, dpr);
-    var cx = S / 2, cy = S / 2, maxAU = 5.6, k = (S / 2 - 24) / maxAU;
-    function px(x, y) { return [cx + x * k, cy - y * k]; }
+    var ctx = cv.getContext("2d");
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var HOME = { az: 0, tilt: Math.PI / 2, zoom: 1 };
+    var view = { az: HOME.az, tilt: HOME.tilt, zoom: HOME.zoom };
 
-    ctx.clearRect(0, 0, S, S);
-    // reference planet orbits (circular approximation)
-    [["Earth", 1.0, "#3b6ea5"], ["Mars", 1.524, "#a5532f"], ["Jupiter", 5.203, "#7a6b45"]]
-      .forEach(function (p) {
-        ctx.beginPath(); ctx.arc(cx, cy, p[1] * k, 0, 2 * Math.PI);
-        ctx.strokeStyle = "rgba(255,255,255,0.14)"; ctx.lineWidth = 1; ctx.stroke();
-        ctx.fillStyle = "rgba(207,195,224,0.6)"; ctx.font = "11px system-ui";
-        ctx.fillText(p[0], cx + 3, cy - p[1] * k - 3);
-      });
-    // asteroid orbit (projected to ecliptic x-y)
-    ctx.beginPath();
-    for (var nu = 0; nu <= 360; nu += 2) {
-      var a = el.a_au, e = el.e, rr = a * (1 - e * e) / (1 + e * Math.cos(nu * D2R));
-      var u = (el.w_deg + nu) * D2R, om = el.om_deg * D2R, inc = el.i_deg * D2R;
-      var x = rr * (Math.cos(om) * Math.cos(u) - Math.sin(om) * Math.sin(u) * Math.cos(inc));
-      var y = rr * (Math.sin(om) * Math.cos(u) + Math.cos(om) * Math.sin(u) * Math.cos(inc));
-      var pt = px(x, y); nu === 0 ? ctx.moveTo(pt[0], pt[1]) : ctx.lineTo(pt[0], pt[1]);
+    // Precompute the asteroid's orbit path in 3D ecliptic coordinates (AU).
+    var path = [];
+    (function () {
+      var a = el.a_au, e = el.e;
+      var w = el.w_deg * D2R, om = el.om_deg * D2R, inc = el.i_deg * D2R;
+      for (var nu = 0; nu <= 360; nu += 2) {
+        var rr = a * (1 - e * e) / (1 + e * Math.cos(nu * D2R));
+        var u = w + nu * D2R;
+        path.push({
+          x: rr * (Math.cos(om) * Math.cos(u) - Math.sin(om) * Math.sin(u) * Math.cos(inc)),
+          y: rr * (Math.sin(om) * Math.cos(u) + Math.cos(om) * Math.sin(u) * Math.cos(inc)),
+          z: rr * Math.sin(u) * Math.sin(inc)
+        });
+      }
+    })();
+
+    var S = 600, cx = 300, cy = 300, k = 1;
+    // Orthographic projection: yaw around the ecliptic pole, then tilt.
+    // tilt = π/2 → classic top-down; tilt → 0 → edge-on (inclination visible).
+    function project(p) {
+      var ca = Math.cos(view.az), sa = Math.sin(view.az);
+      var x1 = p.x * ca - p.y * sa, y1 = p.x * sa + p.y * ca;
+      var sy = y1 * Math.sin(view.tilt) + p.z * Math.cos(view.tilt);
+      return [cx + x1 * k, cy - sy * k];
     }
-    ctx.closePath(); ctx.strokeStyle = "#ff6c40"; ctx.lineWidth = 1.6; ctx.stroke();
+    function circle3(aAU, label) {
+      ctx.beginPath();
+      for (var t = 0; t <= 360; t += 3) {
+        var pt = project({ x: aAU * Math.cos(t * D2R), y: aAU * Math.sin(t * D2R), z: 0 });
+        if (t === 0) ctx.moveTo(pt[0], pt[1]); else ctx.lineTo(pt[0], pt[1]);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = "rgba(255,255,255,0.14)"; ctx.lineWidth = 1; ctx.stroke();
+      if (label) {
+        var lp = project({ x: 0, y: aAU, z: 0 });
+        ctx.fillStyle = "rgba(207,195,224,0.6)"; ctx.font = "11px system-ui";
+        ctx.fillText(label, lp[0] + 3, lp[1] - 3);
+      }
+    }
+    function dot(p, r, color, label) {
+      ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 2 * Math.PI); ctx.fillStyle = color; ctx.fill();
+      if (label) {
+        ctx.fillStyle = "rgba(255,255,255,0.88)"; ctx.font = "11px system-ui";
+        ctx.fillText(label, p[0] + 6, p[1] - 5);
+      }
+    }
+    function drawOrbit() {
+      S = cv.clientWidth || 600; cx = S / 2; cy = S / 2;
+      cv.width = Math.round(S * dpr); cv.height = Math.round(S * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      k = ((S / 2 - 26) / 5.6) * view.zoom;
+      ctx.clearRect(0, 0, S, S);
+      [["Earth", 1.0], ["Mars", 1.524], ["Jupiter", 5.203]].forEach(function (p) {
+        circle3(p[1], p[0]);
+      });
+      ctx.beginPath();
+      for (var i = 0; i < path.length; i++) {
+        var pt = project(path[i]);
+        if (i === 0) ctx.moveTo(pt[0], pt[1]); else ctx.lineTo(pt[0], pt[1]);
+      }
+      ctx.closePath(); ctx.strokeStyle = "#ff6c40"; ctx.lineWidth = 1.8; ctx.stroke();
+      var jd = nowJD();
+      dot(project({ x: 0, y: 0, z: 0 }), 4.5, "#ffc532");
+      dot(project(earthEcliptic(jd)), 3.5, "#5aa0e0", "Earth");
+      dot(project(astEcliptic(jd)), 4.5, "#ff6c40", "(33964)");
+    }
 
-    // Sun
-    var jd = nowJD();
-    ctx.beginPath(); ctx.arc(cx, cy, 4, 0, 2 * Math.PI); ctx.fillStyle = "#ffc532"; ctx.fill();
-    // current Earth
-    var ea = earthEcliptic(jd), ep = px(ea.x, ea.y);
-    dot(ctx, ep, 3.5, "#5aa0e0", "Earth");
-    // current asteroid
-    var as = astEcliptic(jd), ap = px(as.x, as.y);
-    dot(ctx, ap, 4.5, "#ff6c40", "(33964)");
-  }
-  function dot(ctx, p, r, color, label) {
-    ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 2 * Math.PI); ctx.fillStyle = color; ctx.fill();
-    ctx.fillStyle = "rgba(255,255,255,0.88)"; ctx.font = "11px system-ui";
-    ctx.fillText(label, p[0] + 6, p[1] - 5);
-  }
+    // Interactions. touch-action none so pointer events own the gestures.
+    cv.style.touchAction = "none";
+    cv.style.cursor = "grab";
+    var pointers = {}, lastPinch = null;
+    cv.addEventListener("pointerdown", function (e) {
+      pointers[e.pointerId] = [e.clientX, e.clientY];
+      cv.setPointerCapture(e.pointerId);
+      cv.style.cursor = "grabbing";
+    });
+    cv.addEventListener("pointermove", function (e) {
+      if (!pointers[e.pointerId]) return;
+      var ids = Object.keys(pointers);
+      if (ids.length === 2) {           // pinch zoom
+        pointers[e.pointerId] = [e.clientX, e.clientY];
+        var a = pointers[ids[0]], b = pointers[ids[1]];
+        var dist = Math.hypot(a[0] - b[0], a[1] - b[1]);
+        if (lastPinch) {
+          view.zoom = Math.max(0.5, Math.min(5, view.zoom * dist / lastPinch));
+          drawOrbit();
+        }
+        lastPinch = dist;
+        return;
+      }
+      var prev = pointers[e.pointerId];
+      pointers[e.pointerId] = [e.clientX, e.clientY];
+      view.az += (e.clientX - prev[0]) * 0.008;
+      view.tilt = Math.max(0.12, Math.min(Math.PI / 2, view.tilt + (e.clientY - prev[1]) * 0.008));
+      drawOrbit();
+    });
+    function endPointer(e) { delete pointers[e.pointerId]; lastPinch = null; cv.style.cursor = "grab"; }
+    cv.addEventListener("pointerup", endPointer);
+    cv.addEventListener("pointercancel", endPointer);
+    cv.addEventListener("wheel", function (e) {
+      e.preventDefault();
+      view.zoom = Math.max(0.5, Math.min(5, view.zoom * (e.deltaY < 0 ? 1.12 : 0.89)));
+      drawOrbit();
+    }, { passive: false });
+    cv.addEventListener("dblclick", function () {
+      view.az = HOME.az; view.tilt = HOME.tilt; view.zoom = HOME.zoom;
+      drawOrbit();
+    });
+    var rt = null;
+    window.addEventListener("resize", function () {
+      clearTimeout(rt); rt = setTimeout(drawOrbit, 150);
+    });
+
+    drawOrbit();
+    setInterval(drawOrbit, 60000);      // keep current positions moving
+  })();
 
   update();
-  drawOrbit();
   setInterval(update, 60000); // refresh the live panel each minute
 })();

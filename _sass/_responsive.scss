@@ -12,6 +12,7 @@
 
   .nav { flex-wrap: wrap; min-height: 0; padding-top: 0.6rem; padding-bottom: 0.6rem; justify-content: center; row-gap: 0.2rem; }
   .nav__brand img { height: 84px; }
+  .nav__brand--home img { height: 120px; }
   .nav__links { gap: 1rem; justify-content: center; }
   .nav__links a { font-size: 0.8rem; }
 
@@ -35,7 +36,7 @@
 
 // ── Print (helps if anyone prints the CV / funding pages) ────────────────────
 @media print {
-  #starfield, .site-header, .site-footer, .cv-toolbar, .skip-link { display: none !important; }
+  #starfield, .site-header, .site-footer, .cv-toolbar, .skip-link, .asteroid-fab { display: none !important; }
   body { background: #fff; color: #000; }
   a { color: #000; text-decoration: underline; }
   .capsule__body { background: #fff; }

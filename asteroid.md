@@ -13,7 +13,9 @@ description: "Where is asteroid (33964) Patrickshober right now? A live orbit di
       Astronomical Union in 2023. Here's where it is <em>right now</em>, computed in
       your browser from JPL orbital elements.</p>
   </header>
+</div>
 
+<div class="container">
   <div class="ast-facts">
     <div class="ast-fact"><span class="v">{{ site.data.asteroid.elements.a_au | round: 2 }}&nbsp;AU</span><span class="k">semi-major axis</span></div>
     <div class="ast-fact"><span class="v">{{ site.data.asteroid.elements.e | round: 3 }}</span><span class="k">eccentricity</span></div>
@@ -26,7 +28,8 @@ description: "Where is asteroid (33964) Patrickshober right now? A live orbit di
   <div class="ast-grid">
     <div class="ast-canvas-wrap">
       <canvas id="orbit" width="600" height="600" role="img"
-        aria-label="Top-down diagram of the orbit of asteroid 33964 Patrickshober relative to Earth, Mars and Jupiter"></canvas>
+        aria-label="Interactive 3D diagram of the orbit of asteroid 33964 Patrickshober relative to Earth, Mars and Jupiter"></canvas>
+      <p class="ast-hint">drag to tilt · scroll or pinch to zoom · double-click to reset</p>
     </div>
     <div class="ast-now">
       <h2>Right now</h2>
@@ -43,7 +46,9 @@ description: "Where is asteroid (33964) Patrickshober right now? A live orbit di
       <button id="ast-locate" class="btn btn--ghost" type="button">Use my location</button>
     </div>
   </div>
+</div>
 
+<div class="container container--narrow">
   <div class="prose" style="margin-top:2rem">
     <p>The orbit and physical data come from NASA/JPL's
       <a href="https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=33964">Small-Body

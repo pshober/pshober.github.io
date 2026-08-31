@@ -35,6 +35,8 @@ main { display: block; }
 
 .nav__brand { display: inline-flex; align-items: center; }
 .nav__brand img { display: block; height: 140px; width: auto; }
+// Homepage: hero-scale logo — big enough to read the curved "Planetary Pat"
+.nav__brand--home img { height: 215px; }
 .nav__brand:hover { text-decoration: none; }
 
 .nav__links {
