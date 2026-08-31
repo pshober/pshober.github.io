@@ -8,8 +8,10 @@
     to the ground is decided by an object's history close to the Sun, not only
     where it came from.
   date_label: "April 2025"
-  image: /assets/img/media/meteorite-macro-thumb.webp
-  alt: "A freshly fallen meteorite with black fusion crust resting on red outback soil"
+  # Interim art: P. Shober's own asteroid->meteorite survival-sequence illustration
+  # (the paper's core concept). Swap when Patrick picks exact per-study images.
+  image: /assets/img/media/fall-sequence-thumb.webp
+  alt: "Illustration of the journey from asteroid to meteor to fireball to meteorite — what enters the atmosphere versus what survives to the ground"
   url: https://doi.org/10.1038/s41550-025-02526-6
 
 - title: "I found a new meteor shower, and it comes from a crumbling asteroid"
@@ -19,6 +21,7 @@
     to take pictures of shooting stars. I am one of the scientists who study
     these meteors.
   date_label: "April 10, 2026"
-  image: /assets/img/media/allsky-milkyway-thumb.webp
-  alt: "All-sky camera frame of a brilliant fireball crossing the Milky Way"
+  # The actual M2026-A1 stream-orbit figure from the ApJ study the article describes
+  image: /assets/img/media/m2026a1-orbits-thumb.webp
+  alt: "Top-down view of the M2026-A1 meteoroid stream orbits sweeping through the inner solar system"
   url: https://theconversation.com/i-found-a-new-meteor-shower-and-it-comes-from-an-asteroid-getting-broken-down-by-the-sun-277557

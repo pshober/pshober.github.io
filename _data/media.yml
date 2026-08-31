@@ -43,12 +43,21 @@
   alt: "Drone view looking straight down at a researcher on an outback track"
   credit: "Photo: Desert Fireball Network, Curtin University"
 
+# Parked pending credit confirmation (green-field setting suggests a FRIPON
+# France campaign, not DFN — confirm photographer/venue before restoring):
+# - type: image
+#   src: /assets/img/media/team-selfie-thumb.webp
+#   full: /assets/img/media/team-selfie.webp
+#   title: "The recovery crew"
+#   meta: "A meteorite in hand minutes after the find"
+#   alt: "Search team group photo holding a freshly recovered meteorite on foil"
+#   credit: "CONFIRM — likely FRIPON/Vigie-Ciel campaign"
 - type: image
-  src: /assets/img/media/team-selfie-thumb.webp
-  full: /assets/img/media/team-selfie.webp
-  title: "The recovery crew"
-  meta: "A meteorite in hand minutes after the find"
-  alt: "Search team group photo holding a freshly recovered meteorite on foil"
+  src: /assets/img/media/dfn-station-thumb.webp
+  full: /assets/img/media/dfn-station.webp
+  title: "A desert sentinel"
+  meta: "Desert Fireball Network camera station on watch"
+  alt: "Rusted-steel Desert Fireball Network observatory with solar panel on red earth under blue sky"
   credit: "Photo: Desert Fireball Network, Curtin University"
 
 - type: image

@@ -64,7 +64,7 @@
 .hero .eyebrow { font-size: var(--fs-eyebrow); }
 .hero__name { margin: 0 0 0.4rem; }
 .hero__role { color: var(--text); font-weight: 700; font-size: var(--fs-lede); line-height: 1.45; margin-bottom: 1rem; }
-.hero .lede { color: var(--text); font-size: var(--fs-lede); line-height: 1.45; }
+.hero .lede { color: var(--text); font-size: var(--fs-lede); line-height: 1.45; font-weight: 700; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.8rem; }
 
 .hero__media { justify-self: center; }
