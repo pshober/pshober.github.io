@@ -30,11 +30,11 @@ main { display: block; }
   gap: 1rem;
   padding-top: 0.7rem;
   padding-bottom: 0.7rem;
-  min-height: 96px;
+  min-height: 112px;
 }
 
 .nav__brand { display: inline-flex; align-items: center; }
-.nav__brand img { display: block; height: 78px; width: auto; }
+.nav__brand img { display: block; height: 96px; width: auto; }
 .nav__brand:hover { text-decoration: none; }
 
 .nav__links {
