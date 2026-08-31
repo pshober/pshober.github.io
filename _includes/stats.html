@@ -1,10 +1,12 @@
 {% comment %}
-  Headline stats. Prefers live ADS values (_data/ads_metrics.yml, written by the
-  weekly GitHub Action) and falls back to manual numbers (_data/metrics.yml).
+  Headline stats (rendered on /cv/). Prefers live ADS values
+  (_data/ads_metrics.yml, refreshed bi-weekly by .github/workflows/
+  update-publications.yml) and falls back to manual numbers (_data/metrics.yml).
+  Funding amounts live on /funding/ (_data/funding.yml), not here.
 {% endcomment %}
 {% assign ads = site.data.ads_metrics %}
 {% assign m = site.data.metrics %}
-<section class="container section--tight" aria-label="Research at a glance">
+<section class="section--tight" aria-label="Research at a glance">
   <ul class="stats">
     <li class="stat"><span class="stat__num">{{ ads.refereed | default: m.papers }}</span><span class="stat__label">refereed papers</span></li>
     <li class="stat"><span class="stat__num">{{ m.first_author }}</span><span class="stat__label">first-author</span></li>
@@ -14,7 +16,6 @@
     {% else %}
     <li class="stat"><span class="stat__num">{{ m.invited_talks }}</span><span class="stat__label">invited talks</span></li>
     {% endif %}
-    <li class="stat"><span class="stat__num">€{{ m.funding_keuro }}k</span><span class="stat__label">funding as PI</span></li>
   </ul>
   {% if ads.updated and ads.updated != "" %}
   <p class="stats__note">citations &amp; h-index updated {{ ads.updated }} from

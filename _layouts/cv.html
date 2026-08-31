@@ -9,6 +9,7 @@ layout: default
     <div class="cv-toolbar">
       <a class="btn btn--primary" href="{{ '/assets/pdf/SHOBER_CV_2026.pdf' | relative_url }}" download>&darr;&nbsp;Download PDF</a>
       <a class="btn btn--ghost" href="{{ '/publications/' | relative_url }}">Publications</a>
+      <a class="btn btn--ghost" href="{{ '/funding/' | relative_url }}">Funding</a>
       <a class="btn btn--ghost" href="https://ui.adsabs.harvard.edu/search/q=orcid:{{ site.author.orcid }}">ADS</a>
       <a class="btn btn--ghost" href="{{ site.links.orcid }}">ORCID</a>
       <a class="btn btn--ghost" href="{{ site.links.scholar }}">Scholar</a>
@@ -16,9 +17,12 @@ layout: default
     {% if site.data.cv.summary %}<p class="lede" style="margin-top:1rem">{{ site.data.cv.summary }}</p>{% endif %}
   </header>
 
+  {% include stats.html %}
+
   {% for sec in site.data.cv.sections %}
   <section class="cv-section"{% if sec.id %} id="{{ sec.id }}"{% endif %}>
     <h2>{{ sec.title }}</h2>
+    {% if sec.note %}<p class="cv-section__note">{{ sec.note }}</p>{% endif %}
     {% for e in sec.entries %}
     <div class="cv-entry">
       <div class="cv-entry__date">{{ e.date }}</div>

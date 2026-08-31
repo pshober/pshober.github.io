@@ -61,23 +61,24 @@ sections:
         sub: "Scientific utilization of the orbital dataset; observatory installation and upkeep."
 
   - title: Selected awards & honors
+    note: 'Amounts and details: <a href="/funding/">full funding history</a>.'
     entries:
       - date: "2024"
-        title: "NASA Postdoctoral Fellowship, $180,000 (PI)"
+        title: "NASA Postdoctoral Program Fellowship (PI)"
       - date: "2023"
         title: "Asteroid (33964) Patrickshober named by the IAU"
         sub: "Following the 2023 Asteroids, Comets, Meteors conference, for contributions to planetary science."
       - date: "2022"
-        title: "Paris Région Fellowship, €128,880 (PI)"
+        title: "Paris Région Fellowship — MASSED (PI)"
         sub: "Domaines d'Intérêt Majeur framework, supporting MASSED at LTE."
       - date: "2017"
-        title: "Curtin International Postgraduate Research Scholarship, $158,600"
+        title: "Curtin International Postgraduate Research Scholarship"
       - date: "2017"
-        title: "Curtin Research Stipend Scholarship, $93,387"
+        title: "Curtin Research Stipend Scholarship"
       - date: "2017"
         title: "Charles S. Bacon Award, Case Western Reserve University"
       - date: "2013"
-        title: "Case Western Reserve University Academic Scholarship, $92,000"
+        title: "Case Western Reserve University Academic Scholarship"
 
   - title: Selected invited talks
     entries:

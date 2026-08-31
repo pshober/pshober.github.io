@@ -1,0 +1,53 @@
+# Competitive funding, fellowships & scholarships. Rendered on /funding/ and
+# summarized on /cv/. NOT touched by scripts/update_publications.py — edit freely.
+# `amount` is a display string (matches the CV PDF); `currency` is a machine hint.
+
+intro: >-
+  Roughly €280,000 in competitive, peer-reviewed funding won as Principal
+  Investigator across two postdoctoral fellowships, plus merit scholarships
+  spanning undergraduate and doctoral study.
+
+sections:
+  - title: "As Principal Investigator"
+    entries:
+      - period: "2024–2026"
+        title: "NASA Postdoctoral Program Fellowship"
+        funder: "NASA / ORAU · Johnson Space Center (ARES Division)"
+        amount: "$180,000"
+        currency: USD
+        role: "PI"
+        status: "active"
+        note: "Next-Generation Meteorite Tracking: machine-learning detection and characterization of meteorite falls in the U.S. NEXRAD weather-radar network."
+        link: /metdetect-demo/
+      - period: "2022–2024"
+        title: "Paris Région Fellowship (MASSED)"
+        funder: "Île-de-France Domaines d'Intérêt Majeur · Marie Skłodowska-Curie framework · Paris Observatory (LTE)"
+        amount: "€128,880"
+        currency: EUR
+        role: "PI"
+        status: "complete"
+        note: "Mapping arrival times of extraterrestrial debris via meteorite irradiation ages and N-body models."
+
+  - title: "Scholarships & early-career support"
+    entries:
+      - period: "2017–2022"
+        title: "Curtin International Postgraduate Research Scholarship"
+        funder: "Curtin University, Perth"
+        amount: "$158,600"
+        currency: AUD   # TODO confirm — CV PDF shows a bare "$"
+        role: "Doctoral scholar"
+        status: "complete"
+      - period: "2017–2022"
+        title: "Curtin Research Stipend Scholarship"
+        funder: "Curtin University, Perth"
+        amount: "$93,387"
+        currency: AUD   # TODO confirm — CV PDF shows a bare "$"
+        role: "Doctoral scholar"
+        status: "complete"
+      - period: "2013–2017"
+        title: "Academic Scholarship"
+        funder: "Case Western Reserve University"
+        amount: "$92,000"
+        currency: USD
+        role: "Undergraduate"
+        status: "complete"
