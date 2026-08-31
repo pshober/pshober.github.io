@@ -13,7 +13,7 @@ layout: default
     </div>
   </div>
   <div class="hero__media">
-    <img class="hero__photo" src="{{ '/assets/img/headshot.jpg' | relative_url }}"
+    <img class="hero__photo" src="{{ '/assets/img/headshot.jpg' | relative_url }}?v={{ site.time | date: '%s' }}"
          alt="Patrick M. Shober" width="522" height="522" fetchpriority="high">
   </div>
 </section>
