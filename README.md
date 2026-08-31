@@ -9,7 +9,9 @@ Actions, no local toolchain required) at <https://planetarypat.com>.
 - **Content is data-driven.** To update the site you almost never touch HTML:
   - CV → [`_data/cv.yml`](_data/cv.yml)
   - Publications → [`_data/publications.yml`](_data/publications.yml)
-  - Projects → [`_data/projects.yml`](_data/projects.yml)
+  - Funding history → [`_data/funding.yml`](_data/funding.yml)
+  - Homepage capsule cards → [`_data/highlights.yml`](_data/highlights.yml)
+  - Homepage "From the field" media wall → [`_data/media.yml`](_data/media.yml)
   - Conference (ACM 2026) page + gallery → [`_data/acm2026.yml`](_data/acm2026.yml)
 - **Layout/look** lives in `_layouts/`, `_includes/`, and `_sass/`.
 - Push to `main` → GitHub rebuilds and redeploys in ~1–2 minutes.

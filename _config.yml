@@ -36,7 +36,6 @@ theme: null
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
-  - jekyll-feed
 
 # Default layout for any page that doesn't set one.
 defaults:
