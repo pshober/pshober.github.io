@@ -189,4 +189,4 @@ description: "Explore real, automatically detected meteorite falls in NEXRAD Dop
   window.MTD_DATA_BASE = {{ '/assets/data/metdetect-demo/' | relative_url | jsonify }};
 </script>
 <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script defer src="{{ '/assets/js/metdetect-demo.js' | relative_url }}"></script>
+<script defer src="{{ '/assets/js/metdetect-demo.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>

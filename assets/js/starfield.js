@@ -11,8 +11,11 @@
   var w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
 
   function resize() {
-    w = canvas.clientWidth = window.innerWidth;
-    h = canvas.clientHeight = window.innerHeight;
+    // clientWidth/Height are read-only — assigning threw in strict mode and
+    // silently killed the whole starfield. The canvas is CSS-sized (inset:0),
+    // so just track the viewport.
+    w = window.innerWidth;
+    h = window.innerHeight;
     canvas.width = Math.floor(w * dpr);
     canvas.height = Math.floor(h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);

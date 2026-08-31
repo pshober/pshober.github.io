@@ -66,4 +66,4 @@ description: "Where is asteroid (33964) Patrickshober right now? A live orbit di
   window.ASTEROID = {{ site.data.asteroid | jsonify }};
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/astronomy-engine@2/astronomy.browser.min.js"></script>
-<script defer src="{{ '/assets/js/asteroid.js' | relative_url }}"></script>
+<script defer src="{{ '/assets/js/asteroid.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>

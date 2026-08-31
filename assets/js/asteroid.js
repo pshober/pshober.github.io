@@ -221,7 +221,7 @@
     var pointers = {}, lastPinch = null;
     cv.addEventListener("pointerdown", function (e) {
       pointers[e.pointerId] = [e.clientX, e.clientY];
-      cv.setPointerCapture(e.pointerId);
+      try { cv.setPointerCapture(e.pointerId); } catch (err) {}
       cv.style.cursor = "grabbing";
     });
     cv.addEventListener("pointermove", function (e) {
