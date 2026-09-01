@@ -97,6 +97,14 @@ main { display: block; }
 .footer-card a:hover { color: var(--accent-ink); text-decoration-thickness: 2px; }
 .footer-card :focus-visible { outline-color: var(--accent-ink); }
 .footer-card__copy { font-size: 0.85rem; }
+// Quieter than the rest of the credit bar: present, findable, not competing.
+.footer-credit {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
 .footer-social {
   display: flex;
   flex-wrap: wrap;

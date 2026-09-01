@@ -28,6 +28,11 @@ links:
   scholar: "https://scholar.google.com/scholar?q=Patrick+M.+Shober"
   github: "https://github.com/pshober"
 
+# Visual identity: logo, palette, type and the page designs this site is built from.
+design:
+  name: "Audrey Lisador"
+  url: "https://www.linkedin.com/in/audrey-lisador/"
+
 # ── Build ───────────────────────────────────────────────────────────────────
 # We ship our own layouts/includes/sass, so no gem theme.
 theme: null
