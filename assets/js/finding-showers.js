@@ -504,149 +504,279 @@
   })();
 
   /* =====================================================================
-   * 3. The (U, lambda_sun) pair-excess map — real data
+   * 3. The (U, lambda_sun) pair-excess map — real data, as a 3D surface
+   *    with the null threshold drawn as a wireframe you can raise and lower.
    * ===================================================================== */
   var Grid = (function () {
-    var cv, data, mode = "z", k = 3, sel = null, hover = null;
-    var PAD = { l: 54, r: 12, t: 10, b: 34 };
+    var cv, data, k = 3, sel = null, zmax = 1, nx = 20, ny = 20, U0 = 0, U1 = 2;
+    var yaw = -0.72, pitch = 0.62;
+    var drag = null, moved = 0, queued = false;
+    var M_BINS = 400;                       // the scan is 20x20; it is not adjustable
 
-    function val(b) {
-      return mode === "obs" ? b.obs : mode === "mu" ? b.mu : (b.z === null ? 0 : b.z);
-    }
-    function ramp(t) { // dark plate -> violet -> orange -> yellow
+    function ramp(t) {                      // dark plate -> violet -> orange -> yellow
       t = Math.max(0, Math.min(1, t));
-      var stops = [[20, 0, 31], [72, 22, 110], [176, 68, 252], [255, 108, 64], [255, 197, 50]];
+      var stops = [[38, 12, 62], [72, 22, 110], [176, 68, 252], [255, 108, 64], [255, 197, 50]];
       var x = t * (stops.length - 1), i = Math.min(stops.length - 2, Math.floor(x)), f = x - i;
       var a = stops[i], b = stops[i + 1];
-      return "rgb(" + Math.round(a[0] + (b[0] - a[0]) * f) + "," +
-                      Math.round(a[1] + (b[1] - a[1]) * f) + "," +
-                      Math.round(a[2] + (b[2] - a[2]) * f) + ")";
+      return [Math.round(a[0] + (b[0] - a[0]) * f),
+              Math.round(a[1] + (b[1] - a[1]) * f),
+              Math.round(a[2] + (b[2] - a[2]) * f)];
+    }
+    function rgb(c, alpha) {
+      return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + (alpha === undefined ? 1 : alpha) + ")";
+    }
+    function thr(b) { return b.mu + k * b.sd; }
+    function isSig(b) { return b.sd > 0 && b.obs > thr(b); }
+
+    // Orthographic projection. yaw spins about the vertical axis, pitch tilts the
+    // view down. Returns [screenX, screenY, depth]; larger depth is farther away.
+    function makeProj(W, H) {
+      var cy = Math.cos(yaw), sy = Math.sin(yaw);
+      var cp = Math.cos(pitch), sp = Math.sin(pitch);
+      var ZEX = 1.05;                                    // vertical exaggeration
+      function raw(gx, gy, gz) {
+        var x = (gx / nx) * 2 - 1, y = (gy / ny) * 2 - 1, z = (gz / zmax) * ZEX;
+        var X1 = x * cy - y * sy, Y1 = x * sy + y * cy;
+        return [X1, -(Y1 * sp + z * cp), Y1 * cp - z * sp];
+      }
+      var xs = [], ys = [], c, a, b;
+      for (a = 0; a <= 1; a++) for (b = 0; b <= 1; b++) {
+        c = raw(a * nx, b * ny, 0); xs.push(c[0]); ys.push(c[1]);
+      }
+      if (data && data.bins) {
+        data.bins.forEach(function (q) {
+          var top = Math.max(q.obs, q.mu + 6 * q.sd);
+          if (top <= 0) return;
+          c = raw(q.ix, q.iy, top); xs.push(c[0]); ys.push(c[1]);
+          c = raw(q.ix + 1, q.iy + 1, top); xs.push(c[0]); ys.push(c[1]);
+        });
+      }
+      var eY = cy > 0 ? 0 : ny, eX = sy > 0 ? 0 : nx;
+      var dY = cy > 0 ? -1 : 1, dX = sy > 0 ? -1 : 1;
+      for (var t = 0; t <= nx; t += 5) {
+        c = raw(t, eY + dY * 2.6, 0); xs.push(c[0]); ys.push(c[1]);
+      }
+      for (t = 0; t <= ny; t += 5) {
+        c = raw(eX + dX * 3.2, t, 0); xs.push(c[0]); ys.push(c[1]);
+      }
+      var minx = Math.min.apply(null, xs), maxx = Math.max.apply(null, xs);
+      var miny = Math.min.apply(null, ys), maxy = Math.max.apply(null, ys);
+      var pL = 10, pR = 10, pT = 10, pB = 30;      // pB reserves the axis-title band
+      var sc = Math.min((W - pL - pR) / (maxx - minx), (H - pT - pB) / (maxy - miny));
+      var ox = (pL + W - pR) / 2 - (minx + maxx) * sc / 2;
+      var oy = (pT + H - pB) / 2 - (miny + maxy) * sc / 2;
+      var f = function (gx, gy, gz) {
+        var q = raw(gx, gy, gz);
+        return [q[0] * sc + ox, q[1] * sc + oy, q[2]];
+      };
+      f.nearX = sy < 0 ? 1 : 0;   // which x-face of a cell points at the camera
+      f.nearY = cy < 0 ? 1 : 0;
+      f.edgeY = eY; f.edgeX = eX; f.dY = dY; f.dX = dX;
+      return f;
+    }
+
+    function quad(ctx, P, pts, fill, stroke, lw) {
+      ctx.beginPath();
+      for (var i = 0; i < pts.length; i++) {
+        var p = P(pts[i][0], pts[i][1], pts[i][2]);
+        if (i === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]);
+      }
+      ctx.closePath();
+      if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+      if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw || 1; ctx.stroke(); }
     }
 
     function draw() {
       var f = fitCanvas(cv), ctx = f.ctx, W = f.w, H = f.h;
-      var nx = data.nx, ny = data.ny;
-      var pw = (W - PAD.l - PAD.r) / nx, ph = (H - PAD.t - PAD.b) / ny;
-      var vmax = 0;
-      data.bins.forEach(function (b) { vmax = Math.max(vmax, val(b)); });
-      if (vmax <= 0) vmax = 1;
-
+      var P = makeProj(W, H);
       ctx.fillStyle = C.plate; ctx.fillRect(0, 0, W, H);
-      data.bins.forEach(function (b) {
-        var x = PAD.l + b.ix * pw, y = H - PAD.b - (b.iy + 1) * ph;
-        ctx.fillStyle = ramp(val(b) / vmax);
-        ctx.fillRect(x, y, Math.ceil(pw) + 0.5, Math.ceil(ph) + 0.5);
-        if (b.sd > 0 && b.obs > b.mu + k * b.sd) {
+
+      // floor grid, drawn first so everything sits on it
+      ctx.strokeStyle = "rgba(255,255,255,0.07)"; ctx.lineWidth = 1;
+      for (var g = 0; g <= nx; g += 5) {
+        var p1 = P(g, 0, 0), p2 = P(g, ny, 0);
+        ctx.beginPath(); ctx.moveTo(p1[0], p1[1]); ctx.lineTo(p2[0], p2[1]); ctx.stroke();
+      }
+      for (g = 0; g <= ny; g += 5) {
+        var q1 = P(0, g, 0), q2 = P(nx, g, 0);
+        ctx.beginPath(); ctx.moveTo(q1[0], q1[1]); ctx.lineTo(q2[0], q2[1]); ctx.stroke();
+      }
+
+      var order = data.bins.slice().sort(function (a, b) {
+        var pa = P(a.ix + 0.5, a.iy + 0.5, 0), pb = P(b.ix + 0.5, b.iy + 0.5, 0);
+        return pb[2] - pa[2];                            // farthest first
+      });
+
+      order.forEach(function (b) {
+        var x0 = b.ix, x1 = b.ix + 1, y0 = b.iy, y1 = b.iy + 1;
+        var h = Math.max(0, thr(b)), o = b.obs, sig = isSig(b);
+        var col = ramp(o / zmax);
+
+        function column() {
+          if (o <= 0) return;
+          var fx = P.nearX ? x1 : x0, fy = P.nearY ? y1 : y0;
+          quad(ctx, P, [[fx, y0, 0], [fx, y1, 0], [fx, y1, o], [fx, y0, o]],
+               rgb([col[0] * 0.55 | 0, col[1] * 0.55 | 0, col[2] * 0.55 | 0]), null);
+          quad(ctx, P, [[x0, fy, 0], [x1, fy, 0], [x1, fy, o], [x0, fy, o]],
+               rgb([col[0] * 0.72 | 0, col[1] * 0.72 | 0, col[2] * 0.72 | 0]), null);
+          quad(ctx, P, [[x0, y0, o], [x1, y0, o], [x1, y1, o], [x0, y1, o]],
+               rgb(col), sig ? C.yellow : "rgba(0,0,0,0.30)", sig ? 1.6 : 0.6);
+        }
+        function mesh() {
+          quad(ctx, P, [[x0, y0, h], [x1, y0, h], [x1, y1, h], [x0, y1, h]],
+               null, "rgba(255,255,255,0.34)", 1);
+        }
+        // whichever is lower gets drawn first, so the higher one occludes it
+        if (o > h) { mesh(); column(); } else { column(); mesh(); }
+
+        if (sig) {                                        // stem through the mesh
+          var a = P(b.ix + 0.5, b.iy + 0.5, h), c2 = P(b.ix + 0.5, b.iy + 0.5, o);
           ctx.strokeStyle = C.yellow; ctx.lineWidth = 2;
-          ctx.strokeRect(x + 1, y + 1, pw - 2, ph - 2);
+          ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(c2[0], c2[1]); ctx.stroke();
+          ctx.fillStyle = C.yellow;
+          ctx.beginPath(); ctx.arc(c2[0], c2[1], 3.2, 0, 2 * Math.PI); ctx.fill();
         }
         if (sel && sel.ix === b.ix && sel.iy === b.iy) {
+          var s2 = P(b.ix + 0.5, b.iy + 0.5, Math.max(o, h));
           ctx.strokeStyle = C.text; ctx.lineWidth = 1.5;
-          ctx.strokeRect(x + 0.5, y + 0.5, pw - 1, ph - 1);
+          ctx.beginPath(); ctx.arc(s2[0], s2[1], 7, 0, 2 * Math.PI); ctx.stroke();
         }
       });
 
-      ctx.fillStyle = C.faint; ctx.font = "11px system-ui, sans-serif";
-      var i;
-      for (i = 0; i <= nx; i += 4) {
-        var b0 = data.bins.find(function (b) { return b.ix === Math.min(i, nx - 1); });
-        var uu = i >= nx ? b0.x1 : b0.x0;
-        ctx.textAlign = "center";
-        ctx.fillText(uu.toFixed(1), PAD.l + i * pw, H - PAD.b + 15);
+      // axis labels along the two front edges of the floor
+      ctx.font = "11px system-ui, sans-serif"; ctx.fillStyle = C.faint;
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      var edgeY = P.edgeY, edgeX = P.edgeX, oY = P.dY, oX = P.dX;
+      for (g = 0; g <= nx; g += 5) {
+        var t2 = P(g, edgeY + oY * 2.6, 0);
+        ctx.fillText((U0 + (U1 - U0) * g / nx).toFixed(1), t2[0], t2[1]);
       }
-      for (i = 0; i <= ny; i += 4) {
-        var yy = H - PAD.b - i * ph;
-        ctx.textAlign = "right";
-        ctx.fillText(String(i * 18), PAD.l - 6, yy + 4);
+      for (g = 0; g <= ny; g += 5) {
+        var u2 = P(edgeX + oX * 3.2, g, 0);
+        ctx.fillText(String(g * 18), u2[0], u2[1]);
       }
-      ctx.fillStyle = C.muted; ctx.textAlign = "center";
-      ctx.fillText("U  (geocentric speed ÷ Earth's 29.78 km/s)", (PAD.l + W - PAD.r) / 2, H - 4);
-      ctx.save(); ctx.translate(12, (PAD.t + H - PAD.b) / 2); ctx.rotate(-Math.PI / 2);
-      ctx.fillText("solar longitude (°)", 0, 0); ctx.restore();
+      ctx.fillStyle = C.muted;
+      var narrow = W < 460;                        // both titles will not fit side by side
+      ctx.textAlign = "left";
+      ctx.fillText(narrow ? "U" : "U  (geocentric speed ÷ 29.78 km/s)", 10, H - 12);
+      ctx.textAlign = "right";
+      ctx.fillText(narrow ? "λ☉ (°)" : "solar longitude (°)", W - 10, H - 12);
+      ctx.textAlign = "center";
+    }
+
+    function schedule() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () { queued = false; draw(); });
     }
 
     function info(b) {
-      if (!b) {
-        $("fs-grid-info").innerHTML = "<em>Pick a cell to see its numbers.</em>";
-        return;
-      }
-      var sig = b.sd > 0 && b.obs > b.mu + k * b.sd;
+      if (!b) { $("fs-grid-info").innerHTML = "<em>Click a cell to see its numbers.</em>"; return; }
+      var sig = isSig(b);
       $("fs-grid-info").innerHTML =
         "<b>U " + b.x0.toFixed(3) + "–" + b.x1.toFixed(3) +
         "</b> &middot; <b>λ<sub>☉</sub> " + b.y0 + "–" + b.y1 + "°</b><br>" +
         "observed <b>" + b.obs + "</b> pairs &middot; chance predicts <b>" + fmt(b.mu, 2) +
-        " ± " + fmt(b.sd, 2) + "</b><br>z = <b>" + fmt(b.z, 2) + "</b> " +
-        (sig ? "<span class='fs-tag is-hit'>above " + k + "σ</span>"
-             : "<span class='fs-tag'>consistent with chance</span>");
+        " ± " + fmt(b.sd, 2) + "</b>, so the mesh sits at <b>" + fmt(thr(b), 1) + "</b><br>" +
+        "z = <b>" + fmt(b.z, 2) + "</b> " +
+        (sig ? "<span class='fs-tag is-hit'>through the mesh at " + k + "σ</span>"
+             : "<span class='fs-tag'>under the mesh</span>");
     }
 
-    function lookElsewhere() {
-      var m = Math.round(+$("fs-grid-m").value);
-      var zmax = 0;
-      data.bins.forEach(function (b) { if (b.z !== null && b.z > zmax) zmax = b.z; });
-      // one-sided normal tail, Abramowitz & Stegun 26.2.17
-      function tail(z) {
-        var t = 1 / (1 + 0.2316419 * z);
-        var d = 0.3989422804014327 * Math.exp(-z * z / 2);
-        return d * t * (0.319381530 + t * (-0.356563782 + t * (1.781477937 +
-               t * (-1.821255978 + t * 1.330274429))));
-      }
-      var pl = tail(zmax);
-      var pg = 1 - Math.pow(1 - pl, m);
-      function sigmaOf(p) { // invert the tail, coarse bisection
-        var lo = 0, hi = 12;
-        for (var it = 0; it < 200; it++) {
-          var mid = (lo + hi) / 2;
-          if (tail(mid) > p) lo = mid; else hi = mid;
-        }
-        return (lo + hi) / 2;
-      }
-      $("fs-grid-m-v").textContent = m;
-      $("fs-grid-plocal").textContent = pl.toExponential(1);
-      $("fs-grid-pglobal").textContent = pg.toExponential(1);
-      $("fs-grid-sigma").textContent = sigmaOf(pg).toFixed(1) + "σ";
+    function tail(z) {                       // one-sided normal tail, A&S 26.2.17
+      var t = 1 / (1 + 0.2316419 * z);
+      var d = 0.3989422804014327 * Math.exp(-z * z / 2);
+      return d * t * (0.319381530 + t * (-0.356563782 + t * (1.781477937 +
+             t * (-1.821255978 + t * 1.330274429))));
+    }
+    function sigmaOf(p) {
+      var lo = 0, hi = 12;
+      for (var i = 0; i < 200; i++) { var m = (lo + hi) / 2; if (tail(m) > p) lo = m; else hi = m; }
+      return (lo + hi) / 2;
     }
 
     function counts() {
-      var n = 0;
-      data.bins.forEach(function (b) { if (b.sd > 0 && b.obs > b.mu + k * b.sd) n++; });
+      var n = 0, top = null;
+      data.bins.forEach(function (b) {
+        if (isSig(b)) n++;
+        if (b.z !== null && (!top || b.z > top.z)) top = b;
+      });
       $("fs-grid-count").textContent = n;
+      var pl = tail(top.z), pg = 1 - Math.pow(1 - pl, M_BINS);
+      $("fs-grid-plocal").textContent = pl.toExponential(1);
+      $("fs-grid-pglobal").textContent = pg.toExponential(1);
+      $("fs-grid-sigma").textContent = sigmaOf(pg).toFixed(1) + "σ";
       $("fs-grid-summary").textContent =
-        "A " + data.nx + " by " + data.ny + " grid of geocentric speed against solar longitude, " +
-        "holding " + data.bins.length + " cells. At a " + k + "-sigma threshold, " + n +
-        " cell" + (n === 1 ? "" : "s") + " hold more close pairs than chance predicts. " +
-        "The strongest sits at U 0.967 to 1.061 and solar longitude 0 to 18 degrees, " +
-        "with 135 observed pairs against about 38.9 expected — z = 6.32.";
+        "A 20 by 20 grid of geocentric speed against solar longitude, 400 cells. The solid " +
+        "columns are the observed pair counts; the wireframe is what chance allows at " + k +
+        " sigma. " + n + " column" + (n === 1 ? "" : "s") + " rise through it. The tallest is " +
+        "M2026-A1, at U 0.967 to 1.061 and solar longitude 0 to 18 degrees, with 135 observed " +
+        "pairs against about 38.9 expected — z = 6.32, which survives the 400-cell correction " +
+        "as a 5.3 sigma detection.";
     }
 
     function pick(ev) {
       var r = cv.getBoundingClientRect();
-      var pw = (r.width - PAD.l - PAD.r) / data.nx, ph = (r.height - PAD.t - PAD.b) / data.ny;
-      var ix = Math.floor((ev.clientX - r.left - PAD.l) / pw);
-      var iy = Math.floor((r.height - PAD.b - (ev.clientY - r.top)) / ph);
-      var b = data.bins.find(function (q) { return q.ix === ix && q.iy === iy; });
-      if (b) { sel = b; info(b); draw(); }
+      var P = makeProj(r.width, r.height);
+      var mx = ev.clientX - r.left, my = ev.clientY - r.top, best = null, bd = 1e9;
+      data.bins.forEach(function (b) {
+        var p = P(b.ix + 0.5, b.iy + 0.5, Math.max(b.obs, thr(b)));
+        var d = (p[0] - mx) * (p[0] - mx) + (p[1] - my) * (p[1] - my);
+        if (d < bd) { bd = d; best = b; }
+      });
+      if (best && bd < 900) { sel = best; info(best); schedule(); }
     }
 
     return {
       init: function () {
         cv = $("fs-grid-canvas"); if (!cv) return;
         getJSON("grid2d.json").then(function (d) {
-          data = d;
-          cv.addEventListener("click", pick);
-          Array.prototype.forEach.call(document.querySelectorAll("[name=fs-grid-mode]"),
-            function (r) {
-              r.addEventListener("change", function () { mode = this.value; draw(); });
-            });
+          data = d; nx = d.nx; ny = d.ny;
+          var hi = 0;
+          U0 = Infinity; U1 = -Infinity;
+          d.bins.forEach(function (b) {
+            hi = Math.max(hi, b.obs, b.mu + 6 * b.sd);
+            U0 = Math.min(U0, b.x0); U1 = Math.max(U1, b.x1);
+          });
+          zmax = hi * 1.02;
+
+          cv.addEventListener("pointerdown", function (e) {
+            drag = { x: e.clientX, y: e.clientY }; moved = 0;
+            cv.setPointerCapture(e.pointerId);
+          });
+          cv.addEventListener("pointermove", function (e) {
+            if (!drag) return;
+            var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+            moved += Math.abs(dx) + Math.abs(dy);
+            yaw += dx * 0.009;
+            pitch = Math.max(0.12, Math.min(1.35, pitch - dy * 0.007));
+            drag.x = e.clientX; drag.y = e.clientY;
+            schedule();
+          });
+          cv.addEventListener("pointerup", function (e) {
+            var wasDrag = moved > 6; drag = null;
+            if (!wasDrag) pick(e);
+          });
+          cv.addEventListener("keydown", function (e) {
+            var step = 0.12, used = true;
+            if (e.key === "ArrowLeft") yaw -= step;
+            else if (e.key === "ArrowRight") yaw += step;
+            else if (e.key === "ArrowUp") pitch = Math.min(1.35, pitch + step * 0.6);
+            else if (e.key === "ArrowDown") pitch = Math.max(0.12, pitch - step * 0.6);
+            else used = false;
+            if (used) { e.preventDefault(); schedule(); }
+          });
           $("fs-grid-k").addEventListener("input", function () {
             k = +this.value; $("fs-grid-k-v").textContent = k;
-            counts(); info(sel); draw();
+            counts(); info(sel); schedule();
           });
-          $("fs-grid-m").addEventListener("input", lookElsewhere);
-          window.addEventListener("resize", debounce(draw, 200));
-          // Open on the detection so the first thing seen is the real result.
-          sel = data.bins.find(function (b) { return b.ix === 9 && b.iy === 0; }) || null;
-          info(sel); counts(); lookElsewhere(); draw();
+          $("fs-grid-reset").addEventListener("click", function () {
+            yaw = -0.72; pitch = 0.62; schedule();
+          });
+          window.addEventListener("resize", debounce(schedule, 200));
+
+          sel = d.bins.filter(function (b) { return b.ix === 9 && b.iy === 0; })[0] || null;
+          info(sel); counts(); draw();
         }).catch(function (e) { fail($("fs-grid-note"), e); });
       }
     };

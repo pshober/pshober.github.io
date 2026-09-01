@@ -29,6 +29,7 @@ papers:
 .fs-canvas-wrap{position:relative;background:var(--plate);border:1px solid var(--border);
   border-radius:10px;overflow:hidden}
 .fs-box canvas{display:block;width:100%;height:340px;outline:none}
+#fs-grid-canvas{height:440px}
 .fs-box canvas:focus-visible{outline:2px solid var(--accent-2);outline-offset:-2px}
 .fs-busy{position:absolute;inset:auto .6rem .5rem auto;font-size:.75rem;color:var(--faint);
   background:rgba(20,0,31,.85);padding:.15rem .5rem;border-radius:6px}
@@ -60,9 +61,6 @@ papers:
 .fs-legend{display:flex;flex-wrap:wrap;gap:.9rem;margin:.7rem 0 0;font-size:.78rem;color:var(--faint)}
 .fs-legend span::before{content:"";display:inline-block;width:11px;height:11px;border-radius:3px;
   margin-right:.35rem;vertical-align:-1px;background:currentColor}
-.fs-modes{display:flex;flex-wrap:wrap;gap:.9rem;font-size:.83rem;color:var(--muted)}
-.fs-modes label{display:flex;align-items:center;gap:.3rem;cursor:pointer}
-.fs-modes input{accent-color:var(--accent)}
 .fs-grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
 .fs-calc-in{display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem}
 .fs-calc-in label{display:flex;flex-direction:column;gap:.15rem;font-size:.74rem;color:var(--faint)}
@@ -81,6 +79,7 @@ papers:
   border:1px solid var(--border);background:var(--plate)}
 .fs-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (max-width:620px){
+  #fs-grid-canvas{height:330px}
   .fs-grid2{grid-template-columns:1fr}
   .fs-calc-in{grid-template-columns:repeat(2,1fr)}
   .fs-box canvas{height:290px}
@@ -414,39 +413,35 @@ and it is brutal. Drag the slider below and watch a detection lose most of a sig
 
 <div class="fs-box">
   <h3>The real pair-excess map</h3>
-  <p class="fs-kicker">400 cells, 122,943 GMN meteors, D<sub>N</sub> &lt; 0.015. Actual published values.</p>
+  <p class="fs-kicker">400 cells, 122,943 GMN meteors, D<sub>N</sub> &lt; 0.015. Actual published values — this is the paper's figure, rebuilt so you can move the threshold.</p>
   <div class="fs-canvas-wrap">
-    <canvas id="fs-grid-canvas" role="img"
-      aria-label="Heat map of meteor pair counts across a 20 by 20 grid of geocentric speed against solar longitude"></canvas>
+    <canvas id="fs-grid-canvas" role="img" tabindex="0"
+      aria-label="Three-dimensional plot of meteor pair counts across a 20 by 20 grid of geocentric speed against solar longitude. Solid columns are the observed counts; a wireframe mesh marks what chance allows."></canvas>
   </div>
-  <div class="fs-modes" style="margin-top:.8rem">
-    <label><input type="radio" name="fs-grid-mode" value="z" checked> z-score</label>
-    <label><input type="radio" name="fs-grid-mode" value="obs"> observed pairs</label>
-    <label><input type="radio" name="fs-grid-mode" value="mu"> predicted by chance</label>
+  <div class="fs-legend">
+    <span style="color:#ffc532">columns through the mesh</span>
+    <span style="color:#cfc3e0">wireframe = chance + kσ</span>
   </div>
   <div class="fs-ctrls">
     <label class="fs-ctrl">Detection threshold: <b><span id="fs-grid-k-v">3</span>σ</b>
       <input type="range" id="fs-grid-k" min="1" max="6" step="0.5" value="3">
-      <span class="fs-hint">cells above it: <b id="fs-grid-count">—</b></span></label>
-    <label class="fs-ctrl">Cells searched: <b id="fs-grid-m-v">400</b>
-      <input type="range" id="fs-grid-m" min="1" max="800" step="1" value="400">
-      <span class="fs-hint">the look-elsewhere penalty</span></label>
+      <span class="fs-hint">columns through the mesh: <b id="fs-grid-count">—</b></span></label>
+  </div>
+  <div class="fs-row">
+    <button type="button" class="fs-btn" id="fs-grid-reset">Reset view</button>
+    <span class="fs-hint">drag to rotate · arrow keys when focused · click a column for its numbers</span>
   </div>
   <p class="fs-readout" id="fs-grid-info"></p>
   <p class="fs-readout">Strongest cell: local p = <b id="fs-grid-plocal">—</b> →
-    after correction <b id="fs-grid-pglobal">—</b> = <b id="fs-grid-sigma">—</b></p>
-  <p class="fs-hint">Click any cell. The published result is the cell this opens on:
-    135 observed pairs against 38.9 expected, z = 6.32, which survives the 400-cell
-    correction as a 5.3σ detection.</p>
+    corrected over all 400 cells <b id="fs-grid-pglobal">—</b> = <b id="fs-grid-sigma">—</b></p>
+  <p class="fs-hint">Drag the threshold and the mesh rises and falls; watch which columns still
+    break through. The grid is fixed at 20 × 20 = 400 cells, because that is the scan the 2026
+    paper actually ran — and 400 is the number the Dunn–Šidák correction has to pay for. The one
+    tall spike is <strong>M2026-A1</strong>: 135 observed pairs against 38.9 expected, z = 6.32,
+    which survives the correction at 5.3σ.</p>
   <p class="fs-sr" id="fs-grid-summary" role="status"></p>
   <p class="fs-hint" id="fs-grid-note" hidden></p>
 </div>
-
-<figure class="fig" data-lightbox data-full="/assets/img/research/fs-usol-surface.webp" data-cap="The same 400 cells as a surface: observed pair counts (solid) against the null mean plus 3 sigma (wireframe). The one tall spike is the detection.">
-  <img src="/assets/img/research/fs-usol-surface.webp" alt="Three-dimensional surface plot of pair counts per cell over geocentric speed and solar longitude. A single narrow spike rises far above the surrounding wireframe surface that marks the chance threshold." loading="lazy" width="1400" height="1180">
-  <figcaption>The same grid drawn as a surface: the wireframe is what chance allows, the solid
-  surface is what was seen. One spike clears it by a mile. <span class="muted">Figure: P.&nbsp;Shober.</span></figcaption>
-</figure>
 
 Project the meteors from the significant cells back into orbital space and the surplus
 resolves into one bright spot at low perihelion and low inclination.
@@ -475,10 +470,14 @@ teams, seeing the same thing.
 
 ## What it turned out to be
 
-The cluster is a **new meteor shower**, now on the IAU Meteor Data Center working list as
-**M2026-A1**. Activity had been submitted once before, as candidate shower *87 Virginids*
-(IAU #01185, code ESV), and subsequently removed; this is the first time its statistical
-significance has been established.
+The cluster is a **new meteor shower**, and it now carries the provisional designation
+**M2026-A1** on the
+[IAU Meteor Data Center working list](https://www.ta3.sk/IAUC22DB/MDC2022/Roje/roje_lista.php?corobic_roje=2&sort_roje=0)
+— it appears there without an IAU number yet, which is what a working-list entry looks like
+before it is established. Activity in this part of the sky had been submitted once before, as
+candidate shower *87 Virginids* (IAU #01185, code **ESV**), and was subsequently
+[removed](https://www.ta3.sk/IAUC22DB/MDC2022/Roje/roje_lista.php?corobic_roje=4&sort_roje=0)
+for want of evidence. This is the first time its statistical significance has been established.
 
 Its orbit is the interesting part. Median values across the 282 members:
 **q = 0.22 ± 0.01 au**, a = 1.29 ± 0.10 au, e = 0.83 ± 0.02, i = 12.3 ± 1.8°, and a
