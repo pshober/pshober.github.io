@@ -428,8 +428,11 @@ and it is brutal. Drag the slider below and watch a detection lose most of a sig
       <span class="fs-hint">columns through the mesh: <b id="fs-grid-count">—</b></span></label>
   </div>
   <div class="fs-row">
+    <button type="button" class="fs-btn" id="fs-grid-zoom-out" aria-label="Zoom out">−</button>
+    <button type="button" class="fs-btn" id="fs-grid-zoom-in" aria-label="Zoom in">+</button>
     <button type="button" class="fs-btn" id="fs-grid-reset">Reset view</button>
-    <span class="fs-hint">drag to rotate · arrow keys when focused · click a column for its numbers</span>
+    <span class="fs-hint">drag to rotate · shift-drag or two fingers to pan · ctrl/⌘-scroll,
+      pinch or + / − to zoom · double-click to reset · click a column for its numbers</span>
   </div>
   <p class="fs-readout" id="fs-grid-info"></p>
   <p class="fs-readout">Strongest cell: local p = <b id="fs-grid-plocal">—</b> →

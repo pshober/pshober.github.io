@@ -506,11 +506,14 @@
   /* =====================================================================
    * 3. The (U, lambda_sun) pair-excess map — real data, as a 3D surface
    *    with the null threshold drawn as a wireframe you can raise and lower.
+   *    Drag to rotate, shift-drag or two fingers to pan, ctrl/cmd-wheel to zoom.
    * ===================================================================== */
   var Grid = (function () {
     var cv, data, k = 3, sel = null, zmax = 1, nx = 20, ny = 20, U0 = 0, U1 = 2;
-    var yaw = -0.72, pitch = 0.62;
-    var drag = null, moved = 0, queued = false;
+    var HOME = { yaw: -0.72, pitch: 0.62, zoom: 1, panX: 0, panY: 0 };
+    var view = { yaw: HOME.yaw, pitch: HOME.pitch, zoom: 1, panX: 0, panY: 0 };
+    var pointers = {}, lastPinch = 0, lastMid = null, moved = 0;
+    var curW = 1, curH = 1, queued = false;
     var M_BINS = 400;                       // the scan is 20x20; it is not adjustable
 
     function ramp(t) {                      // dark plate -> violet -> orange -> yellow
@@ -522,56 +525,59 @@
               Math.round(a[1] + (b[1] - a[1]) * f),
               Math.round(a[2] + (b[2] - a[2]) * f)];
     }
-    function rgb(c, alpha) {
-      return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + (alpha === undefined ? 1 : alpha) + ")";
+    function rgb(c, al) {
+      return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + (al === undefined ? 1 : al) + ")";
     }
+    function shade(c, f) { return [c[0] * f | 0, c[1] * f | 0, c[2] * f | 0]; }
     function thr(b) { return b.mu + k * b.sd; }
     function isSig(b) { return b.sd > 0 && b.obs > thr(b); }
 
-    // Orthographic projection. yaw spins about the vertical axis, pitch tilts the
-    // view down. Returns [screenX, screenY, depth]; larger depth is farther away.
+    var TICK = 5;                           // label every 5th cell
+    var LBL = 2.0, TK = 0.7;                // label / tick-mark offsets, in cells
+
+    // Orthographic projection, then a 2D zoom+pan about the canvas centre.
     function makeProj(W, H) {
-      var cy = Math.cos(yaw), sy = Math.sin(yaw);
-      var cp = Math.cos(pitch), sp = Math.sin(pitch);
-      var ZEX = 1.05;                                    // vertical exaggeration
+      var cy = Math.cos(view.yaw), sy = Math.sin(view.yaw);
+      var cp = Math.cos(view.pitch), sp = Math.sin(view.pitch);
+      var ZEX = 1.05;
       function raw(gx, gy, gz) {
         var x = (gx / nx) * 2 - 1, y = (gy / ny) * 2 - 1, z = (gz / zmax) * ZEX;
         var X1 = x * cy - y * sy, Y1 = x * sy + y * cy;
         return [X1, -(Y1 * sp + z * cp), Y1 * cp - z * sp];
       }
-      var xs = [], ys = [], c, a, b;
+      // Front edges: the ones minimising Y1, since screen height goes as -(Y1*sp + z*cp).
+      var eY = cy > 0 ? 0 : ny, eX = sy > 0 ? 0 : nx;
+      var dY = cy > 0 ? -1 : 1, dX = sy > 0 ? -1 : 1;
+
+      var xs = [], ys = [], c, a, b, t;
       for (a = 0; a <= 1; a++) for (b = 0; b <= 1; b++) {
         c = raw(a * nx, b * ny, 0); xs.push(c[0]); ys.push(c[1]);
       }
-      if (data && data.bins) {
-        data.bins.forEach(function (q) {
-          var top = Math.max(q.obs, q.mu + 6 * q.sd);
-          if (top <= 0) return;
-          c = raw(q.ix, q.iy, top); xs.push(c[0]); ys.push(c[1]);
-          c = raw(q.ix + 1, q.iy + 1, top); xs.push(c[0]); ys.push(c[1]);
-        });
-      }
-      var eY = cy > 0 ? 0 : ny, eX = sy > 0 ? 0 : nx;
-      var dY = cy > 0 ? -1 : 1, dX = sy > 0 ? -1 : 1;
-      for (var t = 0; t <= nx; t += 5) {
-        c = raw(t, eY + dY * 2.6, 0); xs.push(c[0]); ys.push(c[1]);
-      }
-      for (t = 0; t <= ny; t += 5) {
-        c = raw(eX + dX * 3.2, t, 0); xs.push(c[0]); ys.push(c[1]);
-      }
+      if (data && data.bins) data.bins.forEach(function (q) {
+        var top = Math.max(q.obs, q.mu + 6 * q.sd);
+        if (top <= 0) return;
+        c = raw(q.ix, q.iy, top); xs.push(c[0]); ys.push(c[1]);
+        c = raw(q.ix + 1, q.iy + 1, top); xs.push(c[0]); ys.push(c[1]);
+      });
+      for (t = 0; t <= nx; t += TICK) { c = raw(t, eY + dY * LBL, 0); xs.push(c[0]); ys.push(c[1]); }
+      for (t = 0; t <= ny; t += TICK) { c = raw(eX + dX * LBL, t, 0); xs.push(c[0]); ys.push(c[1]); }
+
       var minx = Math.min.apply(null, xs), maxx = Math.max.apply(null, xs);
       var miny = Math.min.apply(null, ys), maxy = Math.max.apply(null, ys);
-      var pL = 10, pR = 10, pT = 10, pB = 30;      // pB reserves the axis-title band
+      var pL = 26, pR = 26, pT = 12, pB = 30;
       var sc = Math.min((W - pL - pR) / (maxx - minx), (H - pT - pB) / (maxy - miny));
       var ox = (pL + W - pR) / 2 - (minx + maxx) * sc / 2;
       var oy = (pT + H - pB) / 2 - (miny + maxy) * sc / 2;
+      var ccx = W / 2, ccy = H / 2, z = view.zoom;
+
       var f = function (gx, gy, gz) {
         var q = raw(gx, gy, gz);
-        return [q[0] * sc + ox, q[1] * sc + oy, q[2]];
+        var bx = q[0] * sc + ox, by = q[1] * sc + oy;
+        return [ccx + z * (bx - ccx) + view.panX, ccy + z * (by - ccy) + view.panY, q[2]];
       };
-      f.nearX = sy < 0 ? 1 : 0;   // which x-face of a cell points at the camera
-      f.nearY = cy < 0 ? 1 : 0;
       f.edgeY = eY; f.edgeX = eX; f.dY = dY; f.dX = dX;
+      f.nearX = sy < 0 ? 1 : 0;             // which cell face points at the camera
+      f.nearY = cy < 0 ? 1 : 0;
       return f;
     }
 
@@ -585,22 +591,21 @@
       if (fill) { ctx.fillStyle = fill; ctx.fill(); }
       if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw || 1; ctx.stroke(); }
     }
+    function seg(ctx, P, a, b) {
+      var p = P(a[0], a[1], a[2]), q = P(b[0], b[1], b[2]);
+      ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
+    }
 
     function draw() {
       var f = fitCanvas(cv), ctx = f.ctx, W = f.w, H = f.h;
+      curW = W; curH = H;
       var P = makeProj(W, H);
       ctx.fillStyle = C.plate; ctx.fillRect(0, 0, W, H);
 
-      // floor grid, drawn first so everything sits on it
       ctx.strokeStyle = "rgba(255,255,255,0.07)"; ctx.lineWidth = 1;
-      for (var g = 0; g <= nx; g += 5) {
-        var p1 = P(g, 0, 0), p2 = P(g, ny, 0);
-        ctx.beginPath(); ctx.moveTo(p1[0], p1[1]); ctx.lineTo(p2[0], p2[1]); ctx.stroke();
-      }
-      for (g = 0; g <= ny; g += 5) {
-        var q1 = P(0, g, 0), q2 = P(nx, g, 0);
-        ctx.beginPath(); ctx.moveTo(q1[0], q1[1]); ctx.lineTo(q2[0], q2[1]); ctx.stroke();
-      }
+      var g;
+      for (g = 0; g <= nx; g += TICK) seg(ctx, P, [g, 0, 0], [g, ny, 0]);
+      for (g = 0; g <= ny; g += TICK) seg(ctx, P, [0, g, 0], [nx, g, 0]);
 
       var order = data.bins.slice().sort(function (a, b) {
         var pa = P(a.ix + 0.5, a.iy + 0.5, 0), pb = P(b.ix + 0.5, b.iy + 0.5, 0);
@@ -611,14 +616,11 @@
         var x0 = b.ix, x1 = b.ix + 1, y0 = b.iy, y1 = b.iy + 1;
         var h = Math.max(0, thr(b)), o = b.obs, sig = isSig(b);
         var col = ramp(o / zmax);
-
         function column() {
           if (o <= 0) return;
           var fx = P.nearX ? x1 : x0, fy = P.nearY ? y1 : y0;
-          quad(ctx, P, [[fx, y0, 0], [fx, y1, 0], [fx, y1, o], [fx, y0, o]],
-               rgb([col[0] * 0.55 | 0, col[1] * 0.55 | 0, col[2] * 0.55 | 0]), null);
-          quad(ctx, P, [[x0, fy, 0], [x1, fy, 0], [x1, fy, o], [x0, fy, o]],
-               rgb([col[0] * 0.72 | 0, col[1] * 0.72 | 0, col[2] * 0.72 | 0]), null);
+          quad(ctx, P, [[fx, y0, 0], [fx, y1, 0], [fx, y1, o], [fx, y0, o]], rgb(shade(col, 0.55)), null);
+          quad(ctx, P, [[x0, fy, 0], [x1, fy, 0], [x1, fy, o], [x0, fy, o]], rgb(shade(col, 0.72)), null);
           quad(ctx, P, [[x0, y0, o], [x1, y0, o], [x1, y1, o], [x0, y1, o]],
                rgb(col), sig ? C.yellow : "rgba(0,0,0,0.30)", sig ? 1.6 : 0.6);
         }
@@ -626,10 +628,8 @@
           quad(ctx, P, [[x0, y0, h], [x1, y0, h], [x1, y1, h], [x0, y1, h]],
                null, "rgba(255,255,255,0.34)", 1);
         }
-        // whichever is lower gets drawn first, so the higher one occludes it
         if (o > h) { mesh(); column(); } else { column(); mesh(); }
-
-        if (sig) {                                        // stem through the mesh
+        if (sig) {
           var a = P(b.ix + 0.5, b.iy + 0.5, h), c2 = P(b.ix + 0.5, b.iy + 0.5, o);
           ctx.strokeStyle = C.yellow; ctx.lineWidth = 2;
           ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(c2[0], c2[1]); ctx.stroke();
@@ -643,20 +643,32 @@
         }
       });
 
-      // axis labels along the two front edges of the floor
-      ctx.font = "11px system-ui, sans-serif"; ctx.fillStyle = C.faint;
+      // Axis lines along the two front edges, with tick marks, so every label
+      // sits on the division it belongs to.
+      var eY = P.edgeY, eX = P.edgeX, oY = P.dY, oX = P.dX;
+      ctx.strokeStyle = "rgba(255,255,255,0.34)"; ctx.lineWidth = 1.2;
+      seg(ctx, P, [0, eY, 0], [nx, eY, 0]);
+      seg(ctx, P, [eX, 0, 0], [eX, ny, 0]);
+
+      ctx.font = "11px system-ui, sans-serif";
       ctx.textAlign = "center"; ctx.textBaseline = "middle";
-      var edgeY = P.edgeY, edgeX = P.edgeX, oY = P.dY, oX = P.dX;
-      for (g = 0; g <= nx; g += 5) {
-        var t2 = P(g, edgeY + oY * 2.6, 0);
-        ctx.fillText((U0 + (U1 - U0) * g / nx).toFixed(1), t2[0], t2[1]);
+      for (g = 0; g <= nx; g += TICK) {
+        ctx.strokeStyle = "rgba(255,255,255,0.34)";
+        seg(ctx, P, [g, eY, 0], [g, eY + oY * TK, 0]);
+        var lp = P(g, eY + oY * LBL, 0);
+        ctx.fillStyle = C.faint;
+        ctx.fillText((U0 + (U1 - U0) * g / nx).toFixed(1), lp[0], lp[1]);
       }
-      for (g = 0; g <= ny; g += 5) {
-        var u2 = P(edgeX + oX * 3.2, g, 0);
-        ctx.fillText(String(g * 18), u2[0], u2[1]);
+      for (g = 0; g <= ny; g += TICK) {
+        ctx.strokeStyle = "rgba(255,255,255,0.34)";
+        seg(ctx, P, [eX, g, 0], [eX + oX * TK, g, 0]);
+        var mp = P(eX + oX * LBL, g, 0);
+        ctx.fillStyle = C.faint;
+        ctx.fillText(String(g * 18), mp[0], mp[1]);
       }
+
+      var narrow = W < 460;
       ctx.fillStyle = C.muted;
-      var narrow = W < 460;                        // both titles will not fit side by side
       ctx.textAlign = "left";
       ctx.fillText(narrow ? "U" : "U  (geocentric speed ÷ 29.78 km/s)", 10, H - 12);
       ctx.textAlign = "right";
@@ -670,8 +682,22 @@
       requestAnimationFrame(function () { queued = false; draw(); });
     }
 
+    function zoomAt(mx, my, fac) {
+      var nz = Math.max(0.5, Math.min(6, view.zoom * fac));
+      var r = nz / view.zoom, ccx = curW / 2, ccy = curH / 2;
+      view.panX = mx - ccx - r * (mx - ccx - view.panX);
+      view.panY = my - ccy - r * (my - ccy - view.panY);
+      view.zoom = nz;
+    }
+    function zoomBy(f) { zoomAt(curW / 2, curH / 2, f); schedule(); }
+    function reset() {
+      view.yaw = HOME.yaw; view.pitch = HOME.pitch;
+      view.zoom = 1; view.panX = 0; view.panY = 0;
+      schedule();
+    }
+
     function info(b) {
-      if (!b) { $("fs-grid-info").innerHTML = "<em>Click a cell to see its numbers.</em>"; return; }
+      if (!b) { $("fs-grid-info").innerHTML = "<em>Click a column to see its numbers.</em>"; return; }
       var sig = isSig(b);
       $("fs-grid-info").innerHTML =
         "<b>U " + b.x0.toFixed(3) + "–" + b.x1.toFixed(3) +
@@ -715,25 +741,25 @@
         "as a 5.3 sigma detection.";
     }
 
-    function pick(ev) {
-      var r = cv.getBoundingClientRect();
-      var P = makeProj(r.width, r.height);
-      var mx = ev.clientX - r.left, my = ev.clientY - r.top, best = null, bd = 1e9;
+    function pick(cx2, cy2) {
+      var P = makeProj(curW, curH), best = null, bd = 1e9;
       data.bins.forEach(function (b) {
         var p = P(b.ix + 0.5, b.iy + 0.5, Math.max(b.obs, thr(b)));
-        var d = (p[0] - mx) * (p[0] - mx) + (p[1] - my) * (p[1] - my);
+        var d = (p[0] - cx2) * (p[0] - cx2) + (p[1] - cy2) * (p[1] - cy2);
         if (d < bd) { bd = d; best = b; }
       });
       if (best && bd < 900) { sel = best; info(best); schedule(); }
     }
+
+    function pts() { return Object.keys(pointers).map(function (i) { return pointers[i]; }); }
+    function pinchDist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
 
     return {
       init: function () {
         cv = $("fs-grid-canvas"); if (!cv) return;
         getJSON("grid2d.json").then(function (d) {
           data = d; nx = d.nx; ny = d.ny;
-          var hi = 0;
-          U0 = Infinity; U1 = -Infinity;
+          var hi = 0; U0 = Infinity; U1 = -Infinity;
           d.bins.forEach(function (b) {
             hi = Math.max(hi, b.obs, b.mu + 6 * b.sd);
             U0 = Math.min(U0, b.x0); U1 = Math.max(U1, b.x1);
@@ -741,38 +767,79 @@
           zmax = hi * 1.02;
 
           cv.addEventListener("pointerdown", function (e) {
-            drag = { x: e.clientX, y: e.clientY }; moved = 0;
-            cv.setPointerCapture(e.pointerId);
+            try { cv.setPointerCapture(e.pointerId); } catch (err) {}
+            pointers[e.pointerId] = { x: e.clientX, y: e.clientY };
+            moved = 0;
+            var q = pts();
+            if (q.length === 2) {
+              lastPinch = pinchDist(q[0], q[1]);
+              lastMid = { x: (q[0].x + q[1].x) / 2, y: (q[0].y + q[1].y) / 2 };
+            }
           });
           cv.addEventListener("pointermove", function (e) {
-            if (!drag) return;
-            var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+            if (!(e.pointerId in pointers)) return;
+            var prev = pointers[e.pointerId];
+            var dx = e.clientX - prev.x, dy = e.clientY - prev.y;
+            pointers[e.pointerId] = { x: e.clientX, y: e.clientY };
             moved += Math.abs(dx) + Math.abs(dy);
-            yaw += dx * 0.009;
-            pitch = Math.max(0.12, Math.min(1.35, pitch - dy * 0.007));
-            drag.x = e.clientX; drag.y = e.clientY;
+            var q = pts(), r = cv.getBoundingClientRect();
+            if (q.length >= 2) {                       // two fingers: pinch + pan
+              var dist = pinchDist(q[0], q[1]);
+              var mid = { x: (q[0].x + q[1].x) / 2, y: (q[0].y + q[1].y) / 2 };
+              if (lastPinch > 0) zoomAt(mid.x - r.left, mid.y - r.top, dist / lastPinch);
+              if (lastMid) { view.panX += mid.x - lastMid.x; view.panY += mid.y - lastMid.y; }
+              lastPinch = dist; lastMid = mid;
+            } else if (e.shiftKey) {                   // shift-drag: pan
+              view.panX += dx; view.panY += dy;
+            } else {                                   // drag: rotate
+              view.yaw += dx * 0.009;
+              view.pitch = Math.max(0.12, Math.min(1.35, view.pitch - dy * 0.007));
+            }
             schedule();
           });
-          cv.addEventListener("pointerup", function (e) {
-            var wasDrag = moved > 6; drag = null;
-            if (!wasDrag) pick(e);
-          });
+          function release(e) {
+            var wasDrag = moved > 6;
+            delete pointers[e.pointerId];
+            if (pts().length < 2) { lastPinch = 0; lastMid = null; }
+            if (!wasDrag && pts().length === 0) {
+              var r = cv.getBoundingClientRect();
+              pick(e.clientX - r.left, e.clientY - r.top);
+            }
+          }
+          cv.addEventListener("pointerup", release);
+          cv.addEventListener("pointercancel", release);
+
+          // Plain wheel must keep scrolling the page; the widget is tall.
+          cv.addEventListener("wheel", function (e) {
+            if (!e.ctrlKey && !e.metaKey) return;
+            e.preventDefault();
+            var r = cv.getBoundingClientRect();
+            zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.12 : 0.89);
+            schedule();
+          }, { passive: false });
+          cv.addEventListener("dblclick", reset);
+
           cv.addEventListener("keydown", function (e) {
-            var step = 0.12, used = true;
-            if (e.key === "ArrowLeft") yaw -= step;
-            else if (e.key === "ArrowRight") yaw += step;
-            else if (e.key === "ArrowUp") pitch = Math.min(1.35, pitch + step * 0.6);
-            else if (e.key === "ArrowDown") pitch = Math.max(0.12, pitch - step * 0.6);
+            var step = 0.12, pan = 24, used = true;
+            if (e.key === "ArrowLeft") { if (e.shiftKey) view.panX -= pan; else view.yaw -= step; }
+            else if (e.key === "ArrowRight") { if (e.shiftKey) view.panX += pan; else view.yaw += step; }
+            else if (e.key === "ArrowUp") { if (e.shiftKey) view.panY -= pan; else view.pitch = Math.min(1.35, view.pitch + step * 0.6); }
+            else if (e.key === "ArrowDown") { if (e.shiftKey) view.panY += pan; else view.pitch = Math.max(0.12, view.pitch - step * 0.6); }
+            else if (e.key === "+" || e.key === "=") zoomBy(1.25);
+            else if (e.key === "-" || e.key === "_") zoomBy(0.8);
+            else if (e.key === "0") reset();
             else used = false;
             if (used) { e.preventDefault(); schedule(); }
           });
+
           $("fs-grid-k").addEventListener("input", function () {
             k = +this.value; $("fs-grid-k-v").textContent = k;
             counts(); info(sel); schedule();
           });
-          $("fs-grid-reset").addEventListener("click", function () {
-            yaw = -0.72; pitch = 0.62; schedule();
-          });
+          var btn = function (id, fn) { var b = $(id); if (b) b.addEventListener("click", fn); };
+          btn("fs-grid-zoom-in", function () { zoomBy(1.25); });
+          btn("fs-grid-zoom-out", function () { zoomBy(0.8); });
+          btn("fs-grid-reset", reset);
           window.addEventListener("resize", debounce(schedule, 200));
 
           sel = d.bins.filter(function (b) { return b.ix === 9 && b.iy === 0; })[0] || null;
