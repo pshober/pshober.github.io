@@ -25,8 +25,8 @@
   src: /assets/video/stream-topdown.mp4
   poster: /assets/img/media/stream-poster.webp
   preload: none
-  title: "M2026-A1, a brand-new meteor stream"
-  meta: "282 meteors traced back to a crumbling asteroid"
+  title: "M2026-A1, a newly confirmed meteor stream"
+  meta: "282 meteors from a stream shed by a disintegrating asteroid"
   alt: "Animation of the M2026-A1 meteoroid stream orbiting through the inner solar system"
   credit: "Animation: Shober 2026, ApJ"
 
@@ -60,8 +60,8 @@
 - type: image
   src: /assets/img/media/dfn-station-thumb.webp
   full: /assets/img/media/dfn-station.webp
-  title: "A desert sentinel"
-  meta: "Desert Fireball Network camera station on watch"
+  title: "A camera on watch"
+  meta: "A Desert Fireball Network camera station in the Nullarbor"
   alt: "Rusted-steel Desert Fireball Network observatory with solar panel on red earth under blue sky"
   credit: "Photo: Desert Fireball Network, Curtin University"
 
@@ -69,12 +69,12 @@
   src: /assets/img/media/career-map.webp
   full: /assets/img/media/career-map.webp
   title: "Cleveland → Perth → Paris → Houston"
-  meta: "One career, four fireball networks"
+  meta: "One career, four cities"
   alt: "World map showing career moves between Cleveland, Perth, Paris, and Houston with fireball-network logos"
 
 - type: link
   url: /metdetect-demo/
   src: /assets/img/metdetect-demo/osceola_vertical.png
   title: "Interactive: see a fall in weather radar"
-  meta: "MetDetect finds falling meteorites in NEXRAD — try the live demo →"
+  meta: "MetDetect picks falling debris out of NEXRAD weather radar"
   alt: "Radar reflectivity map of meteorite fragments detected over Osceola, Florida"

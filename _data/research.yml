@@ -9,21 +9,29 @@ interests:
   - "Primitive carbonaceous material & its survival"
 
 deep_dives:
+  - title: "Finding meteor showers that aren't there"
+    kicker: "Methods · New shower, ApJ 2026"
+    link: /research/finding-showers/
+    blurb: >-
+      How you tell a real meteoroid family from a coincidence — background models,
+      cumulative similarity, and the 5.3σ detection of a new near-Sun stream.
+      With four interactive tools built on the real data.
+
   - title: "Perihelion filtering & the meteorite record"
     kicker: "Flagship · Nature Astronomy"
     link: /research/perihelion-filtering/
     blurb: >-
-      Why meteorite collections are a thermally- and atmospherically-filtered
-      subset of what actually reaches Earth, and where the carbonaceous
+      Why meteorite collections are a thermally and atmospherically filtered
+      subset of what actually hits Earth, and where the carbonaceous
       chondrites went.
 
   - title: "Cometary ↔ asteroidal reservoir mixing"
     kicker: "Small-body dynamics"
     link: /research/reservoir-mixing/
     blurb: >-
-      Most “comet-like” fireballs are asteroidal interlopers: long-term
-      integrations show only ~1–5% of cm–m bodies on Jupiter-family orbits are
-      dynamically cometary.
+      Most “comet-like” fireballs come from asteroidal material, not comets: long-term
+      integrations show the near-Earth Jupiter-family population is dominated by
+      asteroidal interlopers.
 
   - title: "Sensor fusion & radar meteorite detection"
     kicker: "NASA · MetDetect"

@@ -8,8 +8,8 @@ description: "Where is asteroid (33964) Patrickshober right now? A live orbit di
   <header class="page-head">
     <div class="eyebrow">Named by the IAU · 2023</div>
     <h1>Asteroid (33964) Patrickshober</h1>
-    <p class="lede">A 2.4&nbsp;km main-belt asteroid (provisional designation
-      <em>2000&nbsp;NS10</em>), named after me by the International
+    <p class="lede">This is a main-belt asteroid roughly 2.4&nbsp;km across (provisional
+      designation <em>2000&nbsp;NS10</em>), named after me by the International
       Astronomical Union in 2023. Here's where it is <em>right now</em>, computed in
       your browser from JPL orbital elements.</p>
   </header>
@@ -65,7 +65,7 @@ description: "Where is asteroid (33964) Patrickshober right now? A live orbit di
       <a href="https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=33964">Small-Body
       Database</a>; the live sky position, distance and magnitude above are propagated
       and projected in your browser (no servers involved), so they update as you watch.
-      Want the full 3D view? Explore it in
+      For the full 3D view, see
       <a href="https://eyes.nasa.gov/apps/asteroids/">NASA's Eyes on Asteroids</a>.</p>
     <p style="color:var(--faint);font-size:0.9rem">Discovered in 2000; named in 2023
       following the Asteroids, Comets, Meteors conference, in recognition of

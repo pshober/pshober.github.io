@@ -1,24 +1,39 @@
 ---
 layout: home
 role: "Planetary scientist · NASA Postdoctoral Fellow, Johnson Space Center"
-lead: "I study how small bodies deliver material to Earth, finding meteorite falls in weather radar and tracing meteoroids back to the asteroids and comets they came from."
+lead: "Meteorites are most of what we know about how the solar system formed — and a biased sample of it. I work out what that bias is, using fireball cameras, weather radar and telescopic surveys."
 ---
 
-I'm a planetary scientist in the **Astromaterials Research and Exploration Science
-(ARES)** division at NASA Johnson Space Center. The sky above us is instrumented —
-and most of what falls out of it is never found. My work teaches machines to spot
-**freshly fallen meteorites in the U.S. NEXRAD weather-radar network**, so we can
-get to them before the weather does.
+I'm a planetary scientist at NASA Johnson Space Center, in the **Astromaterials
+Research and Exploration Science (ARES)** division. I study small bodies —
+asteroids and comets — to understand how the solar system formed and how it has
+changed since.
 
-I specialise in the full chain from **fireball → fall → meteorite**, combining
-wide-field camera networks (DFN, FRIPON, the Global Fireball Observatory),
-small-body dynamics, and the physics of atmospheric entry. That chain keeps
-surprising us: meteorite collections turn out to be a strongly **filtered**
-sample of what actually hits Earth, shaped by thermal fragmentation near the Sun
-([Nature Astronomy, 2025](https://doi.org/10.1038/s41550-025-02526-6)), and most
-["comet-like" fireballs are in fact asteroidal interlopers](/research/reservoir-mixing/).
+Most of what we know about that history comes from meteorites, and meteorites are
+a badly biased sample. **We have the samples, but we don't know how they were
+sampled.** Before a rock reaches a collection it has to survive
+[repeated close passes to the Sun](/research/perihelion-filtering/), then
+atmospheric entry, then a search that has to find it, and each of those steps
+preferentially destroys a particular kind of material. Working out what that
+selection removes is what makes the samples interpretable.
 
-I earned my PhD at Curtin University in 2022, chasing fireballs across the
-Australian outback with the Desert Fireball Network. Along the way, the IAU named
-asteroid [**(33964) Patrickshober**](/asteroid/) — a rock I'm happy to report is
-staying safely in the main belt.
+Most of my work combines **all-sky fireball camera networks** with **Doppler
+weather radar**, and compares both against
+[asteroids and comets observed telescopically](/research/reservoir-mixing/). At
+NASA I'm using Bayesian methods to
+[combine optical fireball observations with radar](/research/sensor-fusion/),
+which gives better dark-flight trajectories, better predictions of where
+meteorites land, and a clearer view of the fragmentation and ablation a rock goes
+through on the way down — all of which can be tied back to what telescopes saw
+before it arrived.
+
+The goal is to make the whole sequence routine: observe an object in space, record
+its entry with cameras, radar, infrasound, seismometers and spectra, then recover
+pieces of it on the ground. That matters most for objects **10–100 m across**,
+small enough for surveys to miss and large enough to do damage, so the same
+measurements that tell us how the solar system is put together also feed
+**planetary defense**.
+
+I earned my PhD at Curtin University in 2022 with the **Desert Fireball Network**,
+spent two years at Paris Observatory, and asteroid
+[**(33964) Patrickshober**](/asteroid/) is named after me.

@@ -18,7 +18,8 @@ permalink: /funding/
   <ul class="stats" aria-label="Funding at a glance">
     <li class="stat"><span class="stat__num">€{{ site.data.metrics.funding_keuro }}k</span><span class="stat__label">competitive funding as PI</span></li>
     <li class="stat"><span class="stat__num">{{ site.data.metrics.fellowships }}</span><span class="stat__label">postdoctoral fellowships</span></li>
-    <li class="stat"><span class="stat__num">5</span><span class="stat__label">competitive awards</span></li>
+    {% assign award_count = 0 %}{% for sec in site.data.funding.sections %}{% assign award_count = award_count | plus: sec.entries.size %}{% endfor %}
+    <li class="stat"><span class="stat__num">{{ award_count }}</span><span class="stat__label">competitive awards</span></li>
   </ul>
 
   {% for sec in site.data.funding.sections %}

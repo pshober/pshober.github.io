@@ -22,18 +22,21 @@ papers:
 
 Dark, primitive, water- and organic-rich **carbonaceous bodies** dominate the
 small-body reservoirs and, by [debiased impact-flux models](https://doi.org/10.1051/0004-6361/202450532),
-should supply *at least half* of the macroscopic objects striking Earth. Yet only about **4 % of recovered
+should supply *at least half* of the macroscopic objects striking Earth. Yet only about **4% of recovered
 meteorites are carbonaceous chondrites**. These same materials also have the
 *shortest* cosmic-ray exposure ages of any meteorite class, meaning they were
-liberated recently, while already on near-Earth orbits.
+broken off their parent bodies recently, after those parents were already on
+near-Earth orbits.
 
 If carbonaceous meteoroids are released so recently and so close to home, do we see
 coherent streams of them? Testing meteorites, instrumented fireballs and
 space-based impact detections, I found **no significant excess clustering**, only
-a modest signal in telescopic NEO catalogues, consistent with short-lived families
-from recent tidal disruption. Rapid stream decoherence (10⁴–10⁵ yr) intrinsically
-hides any such clusters. The paradox sharpens: recent production, high expected
-flux, no robust streams, and only ~4 % carbonaceous samples.
+a modest signal in telescopic NEO catalogs, consistent with short-lived families
+from recent tidal disruption. That null is expected rather than
+informative, though: streams decohere in 10⁴–10⁵ yr, which is fast enough to erase
+the clustering before we could see it. So the streams tell us nothing either way, and
+the paradox stands where it was — high expected flux, recent production, and only
+~4% of recovered meteorites carbonaceous.
 
 ## A two-step filter near the Sun
 
@@ -53,7 +56,7 @@ explained by source regions delivering intrinsically weak bodies. Instead,
 that have spent time at low perihelion are systematically depleted among the falls,
 and the survivors come disproportionately from **low-inclination, low-perihelion**
 orbits (excesses up to ~11×). The natural reading is a **two-step filter**: repeated
-heating/cooling cycles at small perihelion fracture friable, hydrated material, and
+cycles of heating and cooling at small perihelion distances fracture friable, hydrated material, and
 atmospheric entry then removes the remaining porous fragments. Meteorite collections
 are thus enriched in compact survivors and depleted in fragile primitive matter. That
 picture is consistent with the rubble-pile structure and [thermal-fatigue cracking](https://doi.org/10.1038/s41467-020-16528-7)

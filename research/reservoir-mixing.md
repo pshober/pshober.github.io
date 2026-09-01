@@ -3,7 +3,7 @@ layout: research
 title: "Cometary ↔ asteroidal reservoir mixing"
 permalink: /research/reservoir-mixing/
 eyebrow: "Small-body dynamics"
-lede: "Most “comet-like” fireballs aren't comets at all. Long-term integrations show the near-Earth “Jupiter-family” population is dominated by asteroidal interlopers."
+lede: "Most “comet-like” fireballs aren't produced by cometary material at all. Long-term integrations show the near-Earth “Jupiter-family” population is dominated by asteroidal interlopers."
 hero_image: /assets/img/research/tisserand-ae.jpg
 hero_alt: "Eccentricity versus semi-major axis, with asteroids and comets separated by Tisserand parameter lines"
 hero_caption: "Asteroids (blue) and comets (red) in eccentricity–semi-major-axis space, split by the Tisserand parameter (values of 2 and 3). The “comet-like” region is heavily contaminated by asteroidal interlopers. Figure from Shober et al. (2024)."
@@ -37,27 +37,28 @@ belt through resonances and evolve more regularly.
 ## What the fireballs actually show
 
 During my PhD I used observed close encounters to quantify this mixing, first
-analysing the [**longest well-observed grazing fireball**](https://doi.org/10.3847/1538-3881/ab8002)
+analyzing the [**longest well-observed grazing fireball**](https://doi.org/10.3847/1538-3881/ab8002)
 on record, in which an Apollo-type asteroidal meteoroid was scattered by Earth onto a
-JFC-type orbit. That motivated an observationally-anchored
+JFC-type orbit. That motivated an observationally anchored
 [**steady-state model of Earth close encounters**](https://doi.org/10.1093/mnras/staa2559):
-a small but persistent flux (~2.5 × 10⁸ objects yr⁻¹, ~0.1 % of the population in this
+a small but persistent flux (~2.5 × 10⁸ objects yr⁻¹, ~0.1% of the population in this
 size range) is transferred from asteroidal orbits (Tisserand parameter above 3) onto
 JFC-type orbits.
 
 In [my thesis's final paper](https://doi.org/10.3847/PSJ/abde4b), long-term integrations
-of 50 sporadic DFN fireballs on JFC-type orbits found that only **~4 % show recent Jupiter
-encounters and genuinely cometary evolution**, while **96 % behave as stable asteroidal
-bodies**. During my Marie Curie postdoc I [scaled this up](https://doi.org/10.1051/0004-6361/202449635),
+of 50 sporadic DFN fireballs on JFC-type orbits found that **fewer than 4% are genetically cometary**; the rest behave as stable
+asteroidal bodies. During my postdoc in Paris I [scaled this up](https://doi.org/10.1051/0004-6361/202449635),
 comparing 646 well-observed "JFC-like" fireballs from French, Australian, Czech and
-American sensors against 661 catalogued JFCs, and
-confirmed it: only about **1–5 % of cm–m bodies on JFC-type orbits are dynamically
-cometary**, while roughly **22 % of NEOs classified as JFCs** actually follow
-surprisingly stable, asteroid-like orbits.
+American sensors against 661 cataloged JFCs, and
+confirmed it: **79–92% of the meteoroids on “JFC-like” orbits show no sign of frequent
+Jupiter encounters**, and only **1–5% of all the fireballs those four networks detected**
+are dynamically cometary — while roughly **22% of near-Earth JFCs** (16 of 72) actually
+follow stable, asteroid-like orbits.
 
 Simple proxies like the Tisserand parameter are not enough at these sizes: **dynamical
-stability diagnostics are essential** to separate the reservoirs. The genuinely
-cometary material is mostly ground to dust, feeding the zodiacal cloud. I'm now
-finalising a study of **>2,200 "asteroids on cometary orbits"** (in preparation), combining long-term
+stability diagnostics are essential** to separate the reservoirs. Genuinely cometary
+material is too friable to survive long in near-Earth space, so little of it ever reaches
+the ground. I'm now
+finalizing a study of **>2,200 "asteroids on cometary orbits"** (in preparation), combining long-term
 integrations, unsupervised clustering and physical properties (albedo, taxonomy) to
 map the mixing interface more finely.

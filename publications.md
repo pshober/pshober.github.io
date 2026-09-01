@@ -17,11 +17,11 @@ description: "Peer-reviewed publications of Patrick M. Shober, with DOI and arXi
       <a class="btn btn--primary" href="https://ui.adsabs.harvard.edu/search/q=orcid:{{ site.author.orcid }}&sort=date desc">NASA ADS profile</a>
       <a class="btn btn--ghost" href="{{ site.links.orcid }}">ORCID</a>
       <a class="btn btn--ghost" href="{{ site.links.scholar }}">Google Scholar</a>
-      <a class="btn btn--ghost" href="https://arxiv.org/a/shober_p_1">arXiv</a>
+      <a class="btn btn--ghost" href="https://arxiv.org/search/?searchtype=author&amp;query=Shober%2C+P">arXiv</a>
     </div>
     <p class="card__meta">Each title links to the published version; <strong>DOI</strong> and
-      <strong>arXiv</strong> links follow each entry. The three in-prep papers and the
-      FRIPONMeter instrument paper don't have a journal DOI yet.
+      <strong>arXiv</strong> links follow each entry. The in-prep and in-review papers, and the
+      FRIPONMeter instrument paper, don't have a journal DOI yet.
       {% if site.data.ads_metrics.updated and site.data.ads_metrics.updated != "" %}
       List auto-synced from NASA ADS ({{ site.data.ads_metrics.updated }}).{% endif %}</p>
   </header>

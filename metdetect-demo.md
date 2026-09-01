@@ -79,8 +79,9 @@ description: "Explore real, automatically detected meteorite falls in NEXRAD Dop
     <p class="lede">When a meteorite fall's debris drifts to the ground it briefly shows up in
       NEXRAD Doppler weather radar. Fireball networks tell us <em>when and where</em> to look;
       <strong>MetDetect</strong> answers <em>which</em> radar echoes are the falling debris.
-      Each event below shows every candidate the detector flags at its 10%-false-alarm
-      operating point — false positives included — re-run with the current pipeline.
+      Each event below shows every candidate the detector surfaces, with the ones clearing
+      its 10%-false-alarm operating point marked; false positives are left in, and every
+      run uses the current pipeline.
       Everything renders in your browser.</p>
   </header>
 
@@ -140,7 +141,7 @@ description: "Explore real, automatically detected meteorite falls in NEXRAD Dop
 
   <div class="prose">
     <p><strong>What am I looking at?</strong> Each dot is a radar “gate” inside a candidate the
-      detector flagged at its operating point, coloured by reflectivity. Real falls appear as an
+      detector flagged at its operating point, colored by reflectivity. Real falls appear as an
       elongated <em>streak</em> — fragments strung out along the wind as they descend. The 3D view
       shows the same gates at their true altitudes. The radar site is marked ✳; ◆ marks the
       candidate's centroid. Rings around dots mark agreement with the manually identified truth.</p>
@@ -155,7 +156,7 @@ description: "Explore real, automatically detected meteorite falls in NEXRAD Dop
     <h2>How MetDetect works</h2>
     <p class="mtd-note" style="max-width:70ch">A window of raw NEXRAD Level-II radar (~10⁶ gates)
       is reduced, stage by stage, to a handful of candidate debris clusters, and a null-trained
-      detector scores each against real no-fall radar behaviour.</p>
+      detector scores each against real no-fall radar behavior.</p>
     <div class="mtd-how-grid">
       <figure>
         <img src="{{ '/assets/img/metdetect-demo/cascade.svg' | relative_url }}"

@@ -1,11 +1,13 @@
 # Competitive funding, fellowships & scholarships. Rendered on /funding/ and
 # summarized on /cv/. NOT touched by scripts/update_publications.py — edit freely.
-# `amount` is a display string (matches the CV PDF); `currency` is a machine hint.
+# Totals below match assets/pdf/SHOBER_CV_2026.pdf: 285 000 € as PI since 2022,
+# 224 000 € in merit-based academic scholarships. Currencies are labeled because
+# the awards were made in three of them.
 
 intro: >-
-  Roughly €280,000 in competitive, peer-reviewed funding won as Principal
-  Investigator across two postdoctoral fellowships, plus merit scholarships
-  spanning undergraduate and doctoral study.
+  About €285,000 in competitive, peer-reviewed funding won as Principal
+  Investigator across two postdoctoral fellowships, alongside roughly €224,000
+  in merit-based scholarships covering doctoral and undergraduate study.
 
 sections:
   - title: "As Principal Investigator"
@@ -13,7 +15,7 @@ sections:
       - period: "2024–2026"
         title: "NASA Postdoctoral Program Fellowship"
         funder: "NASA / ORAU · Johnson Space Center (ARES Division)"
-        amount: "$180,000"
+        amount: "US$180,000"
         currency: USD
         role: "PI"
         status: "active"
@@ -21,7 +23,7 @@ sections:
         link: /metdetect-demo/
       - period: "2022–2024"
         title: "Paris Région Fellowship (MASSED)"
-        funder: "Île-de-France Domaines d'Intérêt Majeur · Marie Skłodowska-Curie framework · Paris Observatory (LTE)"
+        funder: "Île-de-France Domaines d'Intérêt Majeur · Paris Observatory (LTE)"
         amount: "€128,880"
         currency: EUR
         role: "PI"
@@ -30,24 +32,32 @@ sections:
 
   - title: "Scholarships & early-career support"
     entries:
+      - period: "2019"
+        title: "Institute for Geoscience Research Small Grant"
+        funder: "The Institute for Geoscience Research (TIGeR), Curtin University"
+        amount: "A$2,000"
+        currency: AUD
+        role: "Recipient"
+        status: "complete"
+        note: "Collaborative visit to the University of Western Ontario, working with Prof. Peter Brown's meteor physics group."
       - period: "2017–2022"
         title: "Curtin International Postgraduate Research Scholarship"
         funder: "Curtin University, Perth"
-        amount: "$158,600"
-        currency: AUD   # TODO confirm — CV PDF shows a bare "$"
+        amount: "A$158,600"
+        currency: AUD
         role: "Doctoral scholar"
         status: "complete"
       - period: "2017–2022"
         title: "Curtin Research Stipend Scholarship"
         funder: "Curtin University, Perth"
-        amount: "$93,387"
-        currency: AUD   # TODO confirm — CV PDF shows a bare "$"
+        amount: "A$93,387"
+        currency: AUD
         role: "Doctoral scholar"
         status: "complete"
       - period: "2013–2017"
         title: "Academic Scholarship"
         funder: "Case Western Reserve University"
-        amount: "$92,000"
+        amount: "US$92,000"
         currency: USD
         role: "Undergraduate"
         status: "complete"

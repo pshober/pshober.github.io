@@ -15,7 +15,7 @@ selected:
     arxiv: "2504.10690"
   - year: 2026
     authors: "Shober PM, Vaubaillon J, Anghel S, et al."
-    title: "Comparing the data-reduction pipelines of FRIPON, DFN, WMPL, and AMOS: the Geminids"
+    title: "Comparing the data-reduction pipelines of FRIPON, DFN, WMPL, and AMOS: a case study of the Geminids"
     venue: "Astronomy & Astrophysics, 705, A65"
     doi: "10.1051/0004-6361/202554364"
   - year: 2025
@@ -25,7 +25,7 @@ selected:
     doi: "10.1111/maps.70041"
   - year: 2026
     authors: "Shober PM"
-    title: "Asteroidal activity amongst meteor datasets: a confirmed new “rock-comet” stream"
+    title: "Asteroidal activity among meteor datasets: confirmed new “rock-comet” stream and search for a tidal-disruption signature"
     venue: "The Astrophysical Journal, 1000(2), 254"
     doi: "10.3847/1538-4357/ae4bde"
   - year: 2019
@@ -68,14 +68,13 @@ sections:
     items:
       - year: 2026
         authors: "Shober PM"
-        title: "Asteroidal activity amongst meteor datasets: confirmed new “rock-comet” stream and search for a tidal disruption signature"
+        title: "Asteroidal activity among meteor datasets: confirmed new “rock-comet” stream and search for a tidal-disruption signature"
         venue: "The Astrophysical Journal, 1000(2), 254"
         doi: "10.3847/1538-4357/ae4bde"
       - year: 2026
         authors: "Lebreton M et al. (incl. Shober PM)"
         title: "FRIPONMeter: a high-resolution radiometer for fireballs"
         venue: "WGN, Journal of the IMO (in press)"
-        url: "https://www.fripon.org/wp-content/uploads/2026/03/FriponMeter.pdf"
       - year: 2026
         authors: "Deam S, Devillepoix HAR, Nesvorný D, Shober PM, et al."
         title: "A Near-Earth Object Model Calibrated to Earth Impactors"

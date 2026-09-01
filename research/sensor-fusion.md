@@ -24,11 +24,12 @@ papers:
 
 ## MetDetect: meteorites in weather radar
 
-At NASA Johnson Space Center (ARES) I'm building **MetDetect**, exploiting the U.S.
-**NEXRAD** Doppler weather-radar network, a continent-scale, openly-available mesh
-that can detect falling meteoritic debris. Working with Paul Abell and Mark Fries
-(who pioneered the Doppler-radar meteorite method), the goal is to turn that network
-into an **automatic, physically-interpretable detector of fresh meteorite falls.**
+At NASA Johnson Space Center (ARES) I'm building **MetDetect**, which uses the U.S.
+**NEXRAD** (Next-Generation Radar) Doppler weather-radar network, a continent-scale,
+openly available mesh that can pick up falling meteoritic debris. I work on it with
+Paul Abell and Mark Fries, who pioneered the Doppler-radar meteorite method, and our
+aim is to turn that network into an **automatic, physically interpretable detector of
+fresh meteorite falls**.
 
 The detector ingests volumetric radar scans, suppresses weather noise, clusters
 spatio-temporal echoes with unsupervised machine learning, and applies consistency
@@ -52,10 +53,11 @@ streams with **sequential Bayesian estimators (Kalman-type filters)** that would
 the meteoroid's state (position, velocity, mass, density, fragmentation) and the
 ablation/fragmentation model parameters as each observation is assimilated.
 
-The aim is full **posterior distributions** for pre-atmospheric mass, bulk density,
-strength and fragment size-frequency, with realistic uncertainties propagated to the
-predicted fall ellipse, rather than single best-fit values, with a forward model coupled
-to **hierarchical MCMC** so constraints can be inferred jointly across events.
+The output should be full **posterior distributions** for pre-atmospheric mass, bulk
+density, strength and fragment size-frequency, rather than single best-fit values, with
+the uncertainties carried through to the predicted fall ellipse. Coupling the forward
+model to **hierarchical Markov-chain Monte Carlo (MCMC)** would let constraints be
+inferred jointly across events.
 
 <figure class="fig" data-lightbox data-full="/assets/img/research/end-to-end-model.webp" data-cap="End to end: a telescopic pre-impact detection, the luminous fireball and its fragmentation, the dark flight of the debris, and the ground and radar sensors that catch it — every stream feeding one holistic model.">
   <img src="/assets/img/research/end-to-end-model.webp" alt="Diagram of the full observation chain: a ground-based telescope and satellite catch the asteroid pre-impact, a fireball camera records the luminous phase and fragmentation event, Doppler weather radar sweeps the dark-flight debris as radar pixels, and an infrasound array and seismometer record the event — all arrows converging on a single holistic model" loading="lazy" width="1600" height="873">
@@ -64,12 +66,12 @@ to **hierarchical MCMC** so constraints can be inferred jointly across events.
 
 ## Closing the decametric gap {#decametric-gap}
 
-<figure class="fig" data-lightbox data-full="/assets/img/research/decametric-gap.png" data-cap="Observational coverage of small bodies by size: telescopes constrain the large end, fireball networks the small end, leaving a poorly-sampled 10–100 m “gap in knowledge.”">
+<figure class="fig" data-lightbox data-full="/assets/img/research/decametric-gap.png" data-cap="Observational coverage of small bodies by size: telescopes constrain the large end, fireball networks the small end, leaving a poorly sampled 10–100 m “gap in knowledge.”">
   <img src="/assets/img/research/decametric-gap.png" alt="Plot of peak dynamic pressure and albedo versus diameter showing meteors, fireballs and asteroids, with a 10-100 m gap in knowledge" loading="lazy" width="632" height="380">
   <figcaption>The 10–100&nbsp;m “decametric gap” between what fireball networks and telescopic surveys each sample. <span class="muted">P.&nbsp;Shober; compiled from FRIPON, GMN, CAMS and NEO-survey data.</span></figcaption>
 </figure>
 
-The **10–100 m size range** is the worst-characterised in the whole small-body
+The **10–100 m size range** is the worst-characterized in the whole small-body
 inventory: telescopic surveys become inefficient for objects this small and dark,
 while fireball networks only sample what actually hits Earth. Yet this regime
 dominates the impact flux responsible for [**Chelyabinsk-type events**](https://doi.org/10.1126/science.1242642)
@@ -80,11 +82,11 @@ NEO population that upcoming infrared surveys will reveal ([**NEO Surveyor**](ht
 
 ## From discovery to recovery
 
-A small but growing number of asteroids have now been spotted *before* impact (asteroid
+A small but growing number of asteroids have now been spotted *before* impact, among them
 [2023 CX1](https://doi.org/10.1038/s41550-025-02659-8), which dropped meteorites over
-Normandy, among them). The endgame is **full-chain, "telescope-to-ground" events**:
+Normandy. What I want is routine **full-chain, "telescope-to-ground" events**:
 telescopic discovery and spectroscopy → predicted trajectory and impact energy → luminous
 flight in the camera networks → fragmentation from infrasound/seismic → **dark flight in
 Doppler radar** → prediction and **recovery** of the meteorites, with every step fused into
-one coherent, uncertainty-aware estimate. Building toward that pipeline, and helping prepare
-networks like FRIPON for this regime, is the goal of my sensor-fusion program.
+one coherent, uncertainty-aware estimate. Building that pipeline, and helping prepare networks like
+FRIPON for it, is what my sensor-fusion work is for.

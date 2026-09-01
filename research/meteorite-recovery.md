@@ -3,7 +3,7 @@ layout: research
 title: "Meteorite recovery & fireball networks"
 permalink: /research/meteorite-recovery/
 eyebrow: "FRIPON · GFO · DFN"
-lede: "Reducing fireball-camera data into trajectories and orbits, and helping recover the meteorites that drop from well-observed falls."
+lede: "Turning fireball-camera data into trajectories and orbits, and helping ground teams find the meteorites that follow."
 hero_image: /assets/img/research/recovery-networks.png
 hero_alt: "World map of major fireball and meteorite-tracking camera networks"
 hero_caption: "Major fireball and meteorite-tracking camera networks worldwide."
@@ -15,8 +15,8 @@ I work on the data-reduction and analysis side of three wide-field fireball netw
 the **Desert Fireball Network** (DFN, during my PhD), the **Global Fireball Observatory**
 (GFO), and **FRIPON**, where I have been part of the scientific core team since 2022. That
 work runs from multi-station astrometry and photometry through trajectories, orbits and
-dark-flight modelling, and includes helping plan and carry out the ground searches that
-recover meteorites from well-observed falls.
+dark-flight modeling, and includes the fall-line predictions that ground search teams
+use to decide where to look.
 
 I also led a systematic comparison of the FRIPON, DFN, WMPL and AMOS reduction pipelines on
 a common Geminid sample ([Shober et al. 2026, *A&A*](https://doi.org/10.1051/0004-6361/202554364)),
@@ -25,7 +25,7 @@ coordination with citizen-science partners such as Vigie-Ciel.
 
 ## Recovered meteorites
 
-Falls I have helped recover and/or characterise in the literature:
+Falls whose recovery or characterization I contributed to in the literature:
 
 - **Arpu Kuilpu** (H5), traced to the outer main belt. [Shober et al. 2022, *MAPS*](https://doi.org/10.1111/maps.13813)
 - **Madura Cave**, an Australian fall with reconstructed trajectory and orbital history. [Devillepoix, Sansom, Shober et al. 2022, *MAPS*](https://doi.org/10.1111/maps.13820)
