@@ -57,6 +57,11 @@ strength and fragment size-frequency, with realistic uncertainties propagated to
 predicted fall ellipse, rather than single best-fit values, with a forward model coupled
 to **hierarchical MCMC** so constraints can be inferred jointly across events.
 
+<figure class="fig" data-lightbox data-full="/assets/img/research/end-to-end-model.webp" data-cap="End to end: a telescopic pre-impact detection, the luminous fireball and its fragmentation, the dark flight of the debris, and the ground and radar sensors that catch it — every stream feeding one holistic model.">
+  <img src="/assets/img/research/end-to-end-model.webp" alt="Diagram of the full observation chain: a ground-based telescope and satellite catch the asteroid pre-impact, a fireball camera records the luminous phase and fragmentation event, Doppler weather radar sweeps the dark-flight debris as radar pixels, and an infrasound array and seismometer record the event — all arrows converging on a single holistic model" loading="lazy" width="1600" height="873">
+  <figcaption>Every sensor is a partial view of the same event; fusion means letting all of them constrain one model. <span class="muted">Illustration: P.&nbsp;Shober.</span></figcaption>
+</figure>
+
 ## Closing the decametric gap {#decametric-gap}
 
 <figure class="fig" data-lightbox data-full="/assets/img/research/decametric-gap.png" data-cap="Observational coverage of small bodies by size: telescopes constrain the large end, fireball networks the small end, leaving a poorly-sampled 10–100 m “gap in knowledge.”">

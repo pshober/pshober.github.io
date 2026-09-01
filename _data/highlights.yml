@@ -1,19 +1,6 @@
 # Homepage "Latest publications" capsule cards (rendered by _layouts/home.html).
-# Mix of papers and press — newest first, first two are shown.
-# `date_label` is a display string (not parsed); `image` should be ~800px wide.
-- title: "Perihelion filtering and the meteorite record"
-  kicker: "Flagship result · Nature Astronomy 2025"
-  blurb: >-
-    Meteorite collections aren't a fair sample of what hits Earth. What survives
-    to the ground is decided by an object's history close to the Sun, not only
-    where it came from.
-  date_label: "April 2025"
-  # Interim art: P. Shober's own asteroid->meteorite survival-sequence illustration
-  # (the paper's core concept). Swap when Patrick picks exact per-study images.
-  image: /assets/img/media/fall-sequence-thumb.webp
-  alt: "Illustration of the journey from asteroid to meteor to fireball to meteorite — what enters the atmosphere versus what survives to the ground"
-  url: https://doi.org/10.1038/s41550-025-02526-6
-
+# Mix of papers and press — order here is the order shown; the first two appear.
+# `date_label` is a display string (not parsed); `image` should be ~900px wide.
 - title: "I found a new meteor shower, and it comes from a crumbling asteroid"
   kicker: "Flagship result · The Conversation"
   blurb: >-
@@ -21,7 +8,19 @@
     to take pictures of shooting stars. I am one of the scientists who study
     these meteors.
   date_label: "April 10, 2026"
-  # The actual M2026-A1 stream-orbit figure from the ApJ study the article describes
+  # The M2026-A1 stream-orbit figure from the ApJ study the article describes
   image: /assets/img/media/m2026a1-orbits-thumb.webp
   alt: "Top-down view of the M2026-A1 meteoroid stream orbits sweeping through the inner solar system"
   url: https://theconversation.com/i-found-a-new-meteor-shower-and-it-comes-from-an-asteroid-getting-broken-down-by-the-sun-277557
+
+- title: "Perihelion filtering and the meteorite record"
+  kicker: "Flagship result · Nature Astronomy 2025"
+  blurb: >-
+    Meteorite collections aren't a fair sample of what hits Earth. What survives
+    to the ground is decided by an object's history close to the Sun, not only
+    where it came from.
+  date_label: "April 2025"
+  # P. Shober's own double-filter figure from the paper's talks and posters
+  image: /assets/img/media/perihelion-filter-card.webp
+  alt: "Illustration of the two-step filter: thermal fragmentation near the Sun breaking apart dark primitive material, then fireballs burning through the atmosphere above a meteorite-strewn desert"
+  url: https://doi.org/10.1038/s41550-025-02526-6

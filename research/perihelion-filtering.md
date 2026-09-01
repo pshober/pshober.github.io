@@ -37,8 +37,8 @@ flux, no robust streams, and only ~4 % carbonaceous samples.
 
 ## A two-step filter near the Sun
 
-<figure class="fig fig--portrait" data-lightbox data-full="/assets/img/research/perihelion-two-filter.png" data-cap="The two-step filter: thermal fragmentation near the Sun, then atmospheric entry, set what reaches the ground.">
-  <img src="/assets/img/research/perihelion-two-filter.png" alt="Schematic of the two-step filter: thermal fragmentation near the Sun (Filter 1) and atmospheric entry (Filter 2), determining which material reaches meteorite collections" loading="lazy" width="421" height="628">
+<figure class="fig" data-lightbox data-full="/assets/img/research/perihelion-filter.webp" data-cap="The two-step filter: thermal fragmentation near the Sun breaks down dark, primitive material, then the atmosphere destroys much of what is left — only about half of all 10–100 kg objects survive to the ground.">
+  <img src="/assets/img/research/perihelion-filter.webp" alt="Illustration of the two-step filter. Top: near the Sun, thermal stress cracks apart a dark primitive asteroid while dry stony material is less affected (Filter 1, thermal fragmentation). Middle: fireballs burn through the atmosphere, with only about 50 percent of 10 to 100 kilogram objects surviving (Filter 2). Bottom: the surviving stones as a meteorite collection on desert ground." loading="lazy" width="1600" height="893">
   <figcaption>The two-step filter shaping the meteorite record: thermal fragmentation near the Sun, then atmospheric survival. <span class="muted">Illustration: P.&nbsp;Shober.</span></figcaption>
 </figure>
 
