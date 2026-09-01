@@ -7,7 +7,7 @@ description: "Where is asteroid (33964) Patrickshober right now? A live orbit di
 <div class="container container--narrow">
   <header class="page-head">
     <div class="eyebrow">Named by the IAU · 2023</div>
-    <h1>Asteroid (33964)&nbsp;Patrickshober</h1>
+    <h1>Asteroid (33964) Patrickshober</h1>
     <p class="lede">A 2.4&nbsp;km main-belt asteroid (provisional designation
       <em>2000&nbsp;NS10</em>), named after me by the International
       Astronomical Union in 2023. Here's where it is <em>right now</em>, computed in
@@ -27,10 +27,16 @@ description: "Where is asteroid (33964) Patrickshober right now? A live orbit di
 
   <div class="ast-grid">
     <div class="ast-canvas-wrap">
-      <canvas id="orbit" width="600" height="600" role="img"
-        aria-label="Interactive diagram of the orbit of asteroid 33964 Patrickshober, shown with the Sun and the orbits of Mercury, Venus, Earth, Mars and Jupiter"></canvas>
-      <p class="ast-hint">drag to tilt · scroll or pinch to zoom · double-click to reset</p>
-      <ul id="ast-legend" class="ast-legend" aria-label="Diagram legend"></ul>
+      <canvas id="orbit" width="600" height="600" role="img" tabindex="0"
+        aria-describedby="ast-hint"
+        aria-label="Interactive diagram of the orbit of asteroid 33964 Patrickshober, shown with the Sun and the orbits of Mercury, Venus, Earth, Mars and Jupiter. The legend below lists every symbol."></canvas>
+      <div class="ast-controls">
+        <button id="ast-zoom-out" class="ast-ctrl" type="button" aria-label="Zoom out">−</button>
+        <button id="ast-zoom-in" class="ast-ctrl" type="button" aria-label="Zoom in">+</button>
+        <button id="ast-reset" class="ast-ctrl ast-ctrl--wide" type="button">Reset view</button>
+      </div>
+      <p id="ast-hint" class="ast-hint">drag or arrow keys to tilt · + / − or pinch to zoom · double-click to reset</p>
+      <ul id="ast-legend" class="ast-legend" role="list" aria-label="Diagram legend"></ul>
       <p class="ast-credit">Orbital elements: <a href="{{ site.data.asteroid.source.url }}">{{ site.data.asteroid.source.name }}</a>,
         solution {{ site.data.asteroid.source.solution_date }} · planet positions from JPL's
         approximate ephemeris · propagated live in your browser</p>
@@ -44,7 +50,8 @@ description: "Where is asteroid (33964) Patrickshober right now? A live orbit di
         <dt>Distance from Earth</dt><dd id="ast-dist">…</dd>
         <dt>Apparent magnitude</dt><dd id="ast-mag">…</dd>
       </dl>
-      <p class="ast-now-look" style="margin:1rem 0 0.6rem; color:var(--muted); font-size:0.92rem">
+      <p class="ast-now-look" style="margin:1rem 0 0.6rem; color:var(--muted); font-size:0.92rem"
+         aria-live="polite">
         <span id="ast-look">Far too faint for the naked eye; you'll need a telescope.</span>
       </p>
       <button id="ast-locate" class="btn btn--ghost" type="button">Use my location</button>

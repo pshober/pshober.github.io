@@ -41,4 +41,9 @@
   a { color: #000; text-decoration: underline; }
   .capsule__body { background: #fff; }
   .hero__photo { border-color: #000; }
+  // The asteroid panel keeps dark-theme colours otherwise, which vanish on paper.
+  .ast-controls { display: none !important; }
+  .ast-canvas-wrap, .ast-now, .ast-fact { background: #fff !important; border-color: #999 !important; }
+  .ast-legend, .ast-credit, .ast-hint, .ast-now dt, .ast-fact .k { color: #000 !important; }
+  .ast-credit a { color: #000 !important; }
 }

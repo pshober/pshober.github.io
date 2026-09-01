@@ -92,9 +92,29 @@
 
   // Earth heliocentric ecliptic (AU). Uses the same J2000 planet table as the
   // diagram: an earlier low-precision Sun formula returned longitudes measured
-  // from the equinox of date, which is ~0.37° from J2000 and put the derived
-  // sky position out by ~12 arcminutes.
+  // from the equinox of date, ~0.37° from J2000. Mixing that with the J2000
+  // asteroid elements put Earth 0.0066 AU out and moved the derived sky
+  // position by ~6 arcmin typically (1–17 arcmin over a year) — enough to
+  // shift the displayed declination by a whole arcminute.
   function earthEcliptic(jd) { return planetPos(EARTH, jd); }
+
+  // IAU 1976 precession, J2000 → mean equinox of date. Sidereal time is
+  // reckoned from the equinox of date, so an alt/az built from a J2000 RA
+  // without this swings by up to ~0.4° in altitude.
+  function precessToDate(raDeg, decDeg, jd) {
+    var T = (jd - 2451545.0) / 36525, S = D2R / 3600;
+    var ze = (2306.2181 * T + 0.30188 * T * T + 0.017998 * T * T * T) * S;
+    var z  = (2306.2181 * T + 1.09468 * T * T + 0.018203 * T * T * T) * S;
+    var th = (2004.3109 * T - 0.42665 * T * T - 0.041833 * T * T * T) * S;
+    var a = raDeg * D2R, d = decDeg * D2R;
+    var x = Math.cos(d) * Math.cos(a), y = Math.cos(d) * Math.sin(a), w = Math.sin(d);
+    var cz = Math.cos(ze), sz = Math.sin(ze), cZ = Math.cos(z), sZ = Math.sin(z);
+    var ct = Math.cos(th), st = Math.sin(th);
+    var X = (cz * ct * cZ - sz * sZ) * x + (-sz * ct * cZ - cz * sZ) * y + (-st * cZ) * w;
+    var Y = (cz * ct * sZ + sz * cZ) * x + (-sz * ct * sZ + cz * cZ) * y + (-st * sZ) * w;
+    var Z = (cz * st) * x + (-sz * st) * y + ct * w;
+    return { ra: norm360(Math.atan2(Y, X) * R2D), dec: Math.asin(Z) * R2D };
+  }
 
   function eclToEqu(v) {
     return {
@@ -158,8 +178,9 @@
     var T = (jd - 2451545.0) / 36525;
     var gmst = 280.46061837 + 360.98564736629 * (jd - 2451545.0) + 0.000387933 * T * T;
     var lst = (gmst + lon) * D2R;
-    var ha = lst - raDeg * D2R;
-    var dec = decDeg * D2R, la = lat * D2R;
+    var od = precessToDate(raDeg, decDeg, jd);   // match GMST's equinox of date
+    var ha = lst - od.ra * D2R;
+    var dec = od.dec * D2R, la = lat * D2R;
     var alt = Math.asin(Math.sin(dec) * Math.sin(la) + Math.cos(dec) * Math.cos(la) * Math.cos(ha));
     var az = Math.atan2(-Math.sin(ha), Math.tan(dec) * Math.cos(la) - Math.sin(la) * Math.cos(ha));
     return { alt: alt * R2D, az: norm360(az * R2D) };
@@ -189,7 +210,7 @@
     var HOME = { az: 0, tilt: Math.PI / 2, zoom: 1 };
     var view = { az: HOME.az, tilt: HOME.tilt, zoom: HOME.zoom };
     var AST_COLOR = "#ff6c40", SUN_COLOR = "#ffc532";
-    var ORBIT_COLOR = "rgba(255,255,255,0.14)";
+    var ORBIT_COLOR = "rgba(255,255,255,0.34)";   // faint but actually visible
     var src = A.source || {};
 
     // Asteroid orbit path in 3D ecliptic coordinates (AU) — fixed, so precompute.
@@ -223,22 +244,32 @@
     function dot(p, r, color) {
       ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 2 * Math.PI); ctx.fillStyle = color; ctx.fill();
     }
-    // Labels are drawn in priority order and skipped when they would collide,
-    // so a crowded inner system stays readable instead of overprinting.
-    var placed = [];
-    function label(p, text) {
+    // Labels are drawn in priority order and skipped when they would collide
+    // with an already-placed label, a body's marker disc, or the corner
+    // credit — a crowded inner system stays readable instead of overprinting.
+    var blockers = [];
+    function overlaps(box) {
+      for (var i = 0; i < blockers.length; i++) {
+        var b = blockers[i].box;
+        if (box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1]) return true;
+      }
+      return false;
+    }
+    function label(p, text, own) {
       ctx.font = "11px system-ui";
       var x = p[0] + 6, y = p[1] - 5;
       var box = [x - 2, y - 12, x + ctx.measureText(text).width + 2, y + 3];
-      for (var i = 0; i < placed.length; i++) {
-        var b = placed[i];
-        if (box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1]) return;
-      }
-      placed.push(box);
+      var save = blockers;
+      if (own) blockers = blockers.filter(function (b) { return b.id !== own; });
+      var hit = overlaps(box);
+      blockers = save;
+      if (hit) return;
+      blockers.push({ box: box });
+      ctx.lineJoin = "round";                  // no miter spikes on letter apexes
       ctx.lineWidth = 3;                       // dark halo for legibility
       ctx.strokeStyle = "rgba(20,0,31,0.85)";
       ctx.strokeText(text, x, y);
-      ctx.fillStyle = "rgba(255,255,255,0.9)";
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
       ctx.fillText(text, x, y);
     }
     function drawOrbit() {
@@ -252,31 +283,45 @@
       PLANETS.forEach(function (p) { strokePath(planetPath(p, jd), ORBIT_COLOR, 1); });
       strokePath(path, AST_COLOR, 1.8);
 
-      dot(project({ x: 0, y: 0, z: 0 }), 4.5, SUN_COLOR);
+      blockers = [];
+      function mark(at, r, color, id) {
+        dot(at, r, color);
+        blockers.push({ id: id, box: [at[0] - r, at[1] - r, at[0] + r, at[1] + r] });
+      }
+      mark(project({ x: 0, y: 0, z: 0 }), 4.5, SUN_COLOR, "sun");
       var marks = [];
       PLANETS.forEach(function (p) {
         var at = project(planetPos(p, jd));
-        dot(at, p.size, p.color);
+        mark(at, p.size, p.color, p.name);
         // Only label a planet once its orbit is wide enough to read, so the
         // inner planets don't pile up on the Sun at low zoom.
         if (planetKepler(p, jd).a * k > 30) marks.push([at, p.name]);
       });
       var astAt = project(astEcliptic(jd));
-      dot(astAt, 4.8, AST_COLOR);
+      mark(astAt, 4.8, AST_COLOR, "ast");
 
-      placed = [];
-      label(astAt, "(33964)");                 // the subject always gets its label
-      marks.forEach(function (m) { label(m[0], m[1]); });
-
-      // Source credit, bottom-right corner of the diagram.
+      // Source credit, bottom-right corner. Reserved before the labels so
+      // nothing is drawn across it at high zoom. Both JPL products are named:
+      // SBDB supplies the asteroid's solution, the planets come from JPL's
+      // approximate planetary ephemeris.
       if (src.short) {
-        var credit = src.short + (src.solution_date ? " · solution " + src.solution_date : "");
+        var credit = "Orbits: NASA/JPL" +
+          (src.solution_date ? " · asteroid solution " + src.solution_date : "");
         ctx.font = "10px system-ui";
+        var cw = ctx.measureText(credit).width;
         ctx.textAlign = "right";
-        ctx.fillStyle = "rgba(168,147,194,0.75)";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "rgba(20,0,31,0.85)";
+        ctx.strokeText(credit, S - 10, S - 10);
+        ctx.fillStyle = "rgba(214,204,232,0.95)";
         ctx.fillText(credit, S - 10, S - 10);
         ctx.textAlign = "left";
+        blockers.push({ box: [S - 12 - cw, S - 22, S - 8, S - 6] });
       }
+
+      label(astAt, "(33964)", "ast");           // the subject always gets its label
+      marks.forEach(function (m) { label(m[0], m[1], m[1]); });
     }
 
     // Legend is generated from the same colors the canvas draws with, so the
@@ -288,7 +333,7 @@
       PLANETS.forEach(function (p) { items.push({ name: p.name, color: p.color, kind: "dot" }); });
       items.push({ name: "(33964) Patrickshober", color: AST_COLOR, kind: "dot" });
       items.push({ name: "its orbit", color: AST_COLOR, kind: "line" });
-      items.push({ name: "planet orbits", color: "rgba(255,255,255,0.5)", kind: "line" });
+      items.push({ name: "planet orbits", color: ORBIT_COLOR, kind: "line" });
       host.innerHTML = items.map(function (it) {
         return '<li><i class="ast-key ast-key--' + it.kind +
                '" style="background:' + it.color + '"></i>' + it.name + '</li>';
@@ -327,14 +372,46 @@
     function endPointer(e) { delete pointers[e.pointerId]; lastPinch = null; cv.style.cursor = "grab"; }
     cv.addEventListener("pointerup", endPointer);
     cv.addEventListener("pointercancel", endPointer);
-    cv.addEventListener("wheel", function (e) {
-      e.preventDefault();
-      view.zoom = Math.max(0.5, Math.min(5, view.zoom * (e.deltaY < 0 ? 1.12 : 0.89)));
+    function zoomBy(f) {
+      view.zoom = Math.max(0.5, Math.min(5, view.zoom * f));
       drawOrbit();
-    }, { passive: false });
-    cv.addEventListener("dblclick", function () {
+    }
+    function reset() {
       view.az = HOME.az; view.tilt = HOME.tilt; view.zoom = HOME.zoom;
       drawOrbit();
+    }
+    // Plain wheel must keep scrolling the page — the diagram is tall enough to
+    // swallow the viewport. Zoom needs an explicit modifier, the buttons, or
+    // the keyboard.
+    cv.addEventListener("wheel", function (e) {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      zoomBy(e.deltaY < 0 ? 1.12 : 0.89);
+    }, { passive: false });
+    cv.addEventListener("dblclick", reset);
+
+    var btn = function (id, fn) {
+      var b = document.getElementById(id);
+      if (b) b.addEventListener("click", fn);
+    };
+    btn("ast-zoom-in", function () { zoomBy(1.25); });
+    btn("ast-zoom-out", function () { zoomBy(0.8); });
+    btn("ast-reset", reset);
+
+    // Keyboard parity for the pointer gestures.
+    cv.addEventListener("keydown", function (e) {
+      var step = 0.12, handled = true;
+      switch (e.key) {
+        case "ArrowLeft":  view.az -= step; break;
+        case "ArrowRight": view.az += step; break;
+        case "ArrowUp":    view.tilt = Math.min(Math.PI / 2, view.tilt + step); break;
+        case "ArrowDown":  view.tilt = Math.max(0.12, view.tilt - step); break;
+        case "+": case "=": zoomBy(1.25); return;
+        case "-": case "_": zoomBy(0.8); return;
+        case "0": case "Home": reset(); e.preventDefault(); return;
+        default: handled = false;
+      }
+      if (handled) { e.preventDefault(); drawOrbit(); }
     });
     var rt = null;
     window.addEventListener("resize", function () {
@@ -345,9 +422,14 @@
     setInterval(drawOrbit, 60000);      // keep current positions moving
   })();
 
-  window.__ASTEROID_TEST = { planetPos: planetPos, earthEcliptic: earthEcliptic,
-                             astEcliptic: astEcliptic, eclToEqu: eclToEqu,
-                             PLANETS: PLANETS, update: update };
+  // Internals for the ephemeris regression checks; opt-in so a production
+  // page ships no globals.
+  if (/[?&]astdebug=1/.test(location.search)) {
+    window.__ASTEROID_TEST = { planetPos: planetPos, earthEcliptic: earthEcliptic,
+                               astEcliptic: astEcliptic, eclToEqu: eclToEqu,
+                               precessToDate: precessToDate, altAz: altAz,
+                               PLANETS: PLANETS, update: update };
+  }
 
   update();
   setInterval(update, 60000); // refresh the live panel each minute

@@ -366,6 +366,27 @@
 .ast-grid { display: grid; grid-template-columns: 1.5fr 0.75fr; gap: 1.6rem; align-items: start; margin-top: 1.6rem; }
 .ast-canvas-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.6rem; }
 .ast-hint { color: var(--faint); font-size: 0.82rem; text-align: center; margin: 0.5rem 0 0.1rem; }
+#orbit:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; }
+.ast-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+.ast-ctrl {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  min-width: 2.1rem;
+  padding: 0.25rem 0.6rem;
+  font: inherit;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.ast-ctrl:hover { border-color: var(--accent); color: var(--accent); }
+.ast-ctrl--wide { font-size: 0.85rem; }
 .ast-legend {
   display: flex;
   flex-wrap: wrap;
