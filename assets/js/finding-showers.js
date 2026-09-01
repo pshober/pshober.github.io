@@ -636,7 +636,15 @@
    * ===================================================================== */
   var Calc = (function () {
     var FIELDS = ["q", "e", "i", "w", "O", "sol", "ra", "dec", "vg"];
-    var presets = null;
+    var presets = null, active = null, edited = false;
+
+    // What the numbers cannot tell you. Shown whenever the inputs are not a preset
+    // with a published, population-level verdict attached.
+    var GENERIC =
+      "These four numbers are not a verdict. Whether a pair is significant depends on the " +
+      "population it came from — how many objects, how many pairs that makes, and how many " +
+      "of those pairs chance alone would put at or below this D. None of that is in the numbers " +
+      "above. Steps 2 and 5 are where it comes from.";
 
     function read(side) {
       var o = {};
@@ -650,9 +658,6 @@
       $("fs-calc-" + side + "-label").textContent = o.label || "";
       $("fs-calc-" + side + "-note").textContent = o.note || "";
     }
-
-    // Thresholds below which Shober & Vaubaillon (2024) find <5% false positives.
-    var FP5 = { D_N: 0.15, D_H: 0.10, D_SH: 0.07, D_prime: 0.05 };
 
     function run() {
       var a = read("a"), b = read("b"), bad = false;
@@ -669,23 +674,32 @@
         D_H: D.D_H(a.q, a.e, a.i, a.w, a.O, b.q, b.e, b.i, b.w, b.O)
       };
       var parts = [];
-      Object.keys(FP5).forEach(function (kk) {
-        var v = vals[kk], el = $("fs-calc-" + kk);
-        var pass = isFinite(v) && v < FP5[kk];
-        el.textContent = isFinite(v) ? v.toFixed(4) : "—";
-        el.className = "fs-dval" + (pass ? " is-hit" : "");
-        $("fs-calc-" + kk + "-tag").textContent = pass ? "under the 5% line" : "above the 5% line";
+      ["D_N", "D_SH", "D_prime", "D_H"].forEach(function (kk) {
+        var v = vals[kk];
+        $("fs-calc-" + kk).textContent = isFinite(v) ? v.toFixed(4) : "—";
         parts.push(kk.replace("_", " ") + " " + (isFinite(v) ? v.toFixed(4) : "undefined"));
       });
-      var agree = Object.keys(FP5).filter(function (kk) {
-        return isFinite(vals[kk]) && vals[kk] < FP5[kk];
-      }).length;
-      $("fs-calc-verdict").textContent =
-        agree === 4 ? "All four criteria call this a match."
-        : agree === 0 ? "No criterion calls this a match."
-        : agree + " of the 4 criteria call this a match — the others disagree.";
-      $("fs-calc-verdict").className = "fs-verdict" + (agree === 4 ? " is-hit" : agree === 0 ? "" : " is-warn");
-      $("fs-calc-summary").textContent = parts.join("; ") + ". " + $("fs-calc-verdict").textContent;
+
+      var el = $("fs-calc-verdict");
+      if (active && !edited) {
+        el.innerHTML = active.verdict;
+        el.className = "fs-verdict is-sourced";
+      } else {
+        el.textContent = GENERIC;
+        el.className = "fs-verdict";
+      }
+      $("fs-calc-summary").textContent = parts.join("; ") + ". " + el.textContent;
+    }
+
+    function markEdited() {
+      if (!edited) {
+        edited = true;
+        Array.prototype.forEach.call($("fs-calc-presets").children, function (c) {
+          c.classList.remove("is-on");
+        });
+        $("fs-calc-blurb").textContent = "Edited by hand — no published verdict applies to these inputs.";
+      }
+      run();
     }
 
     return {
@@ -700,6 +714,7 @@
             btn.addEventListener("click", function () {
               Array.prototype.forEach.call(host.children, function (c) { c.classList.remove("is-on"); });
               btn.classList.add("is-on");
+              active = p; edited = false;
               write("a", p.a); write("b", p.b);
               $("fs-calc-blurb").textContent = p.blurb;
               run();
@@ -711,7 +726,7 @@
 
         ["a", "b"].forEach(function (side) {
           FIELDS.forEach(function (f) {
-            $("fs-calc-" + side + "-" + f).addEventListener("input", run);
+            $("fs-calc-" + side + "-" + f).addEventListener("input", markEdited);
           });
         });
       }

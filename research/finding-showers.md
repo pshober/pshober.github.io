@@ -49,6 +49,10 @@ papers:
 .fs-verdict{margin:.7rem 0 0;font-size:.9rem;color:var(--muted);border-left:3px solid var(--border-strong);
   padding-left:.7rem}
 .fs-verdict.is-hit{border-left-color:var(--accent-2);color:var(--text)}
+.fs-verdict.is-sourced{border-left-color:var(--accent-2);color:var(--text)}
+.fs-verdict a{color:var(--accent)}
+.callout ol{margin:.5rem 0 .6rem;padding-left:1.3rem}
+.callout li{margin-bottom:.3rem}
 .fs-verdict.is-warn{border-left-color:var(--accent)}
 .fs-tag{font-size:.72rem;border:1px solid var(--border-strong);border-radius:999px;
   padding:.1rem .5rem;color:var(--faint)}
@@ -120,7 +124,7 @@ drift over thousands of years while the encounter geometry does not.
 
 <div class="fs-box">
   <h3>Are these two meteors related?</h3>
-  <p class="fs-kicker">Four criteria, the same pair, real orbits. Edit any number.</p>
+  <p class="fs-kicker">Four criteria, the same pair, real orbits. Edit any number &mdash; then read the verdict line, because the numbers alone don't carry one.</p>
   <div class="fs-row" id="fs-calc-presets"></div>
   <p class="fs-hint" id="fs-calc-blurb"></p>
   <div class="fs-grid2" style="margin-top:.7rem">
@@ -158,31 +162,49 @@ drift over thousands of years while the encounter geometry does not.
   <div class="fs-dgrid">
     <div class="fs-dcell"><div class="fs-dname">D<sub>N</sub> · geocentric</div>
       <div class="fs-dval" id="fs-calc-D_N">—</div>
-      <div class="fs-tag" id="fs-calc-D_N-tag"></div></div>
+</div>
     <div class="fs-dcell"><div class="fs-dname">D<sub>SH</sub> · Southworth–Hawkins</div>
       <div class="fs-dval" id="fs-calc-D_SH">—</div>
-      <div class="fs-tag" id="fs-calc-D_SH-tag"></div></div>
+</div>
     <div class="fs-dcell"><div class="fs-dname">D′ · Drummond</div>
       <div class="fs-dval" id="fs-calc-D_prime">—</div>
-      <div class="fs-tag" id="fs-calc-D_prime-tag"></div></div>
+</div>
     <div class="fs-dcell"><div class="fs-dname">D<sub>H</sub> · Jopek</div>
       <div class="fs-dval" id="fs-calc-D_H">—</div>
-      <div class="fs-tag" id="fs-calc-D_H-tag"></div></div>
+</div>
   </div>
   <p class="fs-verdict" id="fs-calc-verdict"></p>
-  <p class="fs-hint">"Under the 5% line" means the value clears the threshold at which fewer than
-    5% of matches are coincidences, measured in <a href="https://doi.org/10.1051/0004-6361/202349024">A&amp;A 686, A130</a>.
-    The code here is a line-by-line port of the analysis code used in the papers &mdash; see the
+  <p class="fs-hint">Smaller means more alike. There is deliberately no "match" light: a D value has
+    no threshold of its own, and the presets are chosen to show why. The code is a line-by-line port
+    of the analysis code used in the papers &mdash; see the
     <a href="#printed-equations">note on the printed equations</a>.</p>
   <p class="fs-sr" id="fs-calc-summary" role="status"></p>
   <p class="fs-hint" id="fs-calc-note" hidden></p>
 </div>
 
-Try the Příbram–Neuschwanstein preset. Two meteorites fell 43 years apart, and the meteoroids that delivered them were on orbits so
-alike that the pair was taken for years as proof of a macroscopic meteoroid stream. **All
-four criteria call it a match**, comfortably — every one of them lands well inside the
-strictest threshold anyone uses. And the pair still isn't statistically significant, for a
-reason that has nothing to do with either orbit.
+Try the Příbram–Neuschwanstein preset. Two meteorites fell 43 years apart, and the
+meteoroids that delivered them were on orbits so alike that the pair was taken for years as
+proof of a macroscopic meteoroid stream. Look at the four numbers, then switch back to the
+two M2026-A1 members: they are the same size. One of those pairs sits inside a stream
+detected at 5.3σ; the other is a coincidence. **Nothing in the D values distinguishes
+them.** The verdict came from somewhere else entirely, and the rest of this page is about
+where.
+
+<div class="callout">
+  <p><strong>A low D value is not evidence.</strong> To know whether a pair means anything you
+  need three things the D value does not contain:</p>
+  <ol>
+    <li>how many objects are in the population the pair came from &mdash; and so how many pairs you
+      implicitly compared;</li>
+    <li>how many of those pairs chance alone would put at or below this D &mdash; for a criterion built
+      from <em>d</em> measured quantities that number grows as <em>D<sup>d</sup></em>, so the
+      background is a power law;</li>
+    <li>whether the number you actually count sits significantly above that.</li>
+  </ol>
+  <p>Steps 2 to 6 below are those three things. A tiny D on its own &mdash; for any pair, from any
+  catalog &mdash; establishes nothing. This is the mistake behind a great many published
+  meteorite&ndash;asteroid "associations."</p>
+</div>
 
 ## Step 2 — Remember how many pairs you looked at
 
@@ -262,8 +284,9 @@ sine–cosine pairs so that 359° and 1° are neighbors rather than opposites.
 
 Once you can generate fake skies, you can ask the question that actually matters: at a
 given D threshold, what fraction of "matches" are coincidences? That's the whole point of
-[A&A 686, A130](https://doi.org/10.1051/0004-6361/202349024). For 824 European Fireball
-Network fireballs, the thresholds that keep false positives under 5% are:
+[A&A 686, A130](https://doi.org/10.1051/0004-6361/202349024). For one specific question —
+*which of 824 European Fireball Network fireballs belong to an established meteor shower?* —
+the thresholds that keep false positives under 5% are:
 
 | Criterion | Threshold for <5% false positives |
 |---|---|
@@ -272,8 +295,16 @@ Network fireballs, the thresholds that keep false positives under 5% are:
 | *D*<sub>SH</sub> (Southworth–Hawkins) | ≈ 0.07 |
 | *D*&prime; (Drummond) | < 0.05 |
 
-Traditionally people used *D*<sub>SH</sub> &lt; 0.2. That is far too generous. Applying the strict
-version to that dataset, the genuinely shower-associated fraction converges to
+**Those numbers belong to that dataset and that question, and nowhere else.** They describe
+fireballs matched against known, dense showers, in a catalog of one particular size and
+density. Change any of that — compare meteorites with asteroids, or fireballs with each
+other, or use a catalog ten times larger — and the false-positive rate at a given D is a
+different number, and the only way to learn it is to run the null test again on *that*
+population. There is no universal threshold, and a D value quoted without its population
+is not a result.
+
+Within the EFN question, traditionally people used *D*<sub>SH</sub> &lt; 0.2. That is far too
+generous. Applying the strict version, the genuinely shower-associated fraction converges to
 **150–200 fireballs, about 18–25%** — against the up-to-45% previously attributed.
 
 There's a sting in the tail, and it's worth quoting directly: *"the meteors that meet the
@@ -469,6 +500,17 @@ asteroids do not survive the null test. Across 46 recovered falls and 535 candid
 meteorite-dropping fireballs compared against six independent asteroid radiant
 catalogs, [A&A 702, A36](https://doi.org/10.1051/0004-6361/202555857) finds no excess
 at all: if meteorite streams exist, they account for **less than about 0.1%** of falls.
+
+They don't cluster among *themselves*, either. In
+[A&A 693, A23](https://doi.org/10.1051/0004-6361/202452123), 50 recovered falls, 616
+probable meteorite-dropping fireballs, and 310 US Government sensor impacts all show pair
+counts entirely consistent with random association — no statistically significant stream
+in any of them, on any criterion. Their cumulative similarity curves are straight lines. The
+one population with a genuine excess is the telescopic near-Earth asteroid catalog, and even
+there the clustered fraction is at most a few percent. So when someone reports that a
+meteorite's orbit is "very close" to an asteroid's, the honest response is not *how close?*
+but *out of how many?* — and every time that question has been asked properly, the answer
+has been *chance*.
 
 ## Why single pairs will never work
 
