@@ -453,24 +453,45 @@
       { n: 824, label: "European Fireball Network fireballs" },
       { n: 122943, label: "GMN meteors in the 2026 paper" }
     ];
+    // A real, measured anchor rather than a made-up rate: the KDE null in the 2026
+    // paper predicts ~1395 chance pairs below D_N = 0.015 among GMN's 7.56e9 pairs.
+    var GMN = { n: 122943, nullBelow: 1394.6, dcut: 0.015 };
+    GMN.pairs = GMN.n * (GMN.n - 1) / 2;
+    GMN.rate = GMN.nullBelow / GMN.pairs;          // 1.85e-7, i.e. 1 in 5.4 million
+    GMN.logInv = Math.log10(1 / GMN.rate);
+
+    function oneIn(v) {
+      if (v >= 1e6) return "1 in " + (v / 1e6).toFixed(v / 1e6 < 10 ? 1 : 0) + " million";
+      if (v >= 1e3) return "1 in " + group(v);
+      return "1 in " + Math.round(v);
+    }
+
     function run() {
       var n = Math.round(Math.pow(10, +$("fs-pairs-n").value));
       var pairs = n * (n - 1) / 2;
       var p = Math.pow(10, -(+$("fs-pairs-p").value));
       var fp = pairs * p;
       $("fs-pairs-n-v").textContent = group(n);
-      $("fs-pairs-p-v").textContent = "1 in " + group(1 / p);
+      $("fs-pairs-p-v").textContent = oneIn(1 / p);
       $("fs-pairs-out").textContent = group(pairs);
       $("fs-pairs-fp").textContent = fp < 1 ? fp.toFixed(2) : group(fp);
+
       var near = MARKS.reduce(function (a, b) {
         return Math.abs(Math.log10(b.n) - Math.log10(n)) < Math.abs(Math.log10(a.n) - Math.log10(n)) ? b : a;
       });
       $("fs-pairs-mark").textContent =
         Math.abs(Math.log10(near.n) - Math.log10(n)) < 0.12 ? "≈ " + near.label : "";
+
+      var atGmn = Math.abs(Math.log10(1 / p) - GMN.logInv) < 0.06;
+      $("fs-pairs-pmark").textContent = atGmn
+        ? "≈ GMN below Dₙ = 0.015, measured from that catalog's own null"
+        : "measured from the catalog, never looked up";
+
       $("fs-pairs-summary").textContent =
-        group(n) + " objects make " + group(pairs) + " possible pairs. If one pair in " +
-        group(1 / p) + " looks like a match purely by chance, that is " +
-        (fp < 1 ? fp.toFixed(2) : group(fp)) + " false matches before any real stream exists.";
+        group(n) + " objects make " + group(pairs) + " possible pairs. At a chance rate of " +
+        oneIn(1 / p) + " pairs, that is " + (fp < 1 ? fp.toFixed(2) : group(fp)) +
+        " pairs expected under the cut from chance alone, before any real stream exists. " +
+        "That rate is a property of the catalog and its observational biases, not of the D-criterion.";
     }
     return {
       init: function () {

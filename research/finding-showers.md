@@ -216,18 +216,33 @@ meteoroid orbits two decades ago: the intuition that fails is asking "what are t
 
 <div class="fs-box">
   <h3>How many chances did you give yourself?</h3>
-  <p class="fs-kicker">Every pair is another lottery ticket.</p>
+  <p class="fs-kicker">Every pair is another lottery ticket &mdash; and only the catalog can tell you the odds.</p>
   <div class="fs-ctrls">
     <label class="fs-ctrl">Objects in the catalog: <b id="fs-pairs-n-v">824</b>
       <input type="range" id="fs-pairs-n" min="1.3" max="5.3" step="0.001" value="2.916">
       <span class="fs-hint" id="fs-pairs-mark"></span></label>
-    <label class="fs-ctrl">Chance any one pair looks alike: <b id="fs-pairs-p-v"></b>
-      <input type="range" id="fs-pairs-p" min="3" max="9" step="1" value="6"></label>
+    <label class="fs-ctrl">Rate at which chance alone puts a pair under your D cut: <b id="fs-pairs-p-v"></b>
+      <input type="range" id="fs-pairs-p" min="3" max="9" step="0.01" value="6.734">
+      <span class="fs-hint" id="fs-pairs-pmark"></span></label>
   </div>
   <p class="fs-readout">Possible pairs: <b id="fs-pairs-out">—</b> ·
-    expected coincidences: <b id="fs-pairs-fp">—</b></p>
+    expected under the cut from chance alone: <b id="fs-pairs-fp">—</b></p>
+  <p class="fs-hint">"Alike" only ever means <em>below whatever D cut you chose</em>. Neither number
+    here is a property of the criterion: the left comes from how many objects you have, and the right
+    has to be measured from that same catalog's own null. The slider starts at a real one &mdash; the
+    2026 null predicts about 1,395 chance pairs below <em>D</em><sub>N</sub> = 0.015 among GMN's
+    7.6 billion, or 1 in 5.4 million. Against that, 2,209 were actually observed.</p>
   <p class="fs-sr" id="fs-pairs-summary" role="status"></p>
 </div>
+
+That second number is where the reasoning usually breaks. **There is no universal rate at
+which unrelated orbits land close together.** It is a property of the catalog, not of the
+criterion. A survey's observational biases set it: which part of the sky its cameras watch,
+what they are sensitive enough to catch, which hours and seasons they run, how precisely
+they measure speed. Those biases pile orbits up in some regions of the space and empty out
+others, and that lumpiness is exactly what decides how often two unrelated objects fall
+close together. You cannot look the number up, and you cannot borrow it from a different
+survey — which is what the next step is really about.
 
 And a real cluster is not obvious to the eye. Below are 6,000 sporadic meteors from the
 same shower-removed GMN catalog I analyzed, plotted by perihelion distance against
@@ -263,6 +278,16 @@ the real correlations between speed, direction and date but smears out any small
 Draw synthetic catalogs from that density and you have a fair null: a sky with the
 same lumpy observational biases as the real one, but with no streams in it by
 construction.
+
+The word *same* is carrying real weight there. **The null has to be built from the very
+dataset you are testing.** Fit the density to the catalog in hand, draw synthetic catalogs
+from it, and its biases come along for the ride — which is the point, because the question
+you are asking is whether *this* catalog holds more close pairs than *this* catalog should.
+Borrow a null from a different survey, even a larger and more precise one, and you have
+imported that survey's biases instead of your own: the synthetic population concentrates
+differently, its cumulative similarity curve sits at a different level, and any excess you
+measure against it is meaningless. That mistake can manufacture a detection as easily as it
+can erase one.
 
 <figure class="fig" data-lightbox data-full="/assets/img/research/fs-radiant-kde-on.webp" data-cap="The same radiant field with the density estimate on (left) and off (right). The KDE is what turns a scatter of points into a background you can sample from.">
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
