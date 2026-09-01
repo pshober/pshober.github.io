@@ -172,7 +172,8 @@ drift over thousands of years while the encounter geometry does not.
   <p class="fs-verdict" id="fs-calc-verdict"></p>
   <p class="fs-hint">"Under the 5% line" means the value clears the threshold at which fewer than
     5% of matches are coincidences, measured in <a href="https://doi.org/10.1051/0004-6361/202349024">A&amp;A 686, A130</a>.
-    The code here is a line-by-line port of the analysis code used in the papers.</p>
+    The code here is a line-by-line port of the analysis code used in the papers &mdash; see the
+    <a href="#printed-equations">note on the printed equations</a>.</p>
   <p class="fs-sr" id="fs-calc-summary" role="status"></p>
   <p class="fs-hint" id="fs-calc-note" hidden></p>
 </div>
@@ -510,6 +511,36 @@ surveys. For a survey of the field, see
 
 They differ mostly in how they *cluster*. None of them removes the need for the null
 model — whichever you pick, you still have to know what chance would have handed you.
+
+## A note on the printed equations {#printed-equations}
+
+Two of the D-criterion equations **as typeset in my papers** contain errors. They are
+typographical: the code that produced every published result uses the correct forms, so no
+result in any of these papers is affected. I'm noting them here because someone
+reimplementing a criterion from the printed page would get wrong numbers and have no way to
+know.
+
+- **A&A 686, A130 eqs. (18) and (20)** — repeated in **A&A 702, A36 eqs. (4) and (6)** — print
+  the second branch of Δξ as `2 sin((180° − φ₂ − φ₁)/2)`. The middle term should be
+  `180° + φ₂ − φ₁` — a shifted *difference*, not a sum — as in
+  [Valsecchi, Jopek & Froeschlé (1999)](https://doi.org/10.1046/j.1365-8711.1999.02264.x)
+  eqs. (24) and (26). The sum form isn't rotation-invariant, and it contradicts the sentence
+  printed directly beneath it in both papers — that Δξ is small when φ₁ − φ₂ and λ₁ − λ₂ are
+  *both close to 180°*, the case of two meteors meeting Earth at the two nodes of essentially
+  the same orbit.
+- **A&A 686, A130 eq. (14)** prints the last term of *D*<sub>H</sub> as
+  `((e_B + e_A)(2 sin(Π/2)))²`. The eccentricity sum should be halved:
+  `((e_A + e_B)/2)² (2 sin(Π/2))²`. That is what eq. (6) for *D*<sub>SH</sub> in the same
+  paper prints, and what
+  [Courtot, Shober & Vaubaillon (2026)](https://doi.org/10.1016/j.pss.2025.106231) eq. (3)
+  gives. As printed, the term is four times too large.
+
+One thing that is not an error but reads like one: these papers use lowercase π for the angle
+between perihelia, so `sin(π/2)` appears in the equations. That π is an angle, not 3.14159.
+
+The calculator above uses the correct forms, and is
+[checked against the analysis code](https://github.com/pshober/pshober.github.io/tree/main/scripts/verify-d)
+over several thousand cases.
 
 ## Tools, data, and working together
 
