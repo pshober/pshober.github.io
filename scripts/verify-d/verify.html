@@ -1,0 +1,45 @@
+<!doctype html><html><head><meta charset="utf-8"><title>D-criteria port verification</title></head>
+<body><pre id="out">running…</pre>
+<script src="../../assets/js/d-criteria.js"></script>
+<script src="fixture.js"></script>
+<script>
+(function () {
+  var F = window.D_FIXTURE, C = window.DCriteria, lines = [], fail = 0;
+
+  function cmp(label, cases, run, key) {
+    var maxAbs = 0, maxRel = 0, worst = null, n = 0, skipped = 0, mismatch = 0;
+    for (var i = 0; i < cases.length; i++) {
+      var c = cases[i], exp = c[key], got = run(c);
+      var expNull = (exp === null), gotNull = !isFinite(got);
+      if (expNull !== gotNull) { mismatch++; if (!worst) worst = {i:i, exp:exp, got:got, why:"finite/NaN disagreement"}; continue; }
+      if (expNull) { skipped++; continue; }
+      n++;
+      var abs = Math.abs(got - exp);
+      var rel = exp !== 0 ? abs / Math.abs(exp) : abs;
+      if (abs > maxAbs) maxAbs = abs;
+      if (rel > maxRel) { maxRel = rel; worst = {i:i, exp:exp, got:got, abs:abs, rel:rel}; }
+    }
+    var bad = (maxAbs > 1e-10 && maxRel > 1e-10) || mismatch > 0;
+    if (bad) fail++;
+    lines.push((bad ? "FAIL  " : "ok    ") + label +
+      "  n=" + n + " skipped(nan)=" + skipped + " nan-mismatch=" + mismatch +
+      "  maxAbs=" + maxAbs.toExponential(3) + "  maxRel=" + maxRel.toExponential(3));
+    if (worst && bad) lines.push("        worst case #" + worst.i + " " + JSON.stringify(worst));
+  }
+
+  cmp("D_SH   ", F.orbital, function (c) {
+    return C.D_SH(c.a.q,c.a.e,c.a.i,c.a.w,c.a.O, c.b.q,c.b.e,c.b.i,c.b.w,c.b.O); }, "D_SH");
+  cmp("D_prime", F.orbital, function (c) {
+    return C.D_prime(c.a.q,c.a.e,c.a.i,c.a.w,c.a.O, c.b.q,c.b.e,c.b.i,c.b.w,c.b.O); }, "D_prime");
+  cmp("D_H    ", F.orbital, function (c) {
+    return C.D_H(c.a.q,c.a.e,c.a.i,c.a.w,c.a.O, c.b.q,c.b.e,c.b.i,c.b.w,c.b.O); }, "D_H");
+  cmp("D_N    ", F.radiant, function (c) { return C.D_N(c.a, c.b); }, "D_N");
+
+  if (C.SPEED_EARTH !== F.speed_earth) { fail++; lines.push("FAIL   SPEED_EARTH " + C.SPEED_EARTH + " != " + F.speed_earth); }
+  else lines.push("ok     SPEED_EARTH = " + C.SPEED_EARTH);
+
+  lines.push("");
+  lines.push(fail === 0 ? "RESULT: PASS" : "RESULT: FAIL (" + fail + " group(s))");
+  document.getElementById("out").textContent = lines.join("\n");
+})();
+</script></body></html>
