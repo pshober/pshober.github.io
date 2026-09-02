@@ -55,8 +55,8 @@ layout: default
   <div class="section-title-wrap">
     <img class="section-icon" src="{{ '/assets/img/brand/icon-camera.webp' | relative_url }}"
          alt="" width="100" height="96" loading="lazy">
-    <h2 class="section-title section-title--orange">From the field</h2>
-    <p class="section-sub">Photos and animations from the fireball networks and recovery campaigns behind the papers</p>
+    <h2 class="section-title section-title--orange">Behind the papers</h2>
+    <p class="section-sub">The fireballs, instruments and figures behind the results — each one credited to whoever made it</p>
   </div>
   <div class="media-wall">
     {% for m in site.data.media %}
@@ -67,6 +67,7 @@ layout: default
         <span class="loc">{{ m.title }}</span>
         <span class="meta">· {{ m.meta }}</span>
         {% if m.credit %}<span class="credit">{{ m.credit }}</span>{% endif %}
+        {% if m.paper %}<span class="paper-ref"><a href="https://doi.org/{{ m.paper.doi }}">{{ m.paper.cite }}</a></span>{% endif %}
       </figcaption>
     </figure>
     {% elsif m.type == 'link' %}
@@ -85,6 +86,7 @@ layout: default
         <span class="loc">{{ m.title }}</span>
         <span class="meta">· {{ m.meta }}</span>
         {% if m.credit %}<span class="credit">{{ m.credit }}</span>{% endif %}
+        {% if m.paper %}<span class="paper-ref"><a href="https://doi.org/{{ m.paper.doi }}">{{ m.paper.cite }}</a></span>{% endif %}
       </figcaption>
     </figure>
     {% endif %}

@@ -39,7 +39,11 @@
            el.getAttribute("data-cap"),
            img && img.alt);
     }
-    el.addEventListener("click", trigger);
+    el.addEventListener("click", function (e) {
+      // Citation/DOI links inside a tile must navigate, not open the lightbox.
+      if (e.target.closest && e.target.closest("a")) return;
+      trigger();
+    });
     el.addEventListener("keydown", function (e) {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); trigger(); }
     });

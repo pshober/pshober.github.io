@@ -356,15 +356,16 @@ cannot supply, so the curve kinks upward at the small-D end. **You are looking f
 not a number.**
 
 <div class="fs-box">
-  <h3>Grow the catalog and watch the line bend</h3>
-  <p class="fs-kicker">Real GMN meteors, the real M2026-A1 members at their natural rate, and the
-    paper's real null at full size. Nothing here is synthetic.</p>
+  <h3>Plant a stream and watch the line bend</h3>
+  <p class="fs-kicker">Real GMN catalog, the real pair distribution of M2026-A1, and the paper's
+    real null at full size. Add stream members and see what they do to the curve.</p>
   <div class="fs-canvas-wrap">
     <canvas id="fs-csd-canvas" role="img"
-      aria-label="Log-log plot of the cumulative number of meteor pairs closer than a given dissimilarity, for real GMN subsamples of adjustable size"></canvas>
+      aria-label="Log-log plot of the cumulative number of meteor pairs closer than a given dissimilarity, for a real GMN catalog of adjustable size with an adjustable number of stream members added"></canvas>
   </div>
   <div class="fs-legend">
-    <span style="color:#ffc532">observed</span>
+    <span style="color:#ffc532">observed = background + stream</span>
+    <span style="color:#ff6c40">pairs within the stream</span>
     <span style="color:#b044fc">3σ range from chance alone</span>
     <span style="color:#cfc47e">Dₙ = 0.015, the paper's pair cut</span>
   </div>
@@ -372,43 +373,92 @@ not a number.**
     <label class="fs-ctrl">Meteors in the catalog: <b id="fs-csd-n-v">—</b>
       <input type="range" id="fs-csd-n" min="0" max="5" step="1" value="0">
       <span class="fs-hint" id="fs-csd-n-note"></span></label>
-    <label class="fs-ctrl" style="justify-content:flex-end">
-      <span><input type="checkbox" id="fs-csd-stream" checked style="accent-color:var(--accent);margin-right:.4rem">include
-      the 243 GMN members of M2026-A1</span>
-      <span class="fs-hint" id="fs-csd-stream-note"></span></label>
+    <label class="fs-ctrl">Stream members in it: <b id="fs-csd-k-v">0</b>
+      <input type="range" id="fs-csd-k" min="0" max="1000" step="1" value="0">
+      <span class="fs-hint" id="fs-csd-k-note"></span>
+      <span class="fs-hint"><input type="checkbox" id="fs-csd-frac" style="accent-color:var(--accent);margin-right:.35rem">keep
+        the stream at its real fraction of the sky (0.23%)</span></label>
   </div>
   <div class="fs-row" role="group" aria-label="Extra measurement error">
     <span class="fs-hint">extra measurement error:</span>
-    <button type="button" class="fs-chip is-on" data-err="e0" id="fs-csd-e0">as measured</button>
-    <button type="button" class="fs-chip" data-err="e1" id="fs-csd-e1">+0.15 km/s, +0.2°</button>
-    <button type="button" class="fs-chip" data-err="e2" id="fs-csd-e2">+1 km/s, +1°</button>
+    <button type="button" class="fs-chip is-on" id="fs-csd-e0">as measured</button>
+    <button type="button" class="fs-chip" id="fs-csd-e1">+0.15 km/s, +0.2°</button>
+    <button type="button" class="fs-chip" id="fs-csd-e2">+1 km/s, +1°</button>
+    <button type="button" class="fs-btn" id="fs-csd-real" style="margin-left:auto">Set to the real stream</button>
   </div>
   <p class="fs-readout">Below the cut: observed <b id="fs-csd-below">—</b> pairs ·
     chance predicts <b id="fs-csd-null-below">—</b> ·
-    chance slope here <b id="fs-csd-chslope">—</b>
-    <span class="fs-hint">(random points in four dimensions would give 4; real catalogs come out a little shallower)</span></p>
+    the stream contributes <b id="fs-csd-stream-below">—</b>
+    <span class="fs-hint" id="fs-csd-stream-split"></span></p>
   <p class="fs-verdict" id="fs-csd-verdict"></p>
   <p class="fs-hint" id="fs-csd-first"></p>
-  <p class="fs-hint">Start small: the chance floor sits far to the right of the cut, and removing
-    the stream changes nothing you can see — a couple of hundred members among thousands are invisible. Keep
-    growing the catalog and the whole power law slides up, its foot pushing left, until chance
-    itself starts producing pairs near Dₙ ≈ 10⁻² — and only then does the stream's surplus of
-    tight pairs have something to stand out against. Then add measurement error and watch the
-    detection die again.</p>
-  <p class="fs-hint">What you are looking at: the subsample sizes are random draws from the
-    shower-removed GMN catalog, with the null band from re-draws of that catalog minus the stream.
-    The full-catalog setting is the paper's own published curve against its published KDE null —
-    Figure 3d of the ApJ paper, live. The two error settings are recomputed from the catalog with
-    Gaussian scatter added to speed and radiant on top of GMN's own. (The map in Step 6 counts the
-    same pairs cell by cell from its own null draws and comes out a few percent lower — 2,209
-    against 1,395 — two products of one analysis, not a disagreement.)</p>
+  <p class="fs-hint" id="fs-csd-need"></p>
+  <p class="fs-hint">Start with no stream: the curve is the expected background, a power law inside
+    the chance band whose foot sits far to the right of the cut in a small catalog. Add members. The
+    orange line is the pairs the stream makes with itself — flatter, concentrated at small Dₙ,
+    because its members really are alike — and the observed curve is the two added together. It
+    bends where the stream's pairs overtake the background's. Two experiments worth running: hold the
+    catalog and add members, and the kink grows; hold the members and grow the catalog, and the same
+    stream fades into a bigger haystack. Real streams are a fixed fraction of the sky, so tick the box
+    and grow the catalog to see the honest case — then add measurement error.</p>
+  <p class="fs-hint">Under the hood: the background is the mean of the chance draws at each size (the
+    paper's KDE null at full size), with the band's width at every size set by the scatter of that
+    KDE null; the stream is the actual pair distribution of the 243 GMN members
+    of M2026-A1, scaled to however many you add — beyond 243 it is extrapolated from its own
+    distribution — plus its pairs with the background. The error settings are recomputed with Gaussian
+    scatter added on top of GMN's own.</p>
   <p class="fs-sr" id="fs-csd-summary" role="status"></p>
   <p class="fs-hint" id="fs-csd-note"></p>
 </div>
 
-The widget's largest setting *is* the real thing — the full 122,943-meteor catalog against
-the paper's own KDE null. The published version is below: the observed curve pulls away from
-the chance envelope under *D*<sub>N</sub> &asymp; 2&nbsp;&times;&nbsp;10<sup>&minus;2</sup> and — crucially — stays above
+That was a sandbox. Below is the catalog itself — the same sizes, but the actual random draws,
+with whatever stream members genuinely landed in them, and a switch to take them out. At full
+size it *is* the paper's own observed curve against its own KDE null.
+
+<div class="fs-box">
+  <h3>The real catalog, as observed</h3>
+  <p class="fs-kicker">No planting. Real draws of the shower-removed GMN catalog with M2026-A1's
+    members at their natural rate; the full size is the paper's published curve and null.</p>
+  <div class="fs-canvas-wrap">
+    <canvas id="fs-real-canvas" role="img"
+      aria-label="Log-log plot of cumulative pair counts for real GMN subsamples of adjustable size, with the stream's members switchable in or out"></canvas>
+  </div>
+  <div class="fs-legend">
+    <span style="color:#ffc532">observed</span>
+    <span style="color:#b044fc">3σ range from chance alone</span>
+    <span style="color:#cfc47e">Dₙ = 0.015, the paper's pair cut</span>
+  </div>
+  <div class="fs-ctrls">
+    <label class="fs-ctrl">Meteors in the catalog: <b id="fs-real-n-v">—</b>
+      <input type="range" id="fs-real-n" min="0" max="5" step="1" value="0">
+      <span class="fs-hint" id="fs-real-n-note"></span></label>
+    <label class="fs-ctrl"><span><input type="checkbox" id="fs-real-stream" checked style="accent-color:var(--accent);margin-right:.4rem">include
+      the 243 GMN members of M2026-A1</span><span class="fs-hint" id="fs-real-stream-note"></span></label>
+  </div>
+  <div class="fs-row" role="group" aria-label="Extra measurement error">
+    <span class="fs-hint">extra measurement error:</span>
+    <button type="button" class="fs-chip is-on" id="fs-real-e0">as measured</button>
+    <button type="button" class="fs-chip" id="fs-real-e1">+0.15 km/s, +0.2°</button>
+    <button type="button" class="fs-chip" id="fs-real-e2">+1 km/s, +1°</button>
+  </div>
+  <p class="fs-readout">Below the cut: observed <b id="fs-real-below">—</b> pairs ·
+    chance predicts <b id="fs-real-null-below">—</b> ·
+    chance slope here <b id="fs-real-chslope">—</b>
+    <span class="fs-hint">(random points in four dimensions would give 4; real catalogs come out a little shallower)</span></p>
+  <p class="fs-verdict" id="fs-real-verdict"></p>
+  <p class="fs-hint" id="fs-real-first"></p>
+  <p class="fs-hint">The background at each size is a real random draw from the shower-removed GMN
+    catalog; the null band is centred on re-draws of that catalog minus the stream, with its width set
+    by the scatter of the paper's KDE null (re-draws of one parent understate it); the full-catalog
+    setting is the paper's own published curve against its published KDE null — Figure 3d, live.
+    (The map in Step 6 counts pairs cell by cell from its own null draws and comes out a few percent
+    lower — 2,209 against 1,395 — two products of one analysis, not a disagreement.)</p>
+  <p class="fs-sr" id="fs-real-summary" role="status"></p>
+  <p class="fs-hint" id="fs-real-note"></p>
+</div>
+
+The published version: the observed curve pulls away from the chance envelope under
+*D*<sub>N</sub> &asymp; 2&nbsp;&times;&nbsp;10<sup>&minus;2</sup> and — crucially — stays above
 the band even once the reported measurement uncertainties are folded in. Of the four
 networks, GMN is the only one where the excess survives that test.
 

@@ -1,68 +1,65 @@
-# "From the field" media wall on the home page (rendered by _layouts/home.html).
-# type: video | image | link. Credits live here so they can never be dropped
-# when reshuffling tiles.
+# "Behind the papers" media wall on the home page (rendered by _layouts/home.html).
+#
+# RULE: every tile is either (a) Patrick's own figure/animation, (b) an
+# instrument, or (c) the phenomenon itself — a fireball or a meteorite — from a
+# fall he co-authored. No photographs whose subject is someone else's recovery,
+# and no image that could imply he was in the field. Each tile carries a
+# `credit:` naming who made it, and a `paper:` where it belongs to a
+# publication, so nothing is shown without saying whose work it is.
+#
+# type: video | image | link
+# fields: title, meta, alt, credit, paper {cite, doi}
+
 - type: video
   src: /assets/video/winchcombe-allsky.mp4
   poster: /assets/img/media/winchcombe-poster.webp
   preload: metadata
   title: "The Winchcombe fireball"
-  meta: "All-sky camera view of the 2021 UK meteorite fall"
+  meta: "The 2021 fall recorded by UK all-sky cameras, minutes before the meteorite landed on a driveway in Gloucestershire"
   alt: "Looping all-sky video of the Winchcombe fireball fragmenting"
-  credit: "Video: UK Fireball Alliance"
-
-# NOTE: Patrick is not in any of the field-recovery photos — he worked on the
-# papers behind these campaigns. Captions must describe the campaign, never
-# imply a personal find.
-- type: image
-  src: /assets/img/media/recovery-outback-thumb.webp
-  full: /assets/img/media/recovery-outback.webp
-  title: "Fresh from the sky"
-  meta: "A DFN team recovers a newly fallen meteorite in the Australian outback"
-  alt: "Two researchers kneeling beside a freshly recovered meteorite in the outback"
-  credit: "Photo: Desert Fireball Network, Curtin University"
+  # TODO confirm the individual camera/operator before this is treated as final.
+  credit: "Video: UK Fireball Alliance camera networks"
+  paper:
+    cite: "McMullan et al. 2024, Meteoritics & Planetary Science"
+    doi: "10.1111/maps.13977"
 
 - type: video
   src: /assets/video/stream-topdown.mp4
   poster: /assets/img/media/stream-poster.webp
   preload: none
   title: "M2026-A1, a newly confirmed meteor stream"
-  meta: "282 meteors from a stream shed by a disintegrating asteroid"
+  meta: "282 meteors from a stream shed by a disintegrating asteroid, traced through the inner solar system"
   alt: "Animation of the M2026-A1 meteoroid stream orbiting through the inner solar system"
-  credit: "Animation: Shober 2026, ApJ"
+  credit: "Animation: P. Shober"
+  paper:
+    cite: "Shober 2026, The Astrophysical Journal"
+    doi: "10.3847/1538-4357/ae4bde"
+
+- type: image
+  src: /assets/img/media/darkflight-poster.webp
+  full: /assets/img/media/darkflight-poster.webp
+  title: "Falling, unseen"
+  meta: "After the fireball goes dark, fragments drift for two to ten minutes before landing — the part of the trajectory radar can still see"
+  alt: "Three-dimensional visualization of dark-flight trajectories descending toward the ground"
+  credit: "Visualization: P. Shober"
 
 - type: image
   src: /assets/img/media/fripon-summit-thumb.webp
   full: /assets/img/media/fripon-summit.webp
-  title: "Eyes on the sky"
-  meta: "A FRIPON all-sky camera above the clouds at blue hour"
+  title: "A FRIPON all-sky camera"
+  meta: "One node of the French network whose data-reduction pipeline I compared against three others"
   alt: "Gold FRIPON all-sky camera on a snowy mountain summit at dusk"
   credit: "Photo: FRIPON / Vigie-Ciel"
+  paper:
+    cite: "Shober et al. 2026, Astronomy & Astrophysics"
+    doi: "10.1051/0004-6361/202554364"
 
-- type: image
-  src: /assets/img/media/drone-search-thumb.webp
-  full: /assets/img/media/drone-search.webp
-  title: "Searching from above"
-  meta: "Drone-assisted searching on a DFN strewn field"
-  alt: "Drone view looking straight down at a researcher on an outback track"
-  credit: "Photo: Desert Fireball Network, Curtin University"
-
-# Parked: this is the 2023 Saint-Pierre-le-Viger (2023 CX1) recovery in France
-# — Patrick worked on the paper but was not at the search, so it stays off the
-# personal media wall unless he decides otherwise. If restored, caption as the
-# campaign and credit FRIPON/Vigie-Ciel (confirm photographer).
-# - type: image
-#   src: /assets/img/media/team-selfie-thumb.webp
-#   full: /assets/img/media/team-selfie.webp
-#   title: "The Saint-Pierre-le-Viger crew"
-#   meta: "FRIPON/Vigie-Ciel searchers with the 2023 CX1 meteorite"
-#   alt: "Search team group photo holding a freshly recovered meteorite on foil"
-#   credit: "Photo: FRIPON / Vigie-Ciel (confirm photographer)"
 - type: image
   src: /assets/img/media/dfn-station-thumb.webp
   full: /assets/img/media/dfn-station.webp
-  title: "A camera on watch"
-  meta: "A Desert Fireball Network camera station in the Nullarbor"
-  alt: "Rusted-steel Desert Fireball Network observatory with solar panel on red earth under blue sky"
+  title: "A Desert Fireball Network station"
+  meta: "The Australian network I worked on during my PhD, built to survive years alone in the Nullarbor"
+  alt: "Weathered Desert Fireball Network observatory with solar panel on red earth under blue sky"
   credit: "Photo: Desert Fireball Network, Curtin University"
 
 - type: image
@@ -71,6 +68,7 @@
   title: "Cleveland → Perth → Paris → Houston"
   meta: "One career, four cities"
   alt: "World map showing career moves between Cleveland, Perth, Paris, and Houston with fireball-network logos"
+  credit: "Figure: P. Shober"
 
 - type: link
   url: /metdetect-demo/

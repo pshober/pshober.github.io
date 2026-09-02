@@ -49,6 +49,10 @@
 .media-tile .loc { font-weight: 700; color: var(--text); font-size: 0.95rem; }
 .media-tile .meta { color: var(--muted); font-size: 0.85rem; }
 .media-tile .credit { color: var(--faint); font-size: 0.78rem; display: block; margin-top: 0.15rem; }
+// Citation for the paper an observation belongs to — the tile's provenance.
+.media-tile .paper-ref { display: block; margin-top: 0.2rem; font-size: 0.78rem; }
+.media-tile .paper-ref a { color: var(--accent-2); text-decoration: underline; text-underline-offset: 2px; }
+.media-tile .paper-ref a:hover { color: var(--accent); }
 .media-tile[data-lightbox] { cursor: zoom-in; }
 .media-tile[data-lightbox]:hover,
 a.media-tile:hover { transform: translateY(-3px); }

@@ -86,38 +86,33 @@
   /* =====================================================================
    * 1. Cumulative similarity distribution
    * ===================================================================== */
-  var CSD = (function () {
-    var cv, data, ri = 0, eid = "e0", streamIn = true;
-    var DCUT = 0.015;
+  var csdDataPromise = null;
+  function loadCSD() { return csdDataPromise || (csdDataPromise = getJSON("csd_real.json")); }
 
+  // One widget factory, two modes:
+  //   sandbox - background = expected chance curve; add any number of stream members
+  //   real    - the actual draws, with the members that genuinely landed in them
+  function csdWidget(cfg) {
+    var P = cfg.p, mode = cfg.mode;
+    var cv, data, ri = 0, k = 0, eid = "e0", streamIn = true, lockFrac = false;
+    var DCUT = 0.015, KREAL = 243;
+    function el(id) { return $(P + "-" + id); }
     function rung() { return data.rungs[ri]; }
-    function curve() {
+    function fIntra(kk) { return kk * (kk - 1) / (KREAL * (KREAL - 1)); }
+    function fCross(kk, n) { return (kk / KREAL) * (n / data.nBg); }
+    function scaled(arr, w) { return arr.map(function (v) { return v * w; }); }
+    function sandboxObs(r, kk, e) {
+      var I = data.stream.intra[e], X = data.stream.cross[e], wi = fIntra(kk), wx = fCross(kk, r.n);
+      return r.null.mean.map(function (v, i) { return v + wi * I[i] + wx * X[i]; });
+    }
+    function observed() {
       var r = rung();
-      return streamIn ? r.obs[eid] : r.noStream;
+      if (mode === "sandbox") return sandboxObs(r, k, eid);
+      return streamIn ? r.obs[eid] : r.B[eid];
     }
-
-    function fmtBig(x) {
-      if (x >= 1e9) return (x / 1e9).toFixed(1) + " billion";
-      if (x >= 1e6) return (x / 1e6).toFixed(1) + " million";
-      return group(x);
-    }
-
-    function slopeOf(y, nPairs) {
-      var xs = [], ys = [];
-      for (var i = 0; i < data.mids.length; i++) {
-        var D = data.edges[i + 1];
-        if (D < 0.03 || y[i] < 20) continue;
-        if (D > 0.3 || y[i] > 0.02 * nPairs) break;
-        xs.push(Math.log10(D)); ys.push(Math.log10(y[i]));
-      }
-      if (xs.length < 4) return null;
-      var n = xs.length, sx = 0, sy = 0, sxx = 0, sxy = 0;
-      for (i = 0; i < n; i++) { sx += xs[i]; sy += ys[i]; sxx += xs[i] * xs[i]; sxy += xs[i] * ys[i]; }
-      var den = n * sxx - sx * sx;
-      return den === 0 ? null : (n * sxy - sx * sy) / den;
-    }
-
-    function belowCut(y) {
+    function fmtBig(x) { return x >= 1e9 ? (x / 1e9).toFixed(1) + " billion" : x >= 1e6 ? (x / 1e6).toFixed(1) + " million" : group(x); }
+    function fmtN(x) { return x < 10 ? x.toFixed(1) : group(Math.round(x)); }
+    function atCut(y) {
       var E = data.edges;
       for (var i = 0; i < y.length - 1; i++) {
         var a = E[i + 1], b = E[i + 2];
@@ -129,190 +124,157 @@
       }
       return 0;
     }
-
-    // Largest D at or below 0.02 where the curve clears the 3-sigma band with real
-    // statistics behind it. Returns null when nothing does.
     function clears(y, r) {
       var hi = r.null.hi, best = null;
-      for (var i = 0; i < data.mids.length; i++) {
+      for (var i = 0; i < y.length; i++) {
         if (data.edges[i + 1] > 0.02) break;
         if (y[i] >= 10 && y[i] > hi[i]) best = data.edges[i + 1];
       }
       return best;
     }
-    function breakout(r, e) { return clears(r.obs[e], r); }
+    function slopeOf(y, nPairs) {
+      var xs = [], ys = [];
+      for (var i = 0; i < y.length; i++) {
+        var D = data.edges[i + 1];
+        if (D < 0.03 || y[i] < 20) continue;
+        if (D > 0.3 || y[i] > 0.02 * nPairs) break;
+        xs.push(Math.log10(D)); ys.push(Math.log10(y[i]));
+      }
+      if (xs.length < 4) return null;
+      var n = xs.length, sx = 0, sy = 0, sxx = 0, sxy = 0;
+      for (i = 0; i < n; i++) { sx += xs[i]; sy += ys[i]; sxx += xs[i] * xs[i]; sxy += xs[i] * ys[i]; }
+      var den = n * sxx - sx * sx;
+      return den === 0 ? null : (n * sxy - sx * sy) / den;
+    }
+    function kNeeded(r) {                 // smallest member count that clears the band at this size
+      for (var kk = 10; kk <= 3000; kk += 10) if (clears(sandboxObs(r, kk, "e0"), r) !== null) return kk;
+      return null;
+    }
 
     function draw() {
       var f = fitCanvas(cv), ctx = f.ctx, W = f.w, H = f.h;
-      var r = rung(), obs = curve(), nl = r.null;
+      var r = rung(), nl = r.null, obs = observed();
+      var si = (mode === "sandbox" && k > 1) ? scaled(data.stream.intra[eid], fIntra(k)) : null;
       var L = 62, Rp = 10, T = 12, B = 34;
       var xmin = data.edges[0], xmax = data.edges[data.edges.length - 1];
-      var ymax = r.nPairs * 1.5;
-      function px(d) { return L + (Math.log10(d) - Math.log10(xmin)) /
-        (Math.log10(xmax) - Math.log10(xmin)) * (W - L - Rp); }
-      function py(v) {
-        var y = Math.log10(Math.max(v, 0.5)), y0 = Math.log10(0.5), y1 = Math.log10(ymax);
-        return T + (1 - (y - y0) / (y1 - y0)) * (H - T - B);
-      }
-
+      var ymax = Math.max(r.nPairs, obs[obs.length - 1]) * 1.5;
+      function px(d) { return L + (Math.log10(d) - Math.log10(xmin)) / (Math.log10(xmax) - Math.log10(xmin)) * (W - L - Rp); }
+      function py(v) { var y = Math.log10(Math.max(v, 0.5)), y0 = Math.log10(0.5), y1 = Math.log10(ymax);
+        return T + (1 - (y - y0) / (y1 - y0)) * (H - T - B); }
       ctx.fillStyle = C.plate; ctx.fillRect(0, 0, W, H);
-      ctx.strokeStyle = C.grid; ctx.lineWidth = 1;
-      ctx.fillStyle = C.faint; ctx.font = "11px system-ui, sans-serif";
-      function sup(n) {
-        var m = { "-": "⁻", "0": "⁰", "1": "¹", "2": "²", "3": "³",
-                  "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹" };
-        return String(n).split("").map(function (c) { return m[c] || c; }).join("");
-      }
-      var dec;
-      for (dec = -3; dec <= 0; dec++) {
-        var x = px(Math.pow(10, dec));
-        if (x < L - 1 || x > W - Rp + 1) continue;
-        ctx.beginPath(); ctx.moveTo(x, T); ctx.lineTo(x, H - B); ctx.stroke();
-        ctx.textAlign = "center"; ctx.fillText("10" + sup(dec), x, H - B + 15);
-      }
-      for (dec = 0; dec <= 10; dec++) {
-        var v = Math.pow(10, dec); if (v > ymax) break;
-        var y = py(v);
-        ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(W - Rp, y); ctx.stroke();
-        ctx.textAlign = "right"; ctx.fillText(dec === 0 ? "1" : "10" + sup(dec), L - 6, y + 4);
-      }
+      ctx.strokeStyle = C.grid; ctx.lineWidth = 1; ctx.fillStyle = C.faint; ctx.font = "11px system-ui, sans-serif";
+      function sup(n) { var m = { "-": "⁻", "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹" };
+        return String(n).split("").map(function (c) { return m[c] || c; }).join(""); }
+      var dec, i;
+      for (dec = -3; dec <= 0; dec++) { var x = px(Math.pow(10, dec)); if (x < L - 1 || x > W - Rp + 1) continue;
+        ctx.beginPath(); ctx.moveTo(x, T); ctx.lineTo(x, H - B); ctx.stroke(); ctx.textAlign = "center"; ctx.fillText("10" + sup(dec), x, H - B + 15); }
+      for (dec = 0; dec <= 10; dec++) { var v = Math.pow(10, dec); if (v > ymax) break; var y = py(v);
+        ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(W - Rp, y); ctx.stroke(); ctx.textAlign = "right"; ctx.fillText(dec === 0 ? "1" : "10" + sup(dec), L - 6, y + 4); }
       ctx.textAlign = "center"; ctx.fillStyle = C.muted;
       ctx.fillText("Dₙ  of a pair  (smaller = more alike)", (L + W - Rp) / 2, H - 6);
       ctx.save(); ctx.translate(14, (T + H - B) / 2); ctx.rotate(-Math.PI / 2);
       ctx.fillText("cumulative pairs with Dₙ,pair < Dₙ", 0, 0); ctx.restore();
-
-      // the paper's pair cut
       var xc = px(DCUT);
       ctx.strokeStyle = C.olive; ctx.setLineDash([5, 4]); ctx.lineWidth = 1.2;
-      ctx.beginPath(); ctx.moveTo(xc, T); ctx.lineTo(xc, H - B); ctx.stroke();
-      ctx.setLineDash([]);
-
-      // chance band + mean
-      ctx.beginPath();
-      var i, started = false;
-      for (i = 0; i < data.mids.length; i++) {
-        var hv = Math.max(nl.hi[i], 0.5);
-        if (!started) { ctx.moveTo(px(data.mids[i]), py(hv)); started = true; }
-        else ctx.lineTo(px(data.mids[i]), py(hv));
+      ctx.beginPath(); ctx.moveTo(xc, T); ctx.lineTo(xc, H - B); ctx.stroke(); ctx.setLineDash([]);
+      var started;
+      function line(yv, color, width, dash) {
+        ctx.beginPath(); started = false;
+        for (i = 0; i < yv.length; i++) { if (yv[i] < 1) continue;
+          if (!started) { ctx.moveTo(px(data.edges[i + 1]), py(yv[i])); started = true; } else ctx.lineTo(px(data.edges[i + 1]), py(yv[i])); }
+        ctx.strokeStyle = color; ctx.lineWidth = width; if (dash) ctx.setLineDash(dash); ctx.stroke(); ctx.setLineDash([]);
       }
-      for (i = data.mids.length - 1; i >= 0; i--) ctx.lineTo(px(data.mids[i]), py(Math.max(nl.lo[i], 0.5)));
-      ctx.closePath();
-      ctx.fillStyle = "rgba(176,68,252,0.28)"; ctx.fill();
       ctx.beginPath(); started = false;
-      for (i = 0; i < data.mids.length; i++) {
-        if (nl.mean[i] < 0.5) continue;
-        if (!started) { ctx.moveTo(px(data.mids[i]), py(nl.mean[i])); started = true; }
-        else ctx.lineTo(px(data.mids[i]), py(nl.mean[i]));
-      }
-      ctx.strokeStyle = "rgba(207,195,224,0.6)"; ctx.lineWidth = 1; ctx.stroke();
-
-      // observed
-      ctx.beginPath(); started = false;
-      for (i = 0; i < data.mids.length; i++) {
-        if (obs[i] < 1) continue;
-        if (!started) { ctx.moveTo(px(data.mids[i]), py(obs[i])); started = true; }
-        else ctx.lineTo(px(data.mids[i]), py(obs[i]));
-      }
-      ctx.strokeStyle = C.yellow; ctx.lineWidth = 2.2; ctx.stroke();
+      for (i = 0; i < nl.hi.length; i++) { var hv = Math.max(nl.hi[i], 0.5);
+        if (!started) { ctx.moveTo(px(data.edges[i + 1]), py(hv)); started = true; } else ctx.lineTo(px(data.edges[i + 1]), py(hv)); }
+      for (i = nl.lo.length - 1; i >= 0; i--) ctx.lineTo(px(data.edges[i + 1]), py(Math.max(nl.lo[i], 0.5)));
+      ctx.closePath(); ctx.fillStyle = "rgba(176,68,252,0.28)"; ctx.fill();
+      line(nl.mean, "rgba(207,195,224,0.6)", 1);
+      if (si) line(si, C.orange, 1.6, [6, 4]);
+      line(obs, C.yellow, 2.2);
     }
 
     function update() {
-      var r = rung(), obs = curve();
-      $("fs-csd-n-v").textContent = r.label;
-      $("fs-csd-n-note").textContent = fmtBig(r.nPairs) + " pairs · " +
-        (streamIn ? r.nStream + " stream member" + (r.nStream === 1 ? "" : "s") + " in this draw"
-                  : "stream removed");
-      $("fs-csd-stream-note").textContent = streamIn
-        ? "" : "the same draw with every member taken out";
-      var e0 = eid;
-      ["e0", "e1", "e2"].forEach(function (id) {
-        var b = $("fs-csd-" + id);
-        b.classList.toggle("is-on", streamIn && id === e0);
-        b.disabled = !streamIn;
-        b.style.opacity = streamIn ? 1 : 0.45;
-      });
+      var r = rung();
+      if (mode === "sandbox" && lockFrac) { k = r.nStreamNatural; el("k").value = k; }
+      var obs = observed();
+      el("n-v").textContent = r.label;
+      el("n-note").textContent = fmtBig(r.nPairs) + " pairs" + (mode === "real" ? (streamIn ? " · " + r.nStreamNatural + " stream member" + (r.nStreamNatural === 1 ? "" : "s") + " in this draw" : " · stream removed") : "");
+      ["e0", "e1", "e2"].forEach(function (id) { el(id).classList.toggle("is-on", id === eid); });
+      var ob = atCut(obs), nb = atCut(r.null.mean), v = el("verdict"), bo = clears(obs, r);
+      el("below").textContent = fmtN(ob); el("null-below").textContent = fmtN(nb);
 
-      var ob = belowCut(obs), nb = belowCut(rung().null.mean);
-      $("fs-csd-below").textContent = ob < 10 ? ob.toFixed(1) : group(Math.round(ob));
-      $("fs-csd-null-below").textContent = nb < 10 ? nb.toFixed(1) : group(Math.round(nb));
-      var sl = slopeOf(r.null.mean, r.nPairs);
-      $("fs-csd-chslope").textContent = sl === null ? "—" : sl.toFixed(2);
-
-      var bo = streamIn ? breakout(r, eid) : null;
-      var v = $("fs-csd-verdict");
-      if (!streamIn) {
-        var still = clears(r.noStream, r);
-        if (still !== null) {
-          v.textContent = "Stream removed, and an excess remains below Dₙ ≈ " + still.toFixed(3) +
-            ". The 243 linked members were the biggest single contributor, not the whole surplus: " +
-            "the stream's diffuser outskirts that DBSCAN's ε = 0.03 never linked, the two weaker " +
-            "significant cells on the map, and — the paper's own caveat — possible near-simultaneous " +
-            "detections are all still in the catalog. That is exactly why the localized test in " +
-            "Step 6, not the global curve, is what identifies a stream.";
-          v.className = "fs-verdict is-warn";
-        } else {
-          v.textContent = "Stream removed: the curve sits inside the chance band the whole way down. " +
-            "This is what the null looks like.";
-          v.className = "fs-verdict";
-        }
-      } else if (bo !== null) {
-        v.textContent = "Detected: the observed curve clears the 3σ chance band below " +
-          "Dₙ ≈ " + bo.toFixed(3) + ". The catalog is now big enough that chance itself " +
-          "reaches past the cut — and the stream's tight pairs stand out against it.";
-        v.className = "fs-verdict is-hit";
-      } else if (eid !== "e0" && breakout(r, "e0") !== null) {
-        v.textContent = "Erased by measurement error: the catalog is big enough and the stream is " +
-          "in it, but this much extra scatter has pushed its tight pairs apart until they no longer " +
-          "stand out. This is what fireball-precision orbits do to a stream.";
-        v.className = "fs-verdict is-warn";
+      if (mode === "sandbox") {
+        el("k-v").textContent = k;
+        el("k").disabled = lockFrac;
+        el("k-note").textContent = k === 0 ? "none" : k === KREAL ? "= every GMN member of M2026-A1"
+          : k < KREAL ? (100 * k / KREAL).toFixed(0) + "% of the real stream" : (k / KREAL).toFixed(1) + "× the real stream (extrapolated)";
+        var sb = atCut(scaled(data.stream.intra[eid], fIntra(k))), xb = atCut(scaled(data.stream.cross[eid], fCross(k, r.n)));
+        el("stream-below").textContent = fmtN(sb + xb);
+        el("stream-split").textContent = k > 1 ? "(" + fmtN(sb) + " within the stream, " + fmtN(xb) + " stream-to-background)" : "";
+        if (k === 0) { v.textContent = "No stream: the curve is the expected background and sits in the middle of the chance band. This is what the null looks like."; v.className = "fs-verdict"; }
+        else if (bo !== null) { v.textContent = "Detected: the observed curve clears the 3σ chance band below Dₙ ≈ " + bo.toFixed(3) + ". The stream's own pairs have overtaken what chance supplies there."; v.className = "fs-verdict is-hit"; }
+        else if (eid !== "e0" && clears(sandboxObs(r, k, "e0"), r) !== null) { v.textContent = "Erased by measurement error: with this much extra scatter the stream's tight pairs have been pushed apart until they no longer stand out. This is what fireball-precision orbits do to a stream."; v.className = "fs-verdict is-warn"; }
+        else { v.textContent = "No detection: " + k + " member" + (k === 1 ? "" : "s") + " in a catalog this size do not make enough tight pairs to rise above chance."; v.className = "fs-verdict"; }
+        var upTo = null, lastR = data.rungs[data.rungs.length - 1];
+        data.rungs.forEach(function (q) { if (k > 1 && clears(sandboxObs(q, k, "e0"), q) !== null) upTo = q; });
+        el("first").textContent = k <= 1 ? "" : !upTo ? "With " + k + " members the curve clears the band at no catalog size — not even the smallest."
+          : upTo === lastR ? "With " + k + " members the curve clears the band at every size, the full catalog included."
+          : "With " + k + " members the curve clears the band at every size up to " + group(upTo.n) + " meteors, and not beyond — the more background pairs, the more the same stream is buried.";
+        var need = kNeeded(lastR);
+        el("need").textContent = "At full size the real stream — " + KREAL + " GMN members, " + fmtN(atCut(data.stream.intra.e0)) +
+          " pairs tighter than the cut — does not lift this global curve out of the band on its own" +
+          (need ? "; about " + group(need) + " members would" : "") +
+          ". The real catalog's excess (next widget) is bigger than the linked cluster's own pairs, and the rest is diffuse. " +
+          "That is not a weakness of the stream, it is why Step 6 exists: the map finds M2026-A1 in one cell where chance predicts 39 pairs — a test this curve cannot make.";
       } else {
-        v.textContent = "No detection: the stream is in there — " + r.nStream + " member" +
-          (r.nStream === 1 ? "" : "s") + " of it — but the chance floor still sits to the right " +
-          "of the cut, so its tight pairs have nothing to stand out against.";
-        v.className = "fs-verdict";
+        el("stream-note").textContent = streamIn ? "" : "the same draw with every member's pairs taken out";
+        var sl = slopeOf(r.null.mean, r.nPairs); el("chslope").textContent = sl === null ? "—" : sl.toFixed(2);
+        if (!streamIn) {
+          var still = clears(r.B[eid], r);
+          if (still !== null) { v.textContent = "Stream removed, and an excess remains below Dₙ ≈ " + still.toFixed(3) + ". The 243 linked members were the biggest single contributor, not the whole surplus: the stream's diffuser outskirts that DBSCAN's ε = 0.03 never linked, the two weaker significant cells on the map, and — the paper's own caveat — possible near-simultaneous detections are all still in the catalog. That is exactly why the localized test in Step 6, not the global curve, is what identifies a stream."; v.className = "fs-verdict is-warn"; }
+          else { v.textContent = "Stream removed: the curve sits inside the chance band the whole way down. This is what the null looks like."; v.className = "fs-verdict"; }
+        } else if (bo !== null) { v.textContent = "Detected: the observed curve clears the 3σ chance band below Dₙ ≈ " + bo.toFixed(3) + ". The catalog is now big enough that chance itself reaches past the cut — and the surplus of tight pairs stands out against it."; v.className = "fs-verdict is-hit"; }
+        else if (eid !== "e0" && clears(r.obs.e0, r) !== null) { v.textContent = "Erased by measurement error: the catalog is big enough and the stream is in it, but this much extra scatter has pushed its tight pairs apart until they no longer stand out."; v.className = "fs-verdict is-warn"; }
+        else { v.textContent = "No detection: the stream is in there — " + r.nStreamNatural + " member" + (r.nStreamNatural === 1 ? "" : "s") + " of it — but the chance floor still sits to the right of the cut, so its tight pairs have nothing to stand out against."; v.className = "fs-verdict"; }
+        var firstR = null, lastQ = data.rungs[data.rungs.length - 1];
+        data.rungs.forEach(function (q) { if (firstR === null && clears(q.obs.e0, q) !== null) firstR = q; });
+        var prev = firstR ? data.rungs[Math.max(0, data.rungs.indexOf(firstR) - 1)] : null;
+        el("first").textContent = !firstR ? "" : firstR === lastQ
+          ? "In the real data the excess clears the band only at the full catalog, " + group(firstR.n) + " meteors. At " + group(prev.n) + " it does not — " + prev.nStreamNatural + " members are in that draw, but chance had not yet reached far enough left."
+          : "In the real data the excess first clears the band at " + group(firstR.n) + " meteors.";
       }
-
-      var first = null, last = data.rungs[data.rungs.length - 1];
-      data.rungs.forEach(function (q) { if (first === null && breakout(q, "e0") !== null) first = q; });
-      var prev = first ? data.rungs[Math.max(0, data.rungs.indexOf(first) - 1)] : null;
-      $("fs-csd-first").textContent = !first ? ""
-        : first === last
-          ? "With these curves the excess clears the band only at the full catalog, " + group(first.n) +
-            " meteors. At " + group(prev.n) + " it does not — the stream is in that draw too, but " +
-            "chance had not yet reached far enough left."
-          : "With these curves the excess first clears the band at " + group(first.n) + " meteors.";
-
-      $("fs-csd-summary").textContent = r.label + " meteors, " + fmtBig(r.nPairs) +
-        " pairs, stream " + (streamIn ? "included (" + r.nStream + " members in this draw)" : "removed") +
-        ". Observed pairs below the 0.015 cut: " + group(ob) + " against " +
-        (nb < 10 ? nb.toFixed(1) : group(Math.round(nb))) + " from chance. " + v.textContent;
+      el("summary").textContent = r.label + " meteors; " + (mode === "sandbox" ? k + " planted stream members" : (streamIn ? "stream included" : "stream removed")) +
+        "; error " + eid + ". Below the 0.015 cut: " + fmtN(ob) + " observed pairs against " + fmtN(nb) + " from chance. " + v.textContent;
       draw();
     }
 
     return {
       init: function () {
-        cv = $("fs-csd-canvas"); if (!cv) return;
-        getJSON("csd_real.json").then(function (d) {
+        cv = el("canvas"); if (!cv) return;
+        loadCSD().then(function (d) {
           data = d;
-          var sl = $("fs-csd-n");
-          sl.max = d.rungs.length - 1;
-          sl.value = 0;
+          var sl = el("n"); sl.max = d.rungs.length - 1; sl.value = 0;
           sl.addEventListener("input", function () { ri = +this.value; update(); });
-          $("fs-csd-stream").addEventListener("change", function () {
-            streamIn = this.checked; update();
-          });
-          ["e0", "e1", "e2"].forEach(function (id) {
-            $("fs-csd-" + id).addEventListener("click", function () {
-              if (!streamIn) return;
-              eid = id; update();
+          ["e0", "e1", "e2"].forEach(function (id) { el(id).addEventListener("click", function () { eid = id; update(); }); });
+          if (mode === "sandbox") {
+            el("k").addEventListener("input", function () { k = +this.value; update(); });
+            el("frac").addEventListener("change", function () { lockFrac = this.checked; update(); });
+            el("real").addEventListener("click", function () {
+              ri = d.rungs.length - 1; k = KREAL; eid = "e0"; lockFrac = false; el("frac").checked = false;
+              el("n").value = ri; el("k").value = k; update();
             });
-          });
+          } else {
+            el("stream").addEventListener("change", function () { streamIn = this.checked; update(); });
+          }
           window.addEventListener("resize", debounce(update, 200));
           update();
-        }).catch(function (e) { fail($("fs-csd-note"), e); });
+        }).catch(function (e) { fail(el("note"), e); });
       }
     };
-  })();
+  }
+  var CSD = csdWidget({ p: "fs-csd", mode: "sandbox" });
+  var CSDReal = csdWidget({ p: "fs-real", mode: "real" });
 
   function debounce(fn, ms) {
     var t; return function () { clearTimeout(t); t = setTimeout(fn, ms); };
@@ -939,7 +901,7 @@
   function boot() {
     if (!D) return;
     loadColors();
-    CSD.init(); Haystack.init(); Pairs.init(); Grid.init(); Calc.init();
+    CSD.init(); CSDReal.init(); Haystack.init(); Pairs.init(); Grid.init(); Calc.init();
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", boot);
