@@ -212,6 +212,15 @@
         var sb = atCut(scaled(data.stream.intra[eid], fIntra(k))), xb = atCut(scaled(data.stream.cross[eid], fCross(k, r.n)));
         el("stream-below").textContent = fmtN(sb + xb);
         el("stream-split").textContent = k > 1 ? "(" + fmtN(sb) + " within the stream, " + fmtN(xb) + " stream-to-background)" : "";
+        var elbow = null;
+        if (k > 1) {
+          var Iw = scaled(data.stream.intra[eid], fIntra(k)), bg = r.null.mean;
+          for (var q = 0; q < Iw.length; q++) { if (Iw[q] < 1) continue; if (Iw[q] > bg[q]) elbow = data.edges[q + 1]; else break; }
+        }
+        el("elbow").textContent = k <= 1 ? "" : elbow === null
+          ? "The background outnumbers the stream's own pairs at every Dₙ here; the stream shows only as a lift on top of it."
+          : "The stream's own pairs outnumber the background below Dₙ ≈ " + elbow.toFixed(3) +
+            " — that is where the observed curve elbows. Grow the catalog and watch it slide left.";
         if (k === 0) { v.textContent = "No stream: the curve is the expected background and sits in the middle of the chance band. This is what the null looks like."; v.className = "fs-verdict"; }
         else if (bo !== null) { v.textContent = "Detected: the observed curve clears the 3σ chance band below Dₙ ≈ " + bo.toFixed(3) + ". The stream's own pairs have overtaken what chance supplies there."; v.className = "fs-verdict is-hit"; }
         else if (eid !== "e0" && clears(sandboxObs(r, k, "e0"), r) !== null) { v.textContent = "Erased by measurement error: with this much extra scatter the stream's tight pairs have been pushed apart until they no longer stand out. This is what fireball-precision orbits do to a stream."; v.className = "fs-verdict is-warn"; }

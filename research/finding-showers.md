@@ -390,6 +390,7 @@ not a number.**
     chance predicts <b id="fs-csd-null-below">—</b> ·
     the stream contributes <b id="fs-csd-stream-below">—</b>
     <span class="fs-hint" id="fs-csd-stream-split"></span></p>
+  <p class="fs-readout" id="fs-csd-elbow"></p>
   <p class="fs-verdict" id="fs-csd-verdict"></p>
   <p class="fs-hint" id="fs-csd-first"></p>
   <p class="fs-hint" id="fs-csd-need"></p>
@@ -406,7 +407,11 @@ not a number.**
     KDE null; the stream is the actual pair distribution of the 243 GMN members
     of M2026-A1, scaled to however many you add — beyond 243 it is extrapolated from its own
     distribution — plus its pairs with the background. The error settings are recomputed with Gaussian
-    scatter added on top of GMN's own.</p>
+    scatter added on top of GMN's own. One thing worth knowing about the orange curve: it runs out
+    to Dₙ ≈ 0.2 because Dₙ charges the difference in solar longitude at full weight, and M2026-A1 is
+    active for about 20° of it — two members a fortnight apart score as dissimilar even though they
+    are siblings. Only same-night members land near 10⁻², which is why the paper's cut sits at 0.015
+    and why detection lives in the far-left tail of the stream's own curve.</p>
   <p class="fs-sr" id="fs-csd-summary" role="status"></p>
   <p class="fs-hint" id="fs-csd-note"></p>
 </div>
