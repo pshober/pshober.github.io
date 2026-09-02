@@ -202,7 +202,7 @@
 
     function draw(obs, band, M) {
       var f = fitCanvas(cv); ctx = f.ctx; W = f.w; H = f.h;
-      var L = 52, Rp = 10, T = 12, B = 34;
+      var L = 62, Rp = 10, T = 12, B = 34;
       var ymax = Math.max(10, M * M / 2);
       function px(d) { return L + (Math.log10(d) - Math.log10(DMIN)) /
         (Math.log10(DMAX) - Math.log10(DMIN)) * (W - L - Rp); }
@@ -237,9 +237,9 @@
       }
       ctx.textAlign = "center";
       ctx.fillStyle = C.muted;
-      ctx.fillText("Dₙ  (dissimilarity — smaller means more alike)", (L + W - Rp) / 2, H - 6);
-      ctx.save(); ctx.translate(12, (T + H - B) / 2); ctx.rotate(-Math.PI / 2);
-      ctx.fillText("pairs closer than Dₙ", 0, 0); ctx.restore();
+      ctx.fillText("Dₙ  of a pair  (smaller = more alike)", (L + W - Rp) / 2, H - 6);
+      ctx.save(); ctx.translate(14, (T + H - B) / 2); ctx.rotate(-Math.PI / 2);
+      ctx.fillText("cumulative pairs with Dₙ,pair < Dₙ", 0, 0); ctx.restore();
 
       // 3-sigma envelope for pure chance
       ctx.beginPath();
@@ -270,6 +270,8 @@
       var M = +$("fs-csd-m").value, k = +$("fs-csd-k").value, err = +$("fs-csd-err").value / 100;
       $("fs-csd-m-v").textContent = M;
       $("fs-csd-k-v").textContent = k;
+      $("fs-csd-frac").textContent = k === 0 ? "none planted"
+        : (100 * k / M).toFixed(1) + "% of the catalog · the real stream is 0.23% of GMN";
       $("fs-csd-err-v").textContent = err === 0 ? "none"
         : "\u00B1" + (err * 0.05 * 29.78).toFixed(1) + " km/s, \u00B1" + (err * 3).toFixed(1) + "\u00B0";
       if (k > M) { $("fs-csd-k").value = M; k = M; $("fs-csd-k-v").textContent = k; }

@@ -371,7 +371,8 @@ not a number.**
     <label class="fs-ctrl">Meteors in the catalog: <b id="fs-csd-m-v">250</b>
       <input type="range" id="fs-csd-m" min="120" max="420" step="10" value="250"></label>
     <label class="fs-ctrl">Planted stream members: <b id="fs-csd-k-v">0</b>
-      <input type="range" id="fs-csd-k" min="0" max="60" step="1" value="0"></label>
+      <input type="range" id="fs-csd-k" min="0" max="60" step="1" value="0">
+      <span class="fs-hint" id="fs-csd-frac"></span></label>
     <label class="fs-ctrl">Measurement error: <b id="fs-csd-err-v">none</b>
       <input type="range" id="fs-csd-err" min="0" max="100" step="5" value="0"></label>
   </div>
@@ -385,6 +386,14 @@ not a number.**
   <p class="fs-hint">Start with no stream: a straight line. Add members and a kink appears at
     the left-hand end. Now turn up the measurement error and watch the kink dissolve — that is
     why fireball orbits, which are far less precise than asteroid orbits, hide streams so well.</p>
+  <p class="fs-hint"><strong>On the horizontal scale.</strong> A few hundred objects only make a few
+    tens of thousands of pairs, so the closest thing chance produces here sits near
+    <em>D</em><sub>N</sub> ≈ 0.1, and the kink has to appear above that. The real search has
+    122,943 meteors — 7.6 billion pairs — which pushes the chance floor down to about 10<sup>−3</sup>
+    and puts the real kink at 10<sup>−2</sup>, as in the figure below. Same shape, two orders of
+    magnitude apart, and the difference is nothing but how many pairs you have. It is not a
+    difference between criteria: across the real 282 members, median <em>D</em><sub>N</sub> = 0.089
+    against median <em>D</em><sub>H</sub> = 0.079.</p>
   <p class="fs-sr" id="fs-csd-summary" role="status"></p>
   <p class="fs-hint" id="fs-csd-note"></p>
 </div>
@@ -398,6 +407,15 @@ the only one where the excess survives that test.
   <img src="/assets/img/research/fs-csd-gmn.webp" alt="Log-log plot of cumulative pair counts against the D-N dissimilarity for GMN meteors. The observed black curve lies above the blue chance envelope and the orange uncertainty band below D-N of about 0.02." loading="lazy" width="1400" height="980">
   <figcaption>The same plot as the widget above, on 122,943 real meteors. <span class="muted">Figure: Shober 2026, ApJ 1000, 254 (CC&nbsp;BY).</span></figcaption>
 </figure>
+
+There is a physical reading of that left-hand end. A small *D* means two meteoroids were
+released from their parent with very little relative speed, so in the companion plot for
+*D*<sub>H</sub> I put a second axis across the top converting *D* into an **ejection
+velocity**, calibrated by Monte Carlo — injecting particles from each observed orbit and
+fitting the median. On that scale the kink at *D*<sub>H</sub> ≈ 10<sup>−2</sup> corresponds
+to ejections of order 100 m s<sup>−1</sup>, which is the regime of genuinely recent,
+gentle release. Pairs below the kink are not just similar; they are too similar to have
+been thrown apart long ago.
 
 ## Step 6 — Find out *where* the excess is
 
