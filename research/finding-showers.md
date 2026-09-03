@@ -362,7 +362,12 @@ If mapping the whole stream is the goal, there are better tools than a threshold
 - **Membership probabilities instead of a verdict.** Treat the catalog as a mixture of stream
   and sporadic and give every meteor a probability of belonging, rather than a yes/no;
   [Jopek & Bronikowska (2017)](https://doi.org/10.1016/j.pss.2016.12.004) builds the
-  coincidence-probability machinery that needs.
+  coincidence-probability machinery that needs. Mixture models are already doing useful work
+  on meteor data along a different axis:
+  [Hemmelgarn, Moskovitz & Vida (2026)](https://doi.org/10.1016/j.icarus.2026.117128) fit a
+  Gaussian mixture model to factor-analysed observables for 28,177 LO-CAMS meteors and
+  recover physically meaningful groups — clustering meteoroids by what they are made of
+  rather than by orbital similarity.
 - **Model the stream physically.** Eject particles from the parent, integrate them forward,
   and ask which observed orbits the model predicts —
   [Vaubaillon et al. (2005)](https://doi.org/10.1051/0004-6361:20041544),
