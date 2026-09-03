@@ -337,6 +337,46 @@ fireballs with *D*<sub>N</sub> &lt; 0.2 are false positives — **and they are n
 largest D values**. You can never point at an individual pair and call it clean. You can
 only ever quantify the proportion.
 
+### A strict cut answers one question and spoils another
+
+Everything above optimises **purity** — keeping the false-positive rate low. That is the
+right objective when the question is *does this stream exist at all?*, which is the question
+this page is about. It is the wrong objective once the stream is established and you want to
+know what it actually *is*: how many members, how far it spreads in solar longitude, whether
+it has substructure, what its real dispersion is.
+
+For that job a tight cut is actively harmful, and not merely because it discards real
+members — it discards them **non-randomly**. You preferentially keep the tightest core, so
+you underestimate the stream's extent and overestimate how compact it is, then measure its
+properties on the biased remnant. D-criteria trade completeness against contamination
+exactly this way, and [Moorhead (2016)](https://doi.org/10.1093/mnras/stv2610) quantifies
+that trade for each of them. You can see the same thing in the widget above: M2026-A1's own
+members have a median *D*<sub>N</sub> of 0.088, so any cut tight enough to be clean keeps
+only its core.
+
+If mapping the whole stream is the goal, there are better tools than a threshold:
+
+- **Cast wide, then verify independently.** Link at a deliberately high threshold and confirm
+  membership by other means — the CAMS approach of
+  [Jenniskens & Nénon (2016)](https://doi.org/10.1016/j.icarus.2015.10.004).
+- **Membership probabilities instead of a verdict.** Treat the catalog as a mixture of stream
+  and sporadic and give every meteor a probability of belonging, rather than a yes/no;
+  [Jopek & Bronikowska (2017)](https://doi.org/10.1016/j.pss.2016.12.004) builds the
+  coincidence-probability machinery that needs.
+- **Model the stream physically.** Eject particles from the parent, integrate them forward,
+  and ask which observed orbits the model predicts —
+  [Vaubaillon et al. (2005)](https://doi.org/10.1051/0004-6361:20041544),
+  [Ryabova (2007)](https://doi.org/10.1111/j.1365-2966.2007.11392.x),
+  [Egal et al. (2019)](https://doi.org/10.1016/j.icarus.2019.04.021). This is the only route
+  that can tell you about the parts of a stream Earth never passes through.
+- **Measure the dispersion directly** rather than inferring it from whatever survived a cut —
+  [Moorhead, Clements & Vida (2021)](https://doi.org/10.1093/mnras/stab2557) on radiant
+  dispersions in GMN data.
+
+The method follows the question. Detection wants purity; anatomy wants completeness. Reaching
+for a strict *D* threshold when the goal was the second is a common and quiet way to get a
+confident, biased answer.
+
 ## Step 5 — Look at the whole population at once
 
 Here is the move that makes weak streams detectable. Instead of judging pairs one at a
