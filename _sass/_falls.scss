@@ -1,0 +1,290 @@
+// ── Meteorite falls: the table page (/meteorite-falls/) and one page per fall ─
+// Status colours are categorical slots stepped for the dark surface; every tag also carries its word.
+$fall-auto: #3987e5;      // found by MetDetect
+$fall-human: #199e70;     // human-verified
+$fall-found: #ffc532;     // meteorites recovered (brand yellow)
+
+.falls .page-head { padding-bottom: 1rem; }
+.falls-cta { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.4rem; }
+.falls-stats { margin: 1.2rem 0 1.6rem; }
+.falls-stats .stat__num small { font-size: 0.55em; color: var(--muted); }
+.falls-credit { margin: 0 0 2rem; font-size: 0.95rem; }
+.falls-credit a { color: var(--accent-2); }
+
+// filters
+.falls-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem 1.1rem;
+  margin: 0 0 1rem;
+}
+.falls-search { flex: 1 1 260px; max-width: 420px; }
+.falls-search input,
+.falls-form input,
+.falls-form select,
+.falls-form textarea {
+  width: 100%;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  padding: 0.55rem 0.75rem;
+  font: inherit;
+  font-size: 0.95rem;
+}
+.falls-search input:focus,
+.falls-form input:focus,
+.falls-form select:focus,
+.falls-form textarea:focus { outline: 2px solid var(--accent-2); outline-offset: 1px; border-color: transparent; }
+.falls-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.chip {
+  background: var(--surface);
+  color: var(--muted);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 0.32rem 0.85rem;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.chip:hover { color: var(--text); border-color: var(--accent-2); }
+.chip.is-on { background: var(--accent-2); color: var(--accent-ink); border-color: var(--accent-2); font-weight: 600; }
+.falls-count { color: var(--faint); font-size: 0.85rem; margin: 0; }
+
+// table
+.falls-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.falls-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.falls-table th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding: 0.75rem 0.8rem;
+  border-bottom: 1px solid var(--border-strong);
+  white-space: nowrap;
+  background: var(--surface-2);
+}
+.falls-table th button {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+.falls-table th button:hover { color: var(--text); }
+.falls-table th[aria-sort] button { color: var(--accent-2); }
+.falls-table th[aria-sort="descending"] button::after { content: " ▾"; }
+.falls-table th[aria-sort="ascending"] button::after { content: " ▴"; }
+.falls-table td { padding: 0.65rem 0.8rem; border-top: 1px solid var(--border); vertical-align: top; }
+.falls-table tbody tr { cursor: pointer; transition: background 0.12s ease; }
+.falls-table tbody tr:hover { background: rgba(255, 255, 255, 0.045); }
+.falls-table .c-date, .falls-table .c-time { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.falls-table .c-fall a { font-weight: 600; color: var(--text); }
+.falls-table .c-fall a:hover { color: var(--accent-2); }
+.falls-place { display: block; color: var(--faint); font-size: 0.82rem; }
+.falls-table .c-radar { color: var(--muted); font-size: 0.85rem; }
+.falls-table .c-rec a { color: var(--muted); }
+.falls-table .c-rec a:hover { color: var(--accent-2); }
+.falls-by { display: block; color: var(--faint); font-size: 0.78rem; margin-top: 0.15rem; }
+.falls-table .muted, .fall .muted { color: var(--faint); }
+.nowrap { white-space: nowrap; }
+.falls-tablenote { color: var(--faint); font-size: 0.83rem; margin: 0.8rem 0 0; line-height: 1.55; }
+
+.tag {
+  display: inline-block;
+  padding: 0.12rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  white-space: nowrap;
+}
+.tag--auto { background: rgba($fall-auto, 0.22); border-color: rgba($fall-auto, 0.7); }
+.tag--human { background: rgba($fall-human, 0.24); border-color: rgba($fall-human, 0.75); }
+.tag--found { background: rgba($fall-found, 0.16); border-color: rgba($fall-found, 0.6); color: var(--accent-2); }
+.tag--miss { color: var(--muted); }
+.tag--pending { color: var(--accent-2); border-style: dashed; border-color: rgba($fall-found, 0.6); }
+
+// phones: each row becomes a card
+@media (max-width: 760px) {
+  .falls-table-wrap { overflow: visible; border: 0; background: none; }
+  .falls-table thead { display: none; }
+  .falls-table, .falls-table tbody, .falls-table tr, .falls-table td { display: block; width: 100%; }
+  .falls-table tbody tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem 0.8rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 0.85rem 0.95rem;
+    margin-bottom: 0.7rem;
+  }
+  .falls-table tbody tr[hidden] { display: none; }
+  .falls-table td { border: 0; padding: 0; font-size: 0.88rem; }
+  .falls-table td::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--faint);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .falls-table .c-fall { grid-column: 1 / -1; order: -1; font-size: 1rem; }
+  .falls-table .c-fall::before { display: none; }
+}
+
+// ── "Ask about a fireball" ─────────────────────────────────────────────────────
+.falls-ask {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 2rem;
+  margin: 3.5rem 0 1rem;
+  padding: 1.8rem;
+  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  scroll-margin-top: 1rem;
+}
+.falls-ask__intro h2 { margin-top: 0; color: var(--accent-2); }
+.falls-ask__intro p { color: var(--muted); }
+.falls-ask__tips { color: var(--muted); font-size: 0.92rem; padding-left: 1.1rem; }
+.falls-ask__tips li { margin-bottom: 0.35rem; }
+.falls-form fieldset { border: 0; padding: 0; margin: 0 0 1.1rem; min-width: 0; }
+.falls-form legend { font-weight: 700; color: var(--text); margin-bottom: 0.5rem; padding: 0; }
+.falls-form label { display: block; color: var(--muted); font-size: 0.85rem; }
+.falls-form label input, .falls-form label select, .falls-form label textarea { margin-top: 0.25rem; }
+.ff-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.6rem; margin-bottom: 0.6rem; }
+.ff-row--buttons { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.ff-wide { margin-bottom: 0.6rem; }
+.ff-opt { color: var(--faint); }
+.ff-out { color: var(--accent-2); font-size: 0.88rem; margin: 0.2rem 0 0; font-variant-numeric: tabular-nums; min-height: 1.3em; }
+.ff-small { padding: 0.45rem 0.9rem; font-size: 0.85rem; border-width: 2px; }
+.ff-map { height: 320px; border-radius: 12px; border: 1px solid var(--border); margin-top: 0.6rem; background: var(--surface); }
+.ff-map[hidden] { display: none; }
+.ff-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.ff-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.2rem; }
+.ff-privacy { color: var(--faint); font-size: 0.82rem; margin: 0; }
+.ff-status { color: var(--muted); font-size: 0.92rem; margin-top: 0.9rem; }
+.ff-status a { color: var(--accent-2); }
+.ff-copy { width: 100%; margin: 0.6rem 0; font-family: $font-mono; font-size: 0.8rem; background: var(--plate); color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem; }
+.leaflet-container { font: inherit; }
+
+@media (max-width: $bp-md) {
+  .falls-ask { grid-template-columns: 1fr; padding: 1.2rem; gap: 1rem; }
+}
+
+// how it works + sources
+.falls-how { margin-top: 3rem; scroll-margin-top: 1rem; }
+.falls-steps {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.falls-steps li {
+  counter-increment: step;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+}
+.falls-steps li::before {
+  content: counter(step);
+  display: inline-grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: var(--accent-2);
+  color: var(--accent-ink);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.falls-steps h3 { font-size: 1rem; margin: 0.6rem 0 0.4rem; }
+.falls-steps p { color: var(--muted); font-size: 0.9rem; margin: 0; }
+.falls-sources { margin-top: 2.5rem; }
+.falls-sources ul { color: var(--muted); font-size: 0.92rem; padding-left: 1.1rem; }
+.falls-sources li { margin-bottom: 0.35rem; }
+
+// ── One fall ─────────────────────────────────────────────────────────────────
+.fall { max-width: 1040px; }
+.fall-head { padding-bottom: 1.2rem; }
+.fall-head .lede { margin-bottom: 0.9rem; }
+.fall-badges { display: flex; flex-wrap: wrap; gap: 0.45rem; list-style: none; padding: 0; margin: 0; }
+.fbadge {
+  padding: 0.28rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+}
+.fbadge--auto { background: rgba($fall-auto, 0.22); border-color: rgba($fall-auto, 0.75); }
+.fbadge--human { background: rgba($fall-human, 0.24); border-color: rgba($fall-human, 0.8); }
+.fbadge--found { background: rgba($fall-found, 0.16); border-color: rgba($fall-found, 0.65); color: var(--accent-2); }
+.fbadge--miss, .fbadge--none { color: var(--muted); }
+.fbadge--pending { color: var(--accent-2); border-style: dashed; }
+
+.fall-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.8rem;
+  margin: 0.6rem 0 2.2rem;
+}
+.fall-facts > div { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0.8rem 0.95rem; }
+.fall-facts dt { color: var(--faint); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.25rem; }
+.fall-facts dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+.fall-facts dd a { color: var(--text); text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 3px; }
+.fall-facts dd a:hover { color: var(--accent-2); }
+.fall-facts__src { display: block; color: var(--faint); font-size: 0.8rem; font-weight: 400; margin-top: 0.2rem; }
+.fall-facts__src a { color: var(--faint); }
+
+.fall-sec { margin: 0 0 2.6rem; scroll-margin-top: 1rem; }
+.fall-sec h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.45rem; margin-bottom: 1rem; }
+.fall-sec > p { color: var(--muted); max-width: 75ch; }
+.fall-sec > p strong { color: var(--text); }
+.fall-nums { display: flex; flex-wrap: wrap; gap: 0.8rem; list-style: none; padding: 0; margin: 1.1rem 0 0.4rem; }
+.fall-nums li { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0.7rem 0.95rem; flex: 1 1 170px; }
+.fall-nums .v { display: block; font-family: $font-head; font-size: 1.6rem; line-height: 1.1; color: var(--accent-2); font-variant-numeric: tabular-nums; }
+.fall-nums .k { display: block; color: var(--muted); font-size: 0.82rem; margin-top: 0.2rem; }
+.fall-fig { margin: 1.4rem 0 0.8rem; }
+.fall-fig img { background: #fbfaf6; }
+.fall-fig figcaption { text-align: left; }
+.fall-maps--two { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+.fall-maps--two .fall-fig { margin: 1rem 0 0.4rem; }
+@media (max-width: $bp-md) {
+  .fall-maps--two { grid-template-columns: 1fr; }
+}
+.fall-note { color: var(--faint) !important; font-size: 0.85rem; line-height: 1.55; }
+.fall-empty { color: var(--faint) !important; font-style: italic; }
+.fall-list { padding-left: 1.1rem; color: var(--muted); }
+.fall-list li { margin-bottom: 0.4rem; }
+.fall-list a { color: var(--text); }
+// caption keys: the colour sits in a swatch, the words stay in text colour
+.k-both::before, .k-auto::before, .k-human::before {
+  content: "";
+  display: inline-block;
+  width: 0.62em;
+  height: 0.62em;
+  margin-right: 0.3em;
+  vertical-align: 0.05em;
+}
+.k-both::before { background: #2a78d6; border-radius: 50%; }
+.k-auto::before { background: #eb6834; }
+.k-human::before { border: 2px solid #1baf7a; border-radius: 50%; width: 0.5em; height: 0.5em; }

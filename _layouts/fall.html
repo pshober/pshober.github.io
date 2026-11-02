@@ -1,0 +1,173 @@
+---
+layout: default
+---
+{% comment %}
+  One meteorite fall. Hand-maintained facts come from the page's front matter (_falls/<slug>.md);
+  MetDetect results come from the generated _data/metdetect.yml, joined on page.key.
+{% endcomment %}
+{% assign m = site.data.metdetect.events[page.key] %}
+{% assign run = site.data.metdetect.run %}
+{% assign a = m.auto %}
+{% assign v = page.verification %}
+<div class="container fall">
+  <p class="backlink"><a href="{{ '/meteorite-falls/' | relative_url }}">&larr;&nbsp;All meteorite falls</a></p>
+
+  <header class="page-head fall-head">
+    <div class="eyebrow">{{ page.date | date: "%-d %B %Y" }}{% if m.fireball %} · {{ m.fireball.utc | slice: 11, 8 }} UTC{% endif %}</div>
+    <h1>{{ page.title }}</h1>
+    <p class="lede">{{ page.place }}</p>
+    <ul class="fall-badges">
+      {% if a %}
+        {% if a.found %}<li class="fbadge fbadge--auto">Found by MetDetect</li>
+        {% else %}<li class="fbadge fbadge--miss">Missed by MetDetect</li>{% endif %}
+      {% elsif page.status == "automated" %}<li class="fbadge fbadge--auto">Automated detection</li>
+      {% else %}<li class="fbadge fbadge--none">MetDetect not run yet</li>{% endif %}
+      {% if page.status == "verified" %}<li class="fbadge fbadge--human">Human-verified{% if v.by %} · {{ v.by }}{% endif %}</li>
+      {% else %}<li class="fbadge fbadge--pending">Awaiting human verification</li>{% endif %}
+      {% if page.recovered == true %}<li class="fbadge fbadge--found">Meteorites recovered</li>
+      {% elsif page.recovered == false %}<li class="fbadge fbadge--none">No meteorites recovered</li>{% endif %}
+    </ul>
+  </header>
+
+  <dl class="fall-facts">
+    <div><dt>Fireball (UTC)</dt>
+      <dd>{% if m.fireball %}{{ m.fireball.utc | slice: 0, 10 }} {{ m.fireball.utc | slice: 11, 8 }}{% if m.fireball.pm_s %} <span class="muted nowrap">±&nbsp;{{ m.fireball.pm_s }}&nbsp;s</span>{% endif %}
+        <span class="fall-facts__src">{% if m.fireball.url %}<a href="{{ m.fireball.url }}" rel="noopener">{{ m.fireball.source }}</a>{% else %}{{ m.fireball.source }}{% endif %}</span>
+      {% else %}not established <span class="fall-facts__src">no instrumental or published time yet</span>{% endif %}</dd></div>
+    <div><dt>{% if m.human %}Radar signatures{% else %}Radar searched{% endif %}</dt>
+      <dd>{% if m.human %}{% for r in m.human.radars %}{{ r.radar }}{% unless forloop.last %}, {% endunless %}{% endfor %}
+        <span class="fall-facts__src">{{ m.human.cells }} radar cells identified by hand{% if m.human.alt_km %}, {{ m.human.alt_km[0] }}–{{ m.human.alt_km[1] }} km up{% endif %}</span>
+      {% elsif a %}{{ a.radar }}{% else %}—{% endif %}</dd></div>
+    <div><dt>Meteorites</dt>
+      <dd>{% if page.meteorites %}{% for met in page.meteorites %}{% if met.metbull %}<a href="https://www.lpi.usra.edu/meteor/metbull.php?code={{ met.metbull }}" rel="noopener">{{ met.name }}</a>{% else %}{{ met.name }}{% endif %}{% if met.class %} <span class="muted">({{ met.class }})</span>{% endif %}{% unless forloop.last %}; {% endunless %}{% endfor %}
+        <span class="fall-facts__src">{% if page.meteorites[0].metbull %}Meteoritical Bulletin entry{% else %}classification pending{% endif %}</span>
+      {% elsif page.recovered == true %}recovered <span class="fall-facts__src">official name not yet published</span>
+      {% elsif page.recovered == false %}none recovered
+      {% else %}—{% endif %}</dd></div>
+    <div><dt>MetDetect</dt>
+      <dd>{% if a %}{{ run.name }} <span class="fall-facts__src">{{ a.set }} fall · radar {{ a.radar }}</span>
+        {% else %}not run yet{% endif %}</dd></div>
+  </dl>
+
+  {% if a %}
+  <section class="fall-sec" id="automated">
+    <h2>Automated detection</h2>
+    <p>
+      MetDetect searched the <strong>{{ a.radar }}</strong> radar around the fireball time.
+      {% if a.found %}It <strong>found the fall</strong>: the radar cells it reports are mostly the debris identified by hand.
+      {% elsif a.matched > 0 %}Its answer <strong>contains the debris but is mostly other echo</strong>, so it counts as a miss.
+      {% else %}It <strong>missed the fall</strong>: its answer contains none of the hand-identified debris{% if a.rank %} (the debris was its candidate number {{ a.rank }}){% endif %}.{% endif %}
+    </p>
+    <ul class="fall-nums">
+      <li><span class="v">{{ a.matched }}</span><span class="k">of the {{ a.human_cells_searched }} hand-identified cells on {{ a.radar }} found</span></li>
+      <li><span class="v">{{ a.missed }}</span><span class="k">hand-identified cells missed</span></li>
+      <li><span class="v">{{ a.extra }}</span><span class="k">cells reported that were not identified by hand</span></li>
+    </ul>
+    {% if m.figures.detection %}
+    <figure class="fig fall-fig" data-lightbox data-full="{{ m.figures.detection | relative_url }}" data-cap="Automatic and hand-identified radar cells, {{ a.radar }}">
+      <img src="{{ m.figures.detection | relative_url }}" alt="Map and height-against-time plot of the radar cells MetDetect found and the cells identified by hand" loading="lazy" width="1632" height="782">
+      <figcaption>Each mark is one radar measurement cell on {{ a.radar }}. <span class="k-both">Blue</span>: found by MetDetect and identified by hand; <span class="k-auto">orange squares</span>: found only by MetDetect; <span class="k-human">green rings</span>: identified by hand, missed by MetDetect. Left: positions (the arrow points to the radar); right: height against time after the fireball.</figcaption>
+    </figure>
+    {% endif %}
+    <p class="fall-note">{{ run.name }}, {{ run.date | date: "%-d %b %Y" }}. {{ run.evaluation }}{% if a.set == "held-out" %} <strong>This fall was held out.</strong>{% endif %}{% if a.human_cells_not_loaded > 0 %} Hand-identified cells on {{ a.radar }} outside the data the search loads, not counted: {{ a.human_cells_not_loaded }}.{% endif %} The hand identification is the reference these numbers are graded against.</p>
+  </section>
+  {% endif %}
+
+  {% assign df = m.darkflight %}
+  <section class="fall-sec" id="dark-flight">
+    <h2>Dark flight</h2>
+    {% if df %}
+    <p>
+      After the fireball goes dark, meteorites fall freely through the wind. Each radar cell is flown down to the
+      ground through the winds of that day; the coloured areas show where stones of each mass most likely landed,
+      and the black line runs from light to heavy stones (solid where the radar traced it, dashed where extended).
+      {% if df.auto and df.human %}The two maps use the same method and the same scale: one from MetDetect's cells, one from the cells identified by hand.{% if df.overlap %} Their 90% search areas for stones of 10 g and up overlap by <strong>{{ df.overlap | times: 100 | round }}%</strong> (shared area over combined area).{% endif %}{% endif %}
+    </p>
+    <div class="fall-maps{% if df.auto and df.human %} fall-maps--two{% endif %}">
+      {% if m.figures.darkflight_auto %}
+      <figure class="fig fall-fig" data-lightbox data-full="{{ m.figures.darkflight_auto | relative_url }}" data-cap="Dark flight from MetDetect's automatic radar cells">
+        <img src="{{ m.figures.darkflight_auto | relative_url }}" alt="Dark-flight map from the automatically detected radar cells" loading="lazy" width="{{ df.map_px[0] }}" height="{{ df.map_px[1] }}">
+        <figcaption><strong>From MetDetect's cells</strong> ({{ df.auto.cells }} cells, {{ a.radar | default: "one radar" }}).{% if df.auto.area_km2 %} Search area for stones of 10 g and up: {{ df.auto.area_km2 }} km².{% endif %}{% if df.auto.finds_counted %} Recovered meteorites inside it: {{ df.auto.finds_inside }} of {{ df.auto.finds_counted }}.{% endif %}{% if df.human %} Dotted: the search area from the hand identification.{% endif %}</figcaption>
+      </figure>
+      {% endif %}
+      {% if m.figures.darkflight_human %}
+      <figure class="fig fall-fig" data-lightbox data-full="{{ m.figures.darkflight_human | relative_url }}" data-cap="Dark flight from the radar cells identified by hand{% if v.by %} ({{ v.by }}){% endif %}">
+        <img src="{{ m.figures.darkflight_human | relative_url }}" alt="Dark-flight map from the radar cells identified by hand" loading="lazy" width="{{ df.map_px[0] }}" height="{{ df.map_px[1] }}">
+        <figcaption><strong>From the cells identified by hand</strong>{% if v.by %} by {{ v.by }}{% endif %} ({{ df.human.cells }} cells{% if df.human.radars %}, {{ df.human.radars | join: ", " }}{% endif %}).{% if df.human.area_km2 %} Search area for stones of 10 g and up: {{ df.human.area_km2 }} km².{% endif %}{% if df.human.finds_counted %} Recovered meteorites inside it: {{ df.human.finds_inside }} of {{ df.human.finds_counted }}.{% endif %}{% if df.auto %} Dotted: MetDetect's search area.{% endif %}</figcaption>
+      </figure>
+      {% endif %}
+    </div>
+    <p class="fall-note">
+      Pixel estimate, computed by P.&nbsp;Shober with MetDetect: winds from ERA5 (ECMWF), masses for an ordinary-chondrite
+      density over a range of shapes. Preliminary: it does not fit the fireball itself, so the heavy end of the line is an
+      extrapolation.{% if m.finds %} Stars mark recovered meteorites{% if m.finds.audited %} (positions checked against the published tables){% else %} (published positions, not independently checked){% endif %}; they are drawn for comparison only and were never used to make the maps. Counted stones are those of 10 g and up, or of unpublished mass.{% endif %}
+      {% if df.context %}Town names: © OpenStreetMap contributors.{% endif %}
+      {% if df.centre %}<a href="https://www.openstreetmap.org/?mlat={{ df.centre[0] }}&amp;mlon={{ df.centre[1] }}#map=12/{{ df.centre[0] }}/{{ df.centre[1] }}" rel="noopener">See this area on OpenStreetMap</a>, and always ask the landowner before searching.{% endif %}
+    </p>
+    {% else %}
+    <p class="fall-empty">No dark-flight estimate yet for this fall.</p>
+    {% endif %}
+  </section>
+
+  <section class="fall-sec" id="human">
+    <h2>Human identification</h2>
+    {% if page.status == "verified" %}
+    <p>
+      {% if v.by %}The radar signatures of this fall were identified by hand by <strong>{{ v.by }}</strong>{% if v.affiliation %} ({{ v.affiliation }}){% endif %}{% else %}The radar signatures of this fall were identified by hand{% endif %}{% if m.human %}{% if m.human.radars.size > 1 %}: {{ m.human.cells }} radar cells on {{ m.human.radars.size }} radars, {% for r in m.human.radars %}{{ r.radar }} ({{ r.cells }}){% unless forloop.last %}, {% endunless %}{% endfor %}{% else %}: {{ m.human.cells }} radar cells on {{ m.human.radars[0].radar }}{% endif %}{% endif %}.
+      {% if v.report %}<a href="{{ v.report }}" rel="noopener">Read the original report</a>{% if v.report contains "web.archive.org" %} (archived copy){% endif %}.{% endif %}
+    </p>
+    {% if v.note %}<p>{{ v.note }}</p>{% endif %}
+    {% else %}
+    <p>Not yet verified by a person. This is an automatic detection: treat it as a candidate until someone has checked the radar data by hand.</p>
+    {% endif %}
+  </section>
+
+  {% if page.meteorites or page.recovered_note %}
+  <section class="fall-sec" id="meteorites">
+    <h2>Meteorites</h2>
+    {% if page.meteorites %}
+    <ul class="fall-list">
+      {% for met in page.meteorites %}
+      <li><strong>{% if met.metbull %}<a href="https://www.lpi.usra.edu/meteor/metbull.php?code={{ met.metbull }}" rel="noopener">{{ met.name }}</a>{% else %}{{ met.name }}{% endif %}</strong>{% if met.class %} · {{ met.class }}{% endif %}{% if met.note %} · <span class="muted">{{ met.note }}</span>{% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if page.recovered_note %}<p class="fall-note">{{ page.recovered_note }}</p>{% endif %}
+  </section>
+  {% endif %}
+
+  <section class="fall-sec" id="papers">
+    <h2>Publications</h2>
+    {% if page.papers %}
+    {% for p in page.papers %}
+    <p class="pub">
+      <span class="pub__authors">{{ p.authors }} ({{ p.year }})</span>
+      {% if p.doi %}<a class="pub__title" href="https://doi.org/{{ p.doi }}" rel="noopener">{{ p.title }}</a>{% elsif p.url %}<a class="pub__title" href="{{ p.url }}" rel="noopener">{{ p.title }}</a>{% else %}<span class="pub__title">{{ p.title }}</span>{% endif %}.
+      <span class="pub__venue">{{ p.venue }}</span>
+    </p>
+    {% endfor %}
+    {% else %}
+    <p class="fall-empty">No papers on this fall yet that we know of.</p>
+    {% endif %}
+    <p class="fall-note">Know of a paper or a recovered meteorite we missed? <a href="{{ '/meteorite-falls/' | relative_url }}#ask">Tell us</a>.</p>
+  </section>
+
+  {% assign notes = content | strip %}
+  {% if notes != "" %}
+  <section class="fall-sec prose">
+    <h2>Notes</h2>
+    {{ content }}
+  </section>
+  {% endif %}
+
+  {% if page.other_analyses %}
+  <section class="fall-sec" id="other">
+    <h2>Other analyses</h2>
+    <ul class="fall-list">
+      {% for o in page.other_analyses %}
+      <li>{% if o.url %}<a href="{{ o.url }}" rel="noopener">{{ o.title }}</a>{% else %}{{ o.title }}{% endif %}{% if o.by %} · {{ o.by }}{% endif %}{% if o.note %} · <span class="muted">{{ o.note }}</span>{% endif %}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+</div>

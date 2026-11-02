@@ -1,0 +1,64 @@
+{% comment %}
+  "Ask about a fireball". Sends a message only: nobody outside can run the detector from here.
+  site.falls_inquiry.endpoint set (Formspree-style POST): the form submits directly.
+  Empty: the visitor's email app opens with the message filled in, with a copy-to-clipboard fallback.
+{% endcomment %}
+<section class="falls-ask" id="ask" aria-labelledby="ask-title">
+  <div class="falls-ask__intro">
+    <h2 id="ask-title">Ask about a fireball</h2>
+    <p>Saw a bright fireball, or heard a boom, and wonder whether a weather radar caught falling meteorites?
+      Send me the time and place. I can't promise to look at every request, but I read them all, and if the
+      radar shows something I will reply.</p>
+    <ul class="falls-ask__tips">
+      <li>A time range of up to an hour is fine. Use your local time; it is converted to UTC for you.</li>
+      <li>Give where you were, or where you think it came down. You can click the map.</li>
+      <li>Radar coverage is best in the USA; other countries are possible case by case.</li>
+    </ul>
+  </div>
+
+  <form class="falls-form" id="falls-form" novalidate
+        data-endpoint="{{ site.falls_inquiry.endpoint }}"
+        data-to="{{ site.falls_inquiry.email | split: '@' | first }}"
+        data-domain="{{ site.falls_inquiry.email | split: '@' | last }}">
+    <fieldset>
+      <legend>When</legend>
+      <div class="ff-row">
+        <label>Date<input type="date" name="date" required></label>
+        <label>From<input type="time" name="start" required></label>
+        <label>To<input type="time" name="end" required></label>
+      </div>
+      <label class="ff-wide">Time zone<select name="tz" id="ff-tz"></select></label>
+      <p class="ff-out" id="ff-utc" aria-live="polite"></p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Where</legend>
+      <div class="ff-row">
+        <label>Latitude<input type="number" name="lat" step="any" min="-90" max="90" placeholder="e.g. 41.22" required></label>
+        <label>Longitude<input type="number" name="lon" step="any" min="-180" max="180" placeholder="e.g. -81.85" required></label>
+      </div>
+      <div class="ff-row ff-row--buttons">
+        <button type="button" class="btn btn--ghost ff-small" id="ff-map-btn">Pick on a map</button>
+        <button type="button" class="btn btn--ghost ff-small" id="ff-geo-btn">Use my location</button>
+      </div>
+      <div class="ff-map" id="ff-map" hidden></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>About you</legend>
+      <div class="ff-row">
+        <label>Email<input type="email" name="email" autocomplete="email" required></label>
+        <label>Name <span class="ff-opt">(optional)</span><input type="text" name="name" autocomplete="name"></label>
+      </div>
+      <label class="ff-wide">What did you see or hear? <span class="ff-opt">(optional)</span>
+        <textarea name="notes" rows="3" maxlength="2000" placeholder="Direction of travel, colour, sounds, a video link…"></textarea></label>
+      <label class="ff-hp" aria-hidden="true">Leave empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label>
+    </fieldset>
+
+    <div class="ff-actions">
+      <button type="submit" class="btn btn--primary">Send</button>
+      <p class="ff-privacy">Your email address is used only to reply to you.</p>
+    </div>
+    <div class="ff-status" id="ff-status" role="status" aria-live="polite"></div>
+  </form>
+</section>

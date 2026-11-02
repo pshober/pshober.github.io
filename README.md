@@ -49,6 +49,22 @@ Run it on demand from the Actions tab ("Run workflow"), or locally:
 `ADS_TOKEN=… python3 scripts/update_publications.py --dry-run`. Edit the config block at the
 top of the script (journal-name map, protected proper nouns, exclude-list) to tune formatting.
 
+## Meteorite falls (`/meteorite-falls/`)
+
+A GLM-style table of meteorite falls seen in weather radar, one page per fall, and an "Ask about a fireball" form.
+
+- **Hand-maintained facts:** one file per fall in [`_falls/`](_falls) (name, place, date, `status: verified` or
+  `automated`, who verified it, meteorites with Meteoritical Bulletin codes, papers). Edit these directly.
+  A new automatic detection gets `status: automated` until a person checks it; set `status: verified` and fill
+  `verification:` when it is.
+- **MetDetect results and figures are generated**, never edited here: METRAIN
+  `automatic_detection/scripts/web/export_falls_site.py` writes [`_data/metdetect.yml`](_data/metdetect.yml) and
+  `assets/img/falls/<slug>/*.webp`, joined to a fall by its `key:`. Re-run it after a new detection run.
+- **Inquiry form:** with `falls_inquiry.endpoint` empty in `_config.yml` it opens the visitor's email app;
+  paste a free [Formspree](https://formspree.io) endpoint there to receive inquiries directly.
+- **Local preview:** `bundle exec jekyll build` works on the laptop with the Ruby headers unpacked from the
+  `ruby3.0-dev` package (no root); see the METRAIN exporter docstring.
+
 ## Custom domain / DNS
 
 The custom domain is bound by the [`CNAME`](CNAME) file (`planetarypat.com`) plus

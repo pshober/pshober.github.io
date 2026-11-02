@@ -8,6 +8,7 @@
     <ul class="nav__links">
       <li><a href="{{ '/' | relative_url }}"            {% if url == '/' %}class="is-active" aria-current="page"{% endif %}>Home</a></li>
       <li><a href="{{ '/research/' | relative_url }}"    {% if url contains '/research' %}class="is-active" aria-current="page"{% endif %}>Research</a></li>
+      <li><a href="{{ '/meteorite-falls/' | relative_url }}"{% if url contains '/meteorite-falls' %}class="is-active" aria-current="page"{% endif %}>Meteorite falls</a></li>
       <li><a href="{{ '/publications/' | relative_url }}"{% if url contains '/publications' %}class="is-active" aria-current="page"{% endif %}>Publications</a></li>
       <li><a href="{{ '/cv/' | relative_url }}"          {% if url contains '/cv' %}class="is-active" aria-current="page"{% endif %}>CV</a></li>
     </ul>

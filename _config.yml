@@ -42,12 +42,32 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
+# One page per meteorite fall (_falls/<slug>.md) at /meteorite-falls/<slug>/.
+# Hand-maintained facts live in those files; MetDetect results are generated into _data/metdetect.yml.
+collections:
+  falls:
+    output: true
+    permalink: /meteorite-falls/:name/
+
 # Default layout for any page that doesn't set one.
 defaults:
   - scope:
       path: ""
     values:
       layout: page
+  - scope:
+      path: ""
+      type: falls
+    values:
+      layout: fall
+
+# "Ask about a fireball" form on /meteorite-falls/.
+# endpoint empty: the form opens the visitor's own email app with the message filled in (nothing is stored
+# anywhere). To receive inquiries directly instead, create a free form at https://formspree.io (sign in with
+# the address below) and paste its endpoint, e.g. "https://formspree.io/f/abcdwxyz".
+falls_inquiry:
+  endpoint: ""
+  email: planetarypat@gmail.com
 
 sass:
   style: compressed

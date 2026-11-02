@@ -1,0 +1,139 @@
+---
+layout: default
+title: "Meteorite falls in weather radar"
+permalink: /meteorite-falls/
+description: "Meteorite falls seen in weather radar: automatic detections by MetDetect, human-verified radar signatures, dark-flight maps, recovered meteorites and papers. Ask about a fireball you saw."
+---
+{% assign falls = site.falls | sort: "date" | reverse %}
+{% assign ev = site.data.metdetect.events %}
+{% assign run = site.data.metdetect.run %}
+{% assign n_verified = 0 %}{% assign n_rec = 0 %}{% assign n_run = 0 %}{% assign n_found = 0 %}
+{% for f in falls %}
+  {% assign m = ev[f.key] %}
+  {% if f.status == "verified" %}{% assign n_verified = n_verified | plus: 1 %}{% endif %}
+  {% if f.recovered == true %}{% assign n_rec = n_rec | plus: 1 %}{% endif %}
+  {% if m.auto %}{% assign n_run = n_run | plus: 1 %}{% if m.auto.found %}{% assign n_found = n_found | plus: 1 %}{% endif %}{% endif %}
+{% endfor %}
+<div class="container falls">
+  <header class="page-head falls-head">
+    <div class="eyebrow">Radar meteorite falls</div>
+    <h1>{{ page.title }}</h1>
+    <p class="lede">After a bright fireball, meteorites fall the last few kilometres in the dark, and weather radars
+      often see them on the way down. These are the falls whose radar signatures were found by
+      <strong>MetDetect</strong>, my automated search, or identified by hand, with maps of where the stones most likely landed.</p>
+    <div class="falls-cta">
+      <a class="btn btn--primary" href="#ask">Ask about a fireball</a>
+      <a class="btn btn--ghost" href="#how">How it works</a>
+    </div>
+  </header>
+
+  <ul class="stats falls-stats">
+    <li class="stat"><span class="stat__num">{{ falls.size }}</span><span class="stat__label">falls</span></li>
+    <li class="stat"><span class="stat__num">{{ n_found }}<small>/{{ n_run }}</small></span><span class="stat__label">found by MetDetect</span></li>
+    <li class="stat"><span class="stat__num">{{ n_verified }}</span><span class="stat__label">human-verified</span></li>
+    <li class="stat"><span class="stat__num">{{ n_rec }}</span><span class="stat__label">with meteorites recovered</span></li>
+  </ul>
+
+  <aside class="callout falls-credit">
+    <strong>Who did what.</strong> The radar signatures of the human-verified falls listed here were identified by hand by
+    <strong>Dr. Marc Fries</strong> (NASA Johnson Space Center, ARES) and reported on NASA's
+    <a href="https://web.archive.org/web/20260828014937/https://ares.jsc.nasa.gov/meteorite-falls/events/" rel="noopener">Meteorite Falls</a>
+    website; every fall page links to his original report. MetDetect's automatic results are graded against his
+    identifications. The automated detection and the dark-flight maps are my own work.
+  </aside>
+
+  <div class="falls-filters" role="search">
+    <label class="falls-search"><span class="sr-only">Search falls</span>
+      <input type="search" id="falls-q" placeholder="Search name, place or radar" autocomplete="off">
+    </label>
+    <div class="falls-chips" role="group" aria-label="Detection">
+      <button type="button" class="chip is-on" data-filter="det" data-value="all" aria-pressed="true">All</button>
+      <button type="button" class="chip" data-filter="det" data-value="found" aria-pressed="false">Found by MetDetect</button>
+      <button type="button" class="chip" data-filter="det" data-value="verified" aria-pressed="false">Human-verified</button>
+      <button type="button" class="chip" data-filter="det" data-value="pending" aria-pressed="false">Awaiting verification</button>
+    </div>
+    <div class="falls-chips" role="group" aria-label="Meteorites">
+      <button type="button" class="chip is-on" data-filter="rec" data-value="all" aria-pressed="true">Any outcome</button>
+      <button type="button" class="chip" data-filter="rec" data-value="yes" aria-pressed="false">Meteorites recovered</button>
+    </div>
+    <p class="falls-count" id="falls-count" aria-live="polite"></p>
+  </div>
+
+  <div class="falls-table-wrap">
+    <table class="falls-table" id="falls-table">
+      <thead>
+        <tr>
+          <th scope="col" data-sort="date" aria-sort="descending"><button type="button">Date</button></th>
+          <th scope="col">Time (UTC)</th>
+          <th scope="col" data-sort="name"><button type="button">Fall</button></th>
+          <th scope="col" data-sort="auto"><button type="button">MetDetect</button></th>
+          <th scope="col" data-sort="human"><button type="button">Human-verified</button></th>
+          <th scope="col" data-sort="rec"><button type="button">Meteorites</button></th>
+          <th scope="col" data-sort="papers"><button type="button">Papers</button></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in falls %}
+        {% assign m = ev[f.key] %}
+        {% if m.auto %}{% if m.auto.found %}{% assign det = "found" %}{% else %}{% assign det = "missed" %}{% endif %}{% else %}{% assign det = "none" %}{% endif %}
+        {% if f.recovered == true %}{% assign rec = "yes" %}{% elsif f.recovered == false %}{% assign rec = "no" %}{% else %}{% assign rec = "unknown" %}{% endif %}
+        <tr data-date="{{ f.date | date: '%Y-%m-%d' }}{% if m.fireball %}T{{ m.fireball.utc | slice: 11, 8 }}{% endif %}"
+            data-name="{{ f.title | downcase | escape }}" data-auto="{{ det }}" data-human="{{ f.status }}"
+            data-rec="{{ rec }}" data-papers="{{ f.papers.size | default: 0 }}"
+            data-q="{{ f.title | downcase | escape }} {{ f.place | downcase | escape }} {% for r in m.human.radars %}{{ r.radar | downcase }} {% endfor %}{% if m.auto %}{{ m.auto.radar | downcase }} {% endif %}{% for met in f.meteorites %}{{ met.name | downcase | escape }} {% endfor %}{{ f.date | date: '%Y' }}">
+          <td class="c-date" data-label="Date">{{ f.date | date: "%Y-%m-%d" }}</td>
+          <td class="c-time" data-label="Time (UTC)">{% if m.fireball %}{{ m.fireball.utc | slice: 11, 5 }}{% else %}<span class="muted" title="Fireball time not established">—</span>{% endif %}</td>
+          <td class="c-fall" data-label="Fall"><a href="{{ f.url | relative_url }}">{{ f.title }}</a><span class="falls-place">{{ f.place }}</span></td>
+          <td class="c-auto" data-label="MetDetect">{% if det == "found" %}<span class="tag tag--auto">Found</span>{% elsif det == "missed" %}<span class="tag tag--miss">Missed</span>{% else %}<span class="muted">not run</span>{% endif %}</td>
+          <td class="c-human" data-label="Human-verified">{% if f.status == "verified" %}<span class="tag tag--human">Yes</span> <span class="falls-by">{{ f.verification.by }}</span>{% else %}<span class="tag tag--pending">Pending</span>{% endif %}</td>
+          <td class="c-rec" data-label="Meteorites">{% if rec == "yes" %}<span class="tag tag--found">Yes</span>{% for met in f.meteorites limit: 1 %} {% if met.metbull %}<a href="https://www.lpi.usra.edu/meteor/metbull.php?code={{ met.metbull }}" rel="noopener">{{ met.name }}</a>{% else %}{{ met.name }}{% endif %}{% endfor %}{% elsif rec == "no" %}<span class="muted">No</span>{% else %}<span class="muted">Unknown</span>{% endif %}</td>
+          <td class="c-papers" data-label="Papers">{% if f.papers.size > 0 %}<a href="{{ f.url | relative_url }}#papers">{{ f.papers.size }}</a>{% else %}<span class="muted">0</span>{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="falls-tablenote">
+    <strong>Time</strong>: the fireball, where an instrument or a published study pins it down.
+    <strong>MetDetect</strong>: the result of {{ run.name }} ({{ run.date | date: "%B %Y" }}), which searches one radar per fall;
+    "found" means the radar cells it reported are mostly the debris identified by hand.
+    <strong>Human-verified</strong>: a person identified the fall's radar signatures by hand.
+    <strong>Meteorites</strong>: the name links to the Meteoritical Bulletin.
+  </p>
+
+  {% include falls-inquiry.html %}
+
+  <section class="falls-how" id="how">
+    <h2>How it works</h2>
+    <ol class="falls-steps">
+      <li><h3>A fireball breaks up</h3><p>Most of a meteoroid burns up. What survives slows down within seconds and stops glowing 15–40&nbsp;km up.
+        From there the stones fall in the dark for several minutes, drifting with the wind: the <em>dark flight</em>.</p></li>
+      <li><h3>Weather radars see the stones</h3><p>NEXRAD radars scan the sky every few minutes. A shower of falling stones and dust can show up as faint,
+        short-lived echoes that sink from one scan to the next, sometimes on several radars at once.</p></li>
+      <li><h3>MetDetect searches automatically</h3><p>Given the fireball time and a search window, MetDetect looks for new echo at the right height and time,
+        picks the candidate most like falling debris and grows it into the neighbouring radar cells. It was trained and
+        tested one fall at a time, never on the fall being scored.</p></li>
+      <li><h3>A person verifies it</h3><p>Automatic detections stay <em>awaiting verification</em> until someone has checked the radar data by hand.
+        The human-verified falls here were identified by Marc Fries (NASA ARES); MetDetect is graded against his identifications.</p></li>
+      <li><h3>Dark flight gives a search map</h3><p>Each radar cell is flown down through the winds of that day, which shows where stones of each mass
+        most likely landed. Recovered meteorites are drawn on the maps afterwards, as a check.</p></li>
+    </ol>
+    <p>See a fall in 3D in the <a href="{{ '/metdetect-demo/' | relative_url }}">MetDetect demo</a>, or read about the
+      <a href="{{ '/research/' | relative_url }}">research</a>.</p>
+  </section>
+
+  <section class="falls-sources">
+    <h2>Data and credits</h2>
+    <ul>
+      <li><strong>Hand identifications of the radar signatures</strong>: Marc Fries, NASA ARES (Johnson Space Center), from his reports on NASA's Meteorite Falls website (archived copies).</li>
+      <li><strong>Radar data</strong>: NOAA NEXRAD Level-II archive (NOAA Open Data Dissemination).</li>
+      <li><strong>Fireball times</strong>: the GOES Geostationary Lightning Mapper (NASA/SETI bolide database), American Meteor Society witness reports, video and published studies, as cited on each page.</li>
+      <li><strong>Winds</strong>: ERA5 reanalysis (Copernicus Climate Change Service, ECMWF).</li>
+      <li><strong>Meteorites</strong>: the Meteoritical Bulletin Database (The Meteoritical Society) and the publications listed on each page.</li>
+      <li><strong>Map labels</strong>: © OpenStreetMap contributors.</li>
+    </ul>
+    <p class="falls-tablenote">Search maps are estimates. Always get the landowner's permission before searching.
+      Results updated {{ site.data.metdetect.generated | date: "%-d %B %Y" }}.</p>
+  </section>
+</div>
+<script src="{{ '/assets/js/falls.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
