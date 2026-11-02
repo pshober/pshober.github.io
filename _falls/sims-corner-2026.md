@@ -13,8 +13,7 @@ verification:
   report: https://web.archive.org/web/20260828014937/https://ares.jsc.nasa.gov/meteorite-falls/events/
   note: The NASA ARES page for this fall was not archived; the link goes to the archived list of events.
 recovered: true
-meteorites:
-- name: Sims Corner
-  metbull: 87538
-  class: H4
+recovered_note: Five stones, 133.9 g in all, were found in September 2026 by meteorite hunters Anton Clemens and Roberto
+  Vargas (<a href="https://www.meteoritestudies.com/meteorites/view/87538/sims-corner/" rel="noopener">Meteorite Studies</a>).
+  The name Sims Corner is provisional; the meteorite has no Meteoritical Bulletin entry yet.
 ---

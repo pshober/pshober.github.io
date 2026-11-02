@@ -13,6 +13,7 @@ verification:
 recovered: true
 meteorites:
 - name: Lorton
+  metbull: 52843
   class: L6
   note: struck a medical office
 ---

@@ -12,7 +12,9 @@ verification:
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260715173107/https://ares.jsc.nasa.gov/meteorite-falls/events/cockburn-island-ontario
 recovered: true
-meteorites:
-- name: Cockburn Island
-  metbull: 86884
+recovered_note: Meteorite hunters Dave Kenny and Anton Clemens found two stones, 57.6 g and 55.2 g, beside a road south of
+  Tolsmaville on 11 and 13 July 2026 and took them to Western University for classification (<a href="https://www.manitoulin.com/international-meteorite-debris-hunters-successful-in-search-on-cockburn-island/"
+  rel="noopener">Manitoulin Expositor</a>, <a href="https://www.meteoritestudies.com/meteorites/view/86884/cockburn-island/"
+  rel="noopener">Meteorite Studies</a>). The name Cockburn Island is provisional; the meteorite has no Meteoritical Bulletin
+  entry yet.
 ---

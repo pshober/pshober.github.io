@@ -25,5 +25,5 @@ papers:
   year: 2013
   title: 'Faster recovery, better science: meteorite fall events detected with weather radars and seismometers in 2012'
   venue: 44th Lunar and Planetary Science Conference, abstract 2935
-  url: https://www.lpi.usra.edu/meetings/lpsc2013/eposter/2935.pdf
+  url: https://www.lpi.usra.edu/meetings/lpsc2013/pdf/2935.pdf
 ---
