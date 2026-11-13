@@ -8,7 +8,6 @@ description: 'The Battle Mountain meteorite fall of 22 August 2012 (Battle Mount
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/2026/https://ares.jsc.nasa.gov/meteorite-falls/events/battle-mountain-nevada
 recovered: true

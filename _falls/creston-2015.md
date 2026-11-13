@@ -8,7 +8,6 @@ description: 'The Creston meteorite fall of 24 October 2015 (Creston, California
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260601000212/https://ares.jsc.nasa.gov/meteorite-falls/events/creston-california
 recovered: true

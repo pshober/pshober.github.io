@@ -8,7 +8,6 @@ description: 'The Novato meteorite fall of 18 October 2012 (Novato, California, 
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: true
 meteorites:

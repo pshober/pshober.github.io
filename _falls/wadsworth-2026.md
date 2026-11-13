@@ -8,7 +8,6 @@ description: 'The Wadsworth meteorite fall of 17 March 2026 (Wadsworth, Ohio, US
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260531040234/https://ares.jsc.nasa.gov/meteorite-falls/events/windfall-oh
 recovered: true

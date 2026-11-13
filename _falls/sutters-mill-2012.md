@@ -8,7 +8,6 @@ description: 'The Sutter''s Mill meteorite fall of 22 April 2012 (Coloma, Califo
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: true
 meteorites:

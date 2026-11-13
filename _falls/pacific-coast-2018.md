@@ -8,7 +8,6 @@ description: 'The Pacific coast (Quinault) meteorite fall of 8 March 2018 (off t
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/2025/https://ares.jsc.nasa.gov/meteorite-falls/events/pacific-coast-washington
 recovered: false

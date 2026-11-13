@@ -8,7 +8,6 @@ description: 'The Ash Creek meteorite fall of 15 February 2009 (West, Texas, USA
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: true
 meteorites:

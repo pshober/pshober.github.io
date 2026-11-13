@@ -8,7 +8,6 @@ description: 'The McDonough meteorite fall of 26 June 2025 (McDonough, Georgia, 
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20251219172256/https://ares.jsc.nasa.gov/meteorite-falls/events/mcdonough-ga
 recovered: true

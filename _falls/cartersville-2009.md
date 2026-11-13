@@ -8,7 +8,6 @@ description: 'The Cartersville meteorite fall of 2 March 2009 (Cartersville, Geo
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: true
 meteorites:

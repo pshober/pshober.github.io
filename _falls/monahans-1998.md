@@ -8,7 +8,6 @@ description: 'The Monahans (1998) meteorite fall of 23 March 1998 (Monahans, Tex
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: true
 meteorites:

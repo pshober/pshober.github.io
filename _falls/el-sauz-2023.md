@@ -8,7 +8,6 @@ description: 'The El Sauz meteorite fall of 15 February 2023 (Starr County, Texa
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20251212085244/https://ares.jsc.nasa.gov/meteorite-falls/events/el-sauz-tx
 recovered: true

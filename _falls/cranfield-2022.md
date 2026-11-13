@@ -8,7 +8,6 @@ description: 'The Cranfield meteorite fall of 27 April 2022 (Adams County, Missi
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260531040234/https://ares.jsc.nasa.gov/meteorite-falls/events/cranfield-ms
 recovered: true

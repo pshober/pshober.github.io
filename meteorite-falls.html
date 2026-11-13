@@ -38,10 +38,13 @@ description: "Meteorite falls seen in weather radar: automatic detections by Met
 
   <aside class="callout falls-credit">
     <strong>Who did what.</strong> The radar signatures of the human-verified falls listed here were identified by hand by
-    <strong>Dr. Marc Fries</strong> (NASA Johnson Space Center, ARES) and reported on NASA's
+    <strong>Dr. Marc Fries</strong>, whose reports appeared on NASA's
     <a href="https://web.archive.org/web/20260828014937/https://ares.jsc.nasa.gov/meteorite-falls/events/" rel="noopener">Meteorite Falls</a>
-    website; every fall page links to his original report. MetDetect's automatic results are graded against his
+    website; every fall page links to his original report (archived copy). MetDetect's automatic results are graded against his
     identifications. The automated detection and the dark-flight maps are my own work.
+    <br><strong>Interested in this work?</strong> Feel free to contact Marc or <a href="{{ site.links.email }}">me</a>. We are
+    finishing the fully automated detection of meteorite falls, and will then tie it into the other sensors we have available,
+    such as seismic and optical observations.
   </aside>
 
   <div class="falls-filters" role="search">
@@ -163,20 +166,14 @@ description: "Meteorite falls seen in weather radar: automatic detections by Met
         From there the stones fall in the dark for several minutes, drifting with the wind: the <em>dark flight</em>.</p></li>
       <li><h3>Weather radars see the stones</h3><p>NEXRAD radars scan the sky every few minutes. A shower of falling stones and dust can show up as faint,
         short-lived echoes that sink from one scan to the next, sometimes on several radars at once.</p></li>
-      <li><h3>MetDetect searches automatically</h3><p>Given the fireball time and a search window, MetDetect keeps only the radar measurements where falling debris could be
-        at that height and time, proposes candidate echoes, ranks them, takes the one most like debris (its <em>first pick</em>) and grows it into the neighbouring radar cells.
-        Every search returns a pick: it locates the debris of a known fall, it does not decide whether one happened. Each fall is scored by a model trained without it.</p></li>
+      <li><h3>MetDetect searches automatically</h3><p>Given when and roughly where a fireball happened, MetDetect searches the weather-radar data from around that time
+        for the echo of falling debris and outlines the radar cells it covers.
+        Every search returns an answer: it locates the debris of a known fall, it does not decide whether one happened. Each fall is scored by a model trained without it.</p></li>
       <li><h3>A person verifies it</h3><p>Automatic detections stay <em>awaiting verification</em> until someone has checked the radar data by hand.
-        The human-verified falls here were identified by Marc Fries (NASA ARES); MetDetect is graded against his identifications.</p></li>
+        The human-verified falls here were identified by Marc Fries; MetDetect is graded against his identifications.</p></li>
       <li><h3>Dark flight gives a search map</h3><p>Each radar cell is flown down through the winds of that day, which shows where stones of each mass
         most likely landed. Recovered meteorites are drawn on the maps afterwards, as a check.</p></li>
     </ol>
-    {% if run.figures.pipeline %}
-    <figure class="fig falls-pipeline" data-lightbox data-full="{{ run.figures.pipeline.path | relative_url }}" data-cap="Inside MetDetect's automatic search ({{ run.name }})">
-      <img src="{{ run.figures.pipeline.path | relative_url }}" alt="The six steps of MetDetect's automatic search: inputs, keeping only where debris can be, proposing candidate echoes, ranking them, growing the pick, and the output" loading="lazy" width="{{ run.figures.pipeline.px[0] }}" height="{{ run.figures.pipeline.px[1] }}">
-      <figcaption>Inside step 3: the six stages of MetDetect's search in {{ run.name }}. Click to enlarge.</figcaption>
-    </figure>
-    {% endif %}
     <p>{% if site.metdetect_demo_live %}See a fall in 3D in the <a href="{{ '/metdetect-demo/' | relative_url }}">MetDetect demo</a>, or read about the{% else %}Read about the{% endif %}
       <a href="{{ '/research/' | relative_url }}">research</a>.</p>
   </section>
@@ -184,7 +181,7 @@ description: "Meteorite falls seen in weather radar: automatic detections by Met
   <section class="falls-sources">
     <h2>Data and credits</h2>
     <ul>
-      <li><strong>Hand identifications of the radar signatures</strong>: Marc Fries, NASA ARES (Johnson Space Center), from his reports on NASA's Meteorite Falls website (archived copies).</li>
+      <li><strong>Hand identifications of the radar signatures</strong>: Marc Fries, from his reports on NASA's Meteorite Falls website (archived copies).</li>
       <li><strong>Radar data</strong>: NOAA NEXRAD Level-II archive (NOAA Open Data Dissemination).</li>
       <li><strong>Fireball times and how each fireball was observed</strong>: the GOES Geostationary Lightning Mapper (NASA/SETI bolide database), NASA CNEOS, fireball-camera networks, American Meteor Society witness reports, video, seismic and infrasound studies and the published papers, as cited on each page.</li>
       <li><strong>Winds</strong>: ERA5 reanalysis (Copernicus Climate Change Service, ECMWF).</li>

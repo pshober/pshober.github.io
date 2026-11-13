@@ -8,7 +8,6 @@ description: 'The Codyville meteorite fall of 21 February 2025 (Washington Count
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260307134422/https://ares.jsc.nasa.gov/meteorite-falls/events/codyville-me
 recovered: false

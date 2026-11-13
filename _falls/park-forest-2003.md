@@ -8,7 +8,6 @@ description: 'The Park Forest meteorite fall of 27 March 2003 (Park Forest, Illi
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/2026/https://ares.jsc.nasa.gov/meteorite-falls/events/park-forest-illinois
 recovered: true

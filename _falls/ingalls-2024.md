@@ -8,7 +8,6 @@ description: 'The Ingalls meteorite fall of 30 August 2024 (near Asheville, Nort
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20250610155228/https://ares.jsc.nasa.gov/meteorite-falls/events/ingalls-nc
 recovered: false

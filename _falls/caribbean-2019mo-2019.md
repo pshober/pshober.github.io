@@ -8,7 +8,6 @@ description: 'The Caribbean Sea (2019 MO) meteorite fall of 22 June 2019 (South 
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260531040234/https://ares.jsc.nasa.gov/meteorite-falls/events/caribbean-sea-near-puerto-rico
 recovered: false

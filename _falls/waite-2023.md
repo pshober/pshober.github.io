@@ -8,7 +8,6 @@ description: 'The Waite meteorite fall of 8 April 2023 (Washington County, Maine
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260922102811/https://ares.jsc.nasa.gov/meteorite-falls/events/waite-me
 recovered: false

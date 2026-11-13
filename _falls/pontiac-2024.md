@@ -8,7 +8,6 @@ description: 'The Pontiac meteorite fall of 2 December 2024 (Butler County, Kans
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/2026/https://ares.jsc.nasa.gov/meteorite-falls/events/pontiac-ks
 recovered: false

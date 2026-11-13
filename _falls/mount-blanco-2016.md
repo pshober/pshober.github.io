@@ -8,7 +8,6 @@ description: 'The Mount Blanco meteorite fall of 18 February 2016 (Crosby County
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20250610155815/https://ares.jsc.nasa.gov/meteorite-falls/events/mount-blanco-texas
 recovered: true

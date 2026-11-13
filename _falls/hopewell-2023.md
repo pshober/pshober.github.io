@@ -8,7 +8,6 @@ description: 'The Hopewell meteorite fall of 8 May 2023 (Hopewell Township, New 
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260507091708/https://ares.jsc.nasa.gov/meteorite-falls/events/hopewell-nj-08-may-2023-1623-utc
 recovered: true

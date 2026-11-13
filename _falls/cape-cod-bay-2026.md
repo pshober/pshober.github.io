@@ -8,7 +8,6 @@ description: 'The Cape Cod Bay meteorite fall of 30 May 2026 (Cape Cod Bay, Mass
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260828052412/https://ares.jsc.nasa.gov/meteorite-falls/events/cape-cod-bay-ma
 recovered: false

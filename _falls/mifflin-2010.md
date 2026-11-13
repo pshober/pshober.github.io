@@ -8,7 +8,6 @@ description: 'The Mifflin meteorite fall of 15 April 2010 (Iowa County, Wisconsi
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: true
 meteorites:

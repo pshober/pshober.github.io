@@ -8,7 +8,6 @@ description: 'The Cockburn Island meteorite fall of 20 June 2026 (Cockburn Islan
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260715173107/https://ares.jsc.nasa.gov/meteorite-falls/events/cockburn-island-ontario
 recovered: true

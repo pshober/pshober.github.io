@@ -8,7 +8,6 @@ description: 'The Gunnison meteorite fall of 29 November 2002 (western Colorado,
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: false
 recovered_note: No meteorites reported.

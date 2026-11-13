@@ -8,7 +8,6 @@ description: 'The Black Earth meteorite fall of 3 April 2016 (Dane County, Wisco
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: false
 recovered_note: No meteorites reported; a small fall.

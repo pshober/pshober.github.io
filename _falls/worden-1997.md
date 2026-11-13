@@ -8,7 +8,6 @@ description: 'The Worden meteorite fall of 1 September 1997 (Washtenaw County, M
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: true
 meteorites:

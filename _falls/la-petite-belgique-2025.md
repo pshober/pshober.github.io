@@ -8,7 +8,6 @@ description: 'The La Petite-Belgique meteorite fall of 24 June 2025 (Quebec, Can
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260715160112/https://ares.jsc.nasa.gov/meteorite-falls/events/la-petite-belgique-quebec
 recovered: false

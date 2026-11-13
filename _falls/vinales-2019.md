@@ -8,7 +8,6 @@ description: 'The Viñales meteorite fall of 1 February 2019 (Pinar del Río, Cu
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260412034237/https://ares.jsc.nasa.gov/meteorite-falls/events/vinales-cuba
 recovered: true

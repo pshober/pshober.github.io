@@ -8,7 +8,6 @@ description: 'The Gulf of Mexico (2012) meteorite fall of 2 April 2012 (Gulf of 
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: false
 recovered_note: The fall came down at sea.

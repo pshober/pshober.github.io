@@ -8,7 +8,6 @@ description: 'The El Paso superbolide meteorite fall of 9 October 1997 (Hueco Ta
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: false
 recovered_note: No meteorites reported.

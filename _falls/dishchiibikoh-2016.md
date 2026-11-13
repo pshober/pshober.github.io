@@ -8,7 +8,6 @@ description: 'The Dishchii''bikoh meteorite fall of 2 June 2016 (Fort Apache Ind
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260213032223/https://ares.jsc.nasa.gov/meteorite-falls/events/dishchiibikoh-arizona
 recovered: true

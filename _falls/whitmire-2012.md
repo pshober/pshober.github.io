@@ -8,7 +8,6 @@ description: 'The Whitmire meteorite fall of 13 February 2012 (Whitmire, South C
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: false
 recovered_note: No meteorites reported.

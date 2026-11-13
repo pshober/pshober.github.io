@@ -8,7 +8,6 @@ description: 'The White Springs meteorite fall of 4 April 2019 (White Springs, F
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260329083402/https://ares.jsc.nasa.gov/meteorite-falls/events/white-springs-florida
 recovered: false

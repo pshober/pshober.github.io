@@ -8,7 +8,6 @@ description: 'The Hamburg meteorite fall of 17 January 2018 (Hamburg, Michigan, 
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/2026/https://ares.jsc.nasa.gov/meteorite-falls/events/hamburg-michigan
 recovered: true

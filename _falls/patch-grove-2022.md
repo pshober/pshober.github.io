@@ -8,7 +8,6 @@ description: 'The Patch Grove meteorite fall of 20 January 2022 (Grant County, W
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20250610155557/https://ares.jsc.nasa.gov/meteorite-falls/events/patch-grove-wi
 recovered: false
@@ -20,8 +19,8 @@ observed:
     source: 'NASA event page (UW-Madison camera); American Meteor Society event 512-2022 (archived copy: 5 videos, 1 photo)'
     url: https://web.archive.org/web/20240510051656/https://fireball.amsmeteors.org/members/imo_view/event/2022/512
   seismic:
-    detail: A NASA scientist said one seismometer about 50 miles away recorded a fairly weak signal.
-    source: NASA scientist Marc Fries, meteorite-list post of 20 Jan 2022
+    detail: Marc Fries said one seismometer about 50 miles away recorded a fairly weak signal.
+    source: Marc Fries, meteorite-list post of 20 Jan 2022
     url: https://go.mail-archive.com/meteorite-list@meteoritecentral.com/msg130673.html
   witnesses:
     detail: 419 reports to the American Meteor Society from 11 US states, mostly in the upper Midwest.

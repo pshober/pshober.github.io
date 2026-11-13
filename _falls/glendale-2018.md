@@ -8,7 +8,6 @@ description: 'The Glendale meteorite fall of 27 July 2018 (Glendale, Arizona, US
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20250610155727/https://ares.jsc.nasa.gov/meteorite-falls/events/glendale-arizona
 recovered: true

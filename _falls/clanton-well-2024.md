@@ -8,7 +8,6 @@ description: 'The Black Silver Mine meteorite fall of 17 April 2024 (Maricopa Co
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260715164154/https://ares.jsc.nasa.gov/meteorite-falls/events/clanton-well-az
 recovered: true

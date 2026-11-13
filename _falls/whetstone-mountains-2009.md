@@ -8,7 +8,6 @@ description: 'The Whetstone Mountains meteorite fall of 24 June 2009 (Cochise Co
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: true
 meteorites:

@@ -8,7 +8,6 @@ description: 'The Elbert meteorite fall of 11 January 1998 (Elbert County, Color
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: true
 meteorites:

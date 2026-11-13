@@ -232,9 +232,9 @@ $fall-cam: #baaf67;       // dedicated fireball cameras (brand olive, so it is n
 .falls-sources { margin-top: 2.5rem; }
 .falls-results { margin-top: 2.2rem; scroll-margin-top: 1rem; }
 .falls-results > p { color: var(--muted); max-width: 75ch; }
-.falls-results__fig, .falls-pipeline { margin: 1.4rem 0 0.8rem; max-width: 1000px; }
-.falls-results__fig img, .falls-pipeline img { background: #fff; }
-.falls-results__fig figcaption, .falls-pipeline figcaption { text-align: left; }
+.falls-results__fig { margin: 1.4rem 0 0.8rem; max-width: 1000px; }
+.falls-results__fig img { background: #fff; }
+.falls-results__fig figcaption { text-align: left; }
 .falls-sources ul { color: var(--muted); font-size: 0.92rem; padding-left: 1.1rem; }
 .falls-sources li { margin-bottom: 0.35rem; }
 

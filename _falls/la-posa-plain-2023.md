@@ -8,7 +8,6 @@ description: 'The La Posa Plain meteorite fall of 29 December 2023 (La Paz Count
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
 recovered: true
 meteorites:

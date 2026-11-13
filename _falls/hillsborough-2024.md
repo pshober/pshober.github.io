@@ -8,7 +8,6 @@ description: 'The Hillsborough meteorite fall of 16 July 2024 (Hillsborough, New
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260828014937/https://ares.jsc.nasa.gov/meteorite-falls/events/
   note: The NASA ARES page for this fall was not archived; the link goes to the archived list of events.

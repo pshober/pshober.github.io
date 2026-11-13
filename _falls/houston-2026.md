@@ -8,7 +8,6 @@ description: 'The Houston meteorite fall of 21 March 2026 (north Houston (Spring
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260819101132/https://ares.jsc.nasa.gov/meteorite-falls/events/houston-tx
 recovered: true

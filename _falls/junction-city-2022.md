@@ -8,7 +8,6 @@ description: 'The Junction City meteorite fall of 26 September 2022 (Talbot Coun
 status: verified
 verification:
   by: Marc Fries
-  affiliation: NASA ARES, Johnson Space Center
   kind: radar signatures identified by hand
   report: https://web.archive.org/web/20260226205853/https://ares.jsc.nasa.gov/meteorite-falls/events/junction-city-ga
 recovered: true

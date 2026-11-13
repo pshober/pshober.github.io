@@ -27,7 +27,7 @@ papers:
 At NASA Johnson Space Center (ARES) I'm building **MetDetect**, which uses the U.S.
 **NEXRAD** (Next-Generation Radar) Doppler weather-radar network, a continent-scale,
 openly available mesh that can pick up falling meteoritic debris. I work on it with
-Paul Abell and Mark Fries, who pioneered the Doppler-radar meteorite method, and our
+Paul Abell and Marc Fries, who pioneered the Doppler-radar meteorite method, and our
 aim is to turn that network into an **automatic, physically interpretable detector of
 fresh meteorite falls**.
 
