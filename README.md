@@ -71,6 +71,15 @@ A GLM-style table of meteorite falls seen in weather radar, one page per fall, a
 - **Local preview:** `bundle exec jekyll build` works on the laptop with the Ruby headers unpacked from the
   `ruby3.0-dev` package (no root); see the METRAIN exporter docstring.
 
+## Meteorite quiz (`/ansmet-quiz/`)
+
+The floating penguin badge ("Meteorite quiz", bottom right, stacked above "My asteroid"; icon-only on
+phones) and the footer link point to an unofficial photo quiz built from ANSMET field photos. The quiz
+lives in its own repo, [pshober/ansmet-quiz](https://github.com/pshober/ansmet-quiz), and GitHub serves
+it under this domain, so nothing here changes when the quiz does. Badge markup: `_layouts/default.html`
+(`.fab-stack`); styles: `_sass/_components.scss`; icon: `assets/img/brand/icon-penguin.svg`. Keep it out
+of the top nav: with the large homepage logo, a sixth nav item wraps the header onto two lines.
+
 ## Custom domain / DNS
 
 The custom domain is bound by the [`CNAME`](CNAME) file (`planetarypat.com`) plus
