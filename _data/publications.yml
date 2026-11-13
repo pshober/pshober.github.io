@@ -41,11 +41,8 @@ sections:
     badge: "in prep"
     by_year: false
     items:
-      - authors: "Silber EA et al. (incl. Shober PM)"
-        title: "Multimodal analysis of a large daytime bolide near Cleveland, Ohio on March 17, 2026"
-        venue: "Meteoritics & Planetary Science"
       - authors: "Shober PM, Fries MD, Abell PA"
-        title: "MetDetect: an automatic detection software for meteorite signatures in NEXRAD weather radar"
+        title: "Fully-automated detection and characterization of meteorite falls within Doppler weather radar"
         venue: "Meteoritics & Planetary Science"
       - authors: "Shober PM"
         title: "A dynamic analysis of 2,200 asteroids on cometary orbits"
@@ -55,6 +52,9 @@ sections:
     badge: "in review"
     by_year: false
     items:
+      - authors: "Silber EA et al. (incl. Shober PM)"
+        title: "Atmospheric Entry Dynamics of the 17 March 2026 Wadsworth (Ohio) Eucrite Meteorite Fall"
+        venue: "The Astronomical Journal"
       - authors: "Anderson S, Anghel S, Shober PM et al."
         title: "Fresh from space: the Ménétréol meteorite, an exceptional case of rapid recovery and pristine analysis"
         venue: "Meteoritics & Planetary Science"
