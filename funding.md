@@ -34,7 +34,7 @@ permalink: /funding/
           {% if e.status == 'active' %}<span class="badge">active</span>{% endif %}
         </div>
         <div class="cv-entry__sub">{{ e.funder }} · {{ e.role }}</div>
-        {% if e.note %}<div class="cv-entry__note">{{ e.note }}{% if e.link %} <a href="{{ e.link | relative_url }}">Related work &rarr;</a>{% endif %}</div>{% endif %}
+        {% if e.note %}<div class="cv-entry__note">{{ e.note }}{% if e.link and e.link != '/metdetect-demo/' or e.link and site.metdetect_demo_live %} <a href="{{ e.link | relative_url }}">Related work &rarr;</a>{% endif %}</div>{% endif %}
       </div>
     </div>
     {% endfor %}

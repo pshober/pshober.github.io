@@ -70,6 +70,7 @@ layout: default
         {% if m.paper %}<span class="paper-ref"><a href="https://doi.org/{{ m.paper.doi }}">{{ m.paper.cite }}</a></span>{% endif %}
       </figcaption>
     </figure>
+    {% elsif m.type == 'link' and m.url == '/metdetect-demo/' and site.metdetect_demo_live != true %}
     {% elsif m.type == 'link' %}
     <a class="media-tile" href="{{ m.url | relative_url }}">
       <img src="{{ m.src | relative_url }}" alt="{{ m.alt }}" loading="lazy" width="800" height="500">

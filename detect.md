@@ -7,14 +7,15 @@ lede: "The interactive MetDetect viewer is live — explore real, automatically 
 description: "Interactive viewer for MetDetect radar meteorite-fall detections."
 ---
 
-The in-browser viewer is now live at
+{% if site.metdetect_demo_live %}The in-browser viewer is now live at
 **[/metdetect-demo/](/metdetect-demo/)** — pick a real meteorite fall and watch
 the flagged debris gates on a 2D map or in an interactive 3D scatter, straight
-from precomputed detection runs, with nothing to install.
+from precomputed detection runs, with nothing to install.{% else %}The in-browser viewer is temporarily offline. The results of the automatic search are on the
+[Meteorite falls](/meteorite-falls/) page.{% endif %}
 
 <figure class="fig" data-lightbox data-full="/assets/img/research/metdetect-gui.png" data-cap="The MetDetect desktop application: loading NEXRAD radar windows, running detection, and inspecting candidate debris gates.">
   <img src="/assets/img/research/metdetect-gui.png" alt="Screenshot of the MetDetect desktop application showing radar workspace, detection controls and gate inspection" loading="lazy" width="1000" height="617">
-  <figcaption>The MetDetect desktop tool that produces these detections; the <a href="/metdetect-demo/">browser demo</a> shows its output online.</figcaption>
+  <figcaption>The MetDetect desktop tool that produces these detections; {% if site.metdetect_demo_live %}the <a href="/metdetect-demo/">browser demo</a> shows its output online.{% else %}its results are on the <a href="/meteorite-falls/">Meteorite falls</a> page.{% endif %}</figcaption>
 </figure>
 
 A future version of this page will let you upload your own detection files and
@@ -23,7 +24,7 @@ browser.
 
 In the meantime:
 
-- Try the [interactive demo](/metdetect-demo/).
-- See the project overview on the [Research](/research/) page.
+{% if site.metdetect_demo_live %}- Try the [interactive demo](/metdetect-demo/).
+{% endif %}- See the project overview on the [Research](/research/) page.
 - Live detection results for ACM 2026 are at [/acm2026](/acm2026/).
 - Questions or collaboration: [planetarypat@gmail.com](mailto:planetarypat@gmail.com).

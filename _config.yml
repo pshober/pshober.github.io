@@ -79,3 +79,6 @@ exclude:
   - vendor
   - .gitignore
   - scripts
+
+# /metdetect-demo/ is temporarily offline (its page has `published: false`); every link to it is hidden unless this is true.
+metdetect_demo_live: false

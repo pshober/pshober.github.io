@@ -177,7 +177,7 @@ description: "Meteorite falls seen in weather radar: automatic detections by Met
       <figcaption>Inside step 3: the six stages of MetDetect's search in {{ run.name }}. Click to enlarge.</figcaption>
     </figure>
     {% endif %}
-    <p>See a fall in 3D in the <a href="{{ '/metdetect-demo/' | relative_url }}">MetDetect demo</a>, or read about the
+    <p>{% if site.metdetect_demo_live %}See a fall in 3D in the <a href="{{ '/metdetect-demo/' | relative_url }}">MetDetect demo</a>, or read about the{% else %}Read about the{% endif %}
       <a href="{{ '/research/' | relative_url }}">research</a>.</p>
   </section>
 

@@ -36,9 +36,9 @@ description: "Research interests of Patrick M. Shober: planetary defense, sensor
   <section class="section">
     <div class="section-head"><h2>Tools &amp; demos</h2></div>
     <div class="callout">
-      <strong>MetDetect</strong>: <a href="{{ '/metdetect-demo/' | relative_url }}">see a
+      <strong>MetDetect</strong>: {% if site.metdetect_demo_live %}<a href="{{ '/metdetect-demo/' | relative_url }}">see a
       meteorite fall appear in weather radar &rarr;</a> — an interactive in-browser viewer of
-      real, automatically detected falls (2D map + 3D scatter). Live results for the
+      real, automatically detected falls (2D map + 3D scatter). {% else %}automatic detection of meteorite falls in weather radar (see <a href="{{ '/meteorite-falls/' | relative_url }}">Meteorite falls</a>). {% endif %}Live results for the
       ACM&nbsp;2026 poster are at <a href="{{ '/acm2026/' | relative_url }}">/acm2026</a>.
       You can also see where my namesake asteroid is right now at
       <a href="{{ '/asteroid/' | relative_url }}">/asteroid</a>.

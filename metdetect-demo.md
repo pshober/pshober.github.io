@@ -2,6 +2,7 @@
 layout: default
 title: "MetDetect: see a meteorite fall in the radar"
 permalink: /metdetect-demo/
+published: false   # TEMPORARILY OFFLINE (2026-11-12): to restore, delete this line and set metdetect_demo_live: true in _config.yml
 description: "Explore real, automatically detected meteorite falls in NEXRAD Doppler weather radar — interactive 2D + 3D, in your browser, no install."
 ---
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
