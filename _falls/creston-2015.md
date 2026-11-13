@@ -27,4 +27,29 @@ papers:
   title: Meteorite falls observed in U.S. weather radar data in 2015 and 2016 (to date)
   venue: 79th Annual Meeting of the Meteoritical Society, abstract 6536
   url: https://www.hou.usra.edu/meetings/metsoc2016/pdf/6536.pdf
+fireball:
+  utc: '2015-10-24T05:47:44Z'
+  precision: second
+  what: first light
+  source: Jenniskens et al. 2019, Table 3 (camera-triangulated trajectory)
+  pm_s: 0.1
+  url: https://doi.org/10.1111/maps.13235
+observed:
+  cameras:
+    detail: Two SkySentinel all-sky video cameras, a Desert Fireball camera at Sunnyvale, and CAMS cameras that caught a
+      brief flash.
+    source: Jenniskens et al. 2019 (Meteoritics & Planetary Science)
+    url: https://doi.org/10.1111/maps.13235
+  video:
+    detail: One single-exposure photo of the fireball taken from the Goleta pier and posted on social media.
+    source: Jenniskens et al. 2019 (Meteoritics & Planetary Science)
+    url: https://doi.org/10.1111/maps.13235
+  seismic:
+    detail: Nine seismograph stations in central California recorded the ground tremor from the fireball's sonic boom.
+    source: Jenniskens et al. 2019 (Meteoritics & Planetary Science)
+    url: https://doi.org/10.1111/maps.13235
+  witnesses:
+    detail: 218 people reported it to the American Meteor Society; 14 near the path heard sonic booms.
+    source: Jenniskens et al. 2019 (AMS event 2635-2015)
+    url: https://doi.org/10.1111/maps.13235
 ---

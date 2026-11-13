@@ -1,0 +1,1 @@
+{% comment %} The source line of one observation: include.it = {detail, source, url}. {% endcomment %}{% if include.it.source %}<span class="obs-list__src">{% if include.it.url %}<a href="{{ include.it.url | escape }}" rel="noopener">{{ include.it.source | escape }}</a>{% else %}{{ include.it.source | escape }}{% endif %}</span>{% endif %}

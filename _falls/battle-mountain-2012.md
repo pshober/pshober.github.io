@@ -22,4 +22,16 @@ papers:
   title: 'Faster recovery, better science: meteorite fall events detected with weather radars and seismometers in 2012'
   venue: 44th Lunar and Planetary Science Conference, abstract 2935
   url: https://www.lpi.usra.edu/meetings/lpsc2013/pdf/2935.pdf
+observed:
+  video:
+    detail: A security camera in Battle Mountain recorded the flash; the report says no video of the fireball itself had
+      been found.
+    source: Fries et al. 2013, LPSC abstract 2935
+    url: https://www.lpi.usra.edu/meetings/lpsc2013/pdf/2935.pdf
+  witnesses:
+    detail: The American Meteor Society got 11 reports from CA, NV and ID; a drill crew under its path saw it break up and
+      heard sonic booms.
+    source: American Meteor Society event 1192-2012 (archived copy, 11 reports); drill crew from Fries et al. 2013, LPSC
+      abstract 2935
+    url: http://web.archive.org/web/20200815072713/https://fireball.amsmeteors.org/members/imo_view/event/2012/1192
 ---

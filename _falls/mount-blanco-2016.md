@@ -22,4 +22,14 @@ papers:
   title: Meteorite falls observed in U.S. weather radar data in 2015 and 2016 (to date)
   venue: 79th Annual Meeting of the Meteoritical Society, abstract 6536
   url: https://www.hou.usra.edu/meetings/metsoc2016/pdf/6536.pdf
+observed:
+  video:
+    detail: Videos of the event show a long-lasting fireball with fragmentation; the camera type is not stated.
+    source: Fries et al. 2016, Meteoritical Society abstract 6536
+    url: https://www.hou.usra.edu/meetings/metsoc2016/pdf/6536.pdf
+    typed: false
+  witnesses:
+    detail: 39 people reported it to the American Meteor Society; no sonic booms or crackling/hissing sounds were reported.
+    source: Fries et al. 2016, Meteoritical Society abstract 6536
+    url: https://www.hou.usra.edu/meetings/metsoc2016/pdf/6536.pdf
 ---

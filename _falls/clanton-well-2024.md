@@ -19,4 +19,24 @@ meteorites:
 - name: Black Silver Mine
   metbull: 85065
   class: CK6
+observed:
+  cameras:
+    detail: Three NASA Fireball Network cameras in southern Arizona, plus five Global Meteor Network stations that tracked
+      its path.
+    source: NASA fireball event page (3 cameras) and GMN trajectory file (5 stations)
+    url: https://fireballs.ndc.nasa.gov/skyfalls/events/20240417-025932
+  video:
+    detail: Six public videos on the American Meteor Society site, including Wyze home security camera clips in Arizona
+      and dash cams in California.
+    source: American Meteor Society event 1981-2024 (archived copy, July 2025); camera types from the linked videos
+    url: https://web.archive.org/web/20250705071724/https://fireball.amsmeteors.org//members/imo_view/event/2024/1981
+  satellite:
+    detail: A lightning sensor on the GOES-18 weather satellite detected it; NASA reads that as about 150 pounds and 2 tons
+      of TNT of energy.
+    source: NASA fireball event page 20240417-025932
+    url: https://fireballs.ndc.nasa.gov/skyfalls/events/20240417-025932
+  witnesses:
+    detail: The American Meteor Society received 127 reports from Arizona, California, Colorado, Nevada and Utah.
+    source: American Meteor Society event 1981-2024 (archived copy, July 2025)
+    url: https://web.archive.org/web/20250705071724/https://fireball.amsmeteors.org//members/imo_view/event/2024/1981
 ---

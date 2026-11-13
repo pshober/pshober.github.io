@@ -11,9 +11,9 @@
     var rows = Array.prototype.slice.call(tbody.rows);
     var search = document.getElementById("falls-q");
     var count = document.getElementById("falls-count");
-    var state = { det: "all", rec: "all", text: "" };
+    var state = { det: "all", rec: "all", obs: "all", text: "" };
     var RANK = {
-      auto: { found: 0, missed: 1, none: 2 },
+      auto: { found: 0, missed: 1, training: 2, none: 3 },
       human: { verified: 0 },
       rec: { yes: 0, unknown: 1, no: 2 }
     };
@@ -28,6 +28,7 @@
         else if (state.det === "verified") ok = d.human === "verified";
         else if (state.det === "pending") ok = d.human !== "verified";
         if (ok && state.rec === "yes") ok = d.rec === "yes";
+        if (ok && state.obs !== "all") ok = (" " + d.obs + " ").indexOf(" " + state.obs + " ") !== -1;
         if (ok && words.length) ok = words.every(function (w) { return d.q.indexOf(w) !== -1; });
         tr.hidden = !ok;
         if (ok) shown += 1;
@@ -55,6 +56,7 @@
       if (k === "date") return d.date;
       if (k === "name") return d.name;
       if (k === "papers") return Number(d.papers) || 0;
+      if (k === "obs") return Number(d.obsrank);
       var ranks = RANK[k] || {};
       var v = k === "auto" ? d.auto : k === "human" ? d.human : d.rec;
       return v in ranks ? ranks[v] : 9;

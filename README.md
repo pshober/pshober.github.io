@@ -58,8 +58,14 @@ A GLM-style table of meteorite falls seen in weather radar, one page per fall, a
   A new automatic detection gets `status: automated` until a person checks it; set `status: verified` and fill
   `verification:` when it is.
 - **MetDetect results and figures are generated**, never edited here: METRAIN
-  `automatic_detection/scripts/web/export_falls_site.py` writes [`_data/metdetect.yml`](_data/metdetect.yml) and
-  `assets/img/falls/<slug>/*.webp`, joined to a fall by its `key:`. Re-run it after a new detection run.
+  `automatic_detection/scripts/web/export_falls_run42.py` (RUN-42 and later; reads a results bundle from
+  `automatic_detection/paper/detection_psj/bundles/<run>/`) writes [`_data/metdetect.yml`](_data/metdetect.yml),
+  `assets/img/falls/<slug>/*.webp` and `assets/img/falls-run/*.webp`, joined to a fall by its `key:`. Re-run it after
+  a new detection run. (`export_falls_site.py` is the RUN-41 exporter.)
+- **Observations are hand-maintained**: each `_falls/<slug>.md` may carry `observed:` (`cameras` = dedicated
+  fireball cameras, `video` = casual dash/security/phone footage, `satellite`, `seismic`, `infrasound`, `witnesses`;
+  each with `detail`, `source`, `url`) and, for falls MetDetect has not searched, `fireball:` (`utc`, `precision`,
+  `source`, `url`). Only what a source documents is listed.
 - **Inquiry form:** with `falls_inquiry.endpoint` empty in `_config.yml` it opens the visitor's email app;
   paste a free [Formspree](https://formspree.io) endpoint there to receive inquiries directly.
 - **Local preview:** `bundle exec jekyll build` works on the laptop with the Ruby headers unpacked from the

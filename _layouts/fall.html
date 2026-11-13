@@ -9,16 +9,19 @@ layout: default
 {% assign run = site.data.metdetect.run %}
 {% assign a = m.auto %}
 {% assign v = page.verification %}
+{% assign fb = m.fireball | default: page.fireball %}
+{% assign o = page.observed %}
 <div class="container fall">
   <p class="backlink"><a href="{{ '/meteorite-falls/' | relative_url }}">&larr;&nbsp;All meteorite falls</a></p>
 
   <header class="page-head fall-head">
-    <div class="eyebrow">{{ page.date | date: "%-d %B %Y" }}{% if m.fireball %} · {{ m.fireball.utc | slice: 11, 8 }} UTC{% endif %}</div>
+    <div class="eyebrow">{{ page.date | date: "%-d %B %Y" }}{% if fb %} · {% if fb.precision == "approx" %}about {{ fb.utc | slice: 11, 5 }}{% elsif fb.precision == "minute" %}{{ fb.utc | slice: 11, 5 }}{% else %}{{ fb.utc | slice: 11, 8 }}{% endif %} UTC{% endif %}</div>
     <h1>{{ page.title }}</h1>
     <p class="lede">{{ page.place }}</p>
     <ul class="fall-badges">
       {% if a %}
-        {% if a.found %}<li class="fbadge fbadge--auto">Found by MetDetect</li>
+        {% if a.set != "test" %}<li class="fbadge fbadge--none">Training fall for MetDetect</li>
+        {% elsif a.found %}<li class="fbadge fbadge--auto">Found by MetDetect</li>
         {% else %}<li class="fbadge fbadge--miss">Missed by MetDetect</li>{% endif %}
       {% elsif page.status == "automated" %}<li class="fbadge fbadge--auto">Automated detection</li>
       {% else %}<li class="fbadge fbadge--none">MetDetect not run yet</li>{% endif %}
@@ -31,9 +34,12 @@ layout: default
 
   <dl class="fall-facts">
     <div><dt>Fireball (UTC)</dt>
-      <dd>{% if m.fireball %}{{ m.fireball.utc | slice: 0, 10 }} {{ m.fireball.utc | slice: 11, 8 }}{% if m.fireball.pm_s %} <span class="muted nowrap">±&nbsp;{{ m.fireball.pm_s }}&nbsp;s</span>{% endif %}
-        <span class="fall-facts__src">{% if m.fireball.url %}<a href="{{ m.fireball.url }}" rel="noopener">{{ m.fireball.source }}</a>{% else %}{{ m.fireball.source }}{% endif %}</span>
+      <dd>{% if fb %}{{ fb.utc | slice: 0, 10 }} {% if fb.precision == "approx" %}about {{ fb.utc | slice: 11, 5 }}{% elsif fb.precision == "minute" %}{{ fb.utc | slice: 11, 5 }}{% else %}{{ fb.utc | slice: 11, 8 }}{% endif %}{% if fb.pm_s %} <span class="muted nowrap">±&nbsp;{{ fb.pm_s }}&nbsp;s</span>{% endif %}
+        <span class="fall-facts__src">{% if fb.url %}<a href="{{ fb.url }}" rel="noopener">{{ fb.source }}</a>{% else %}{{ fb.source }}{% endif %}{% if fb.what %} · {{ fb.what }}{% endif %}</span>
       {% else %}not established <span class="fall-facts__src">no instrumental or published time yet</span>{% endif %}</dd></div>
+    <div><dt>Observed by</dt>
+      <dd>{% include fall-observed.html fall=page %}
+        <span class="fall-facts__src">{% if o %}<a href="#observed">How it was observed</a>{% else %}no observations documented yet{% endif %}</span></dd></div>
     <div><dt>{% if m.human %}Radar signatures{% else %}Radar searched{% endif %}</dt>
       <dd>{% if m.human %}{% for r in m.human.radars %}{{ r.radar }}{% unless forloop.last %}, {% endunless %}{% endfor %}
         <span class="fall-facts__src">{{ m.human.cells }} radar cells identified by hand{% if m.human.alt_km %}, {{ m.human.alt_km[0] }}–{{ m.human.alt_km[1] }} km up{% endif %}</span>
@@ -45,23 +51,45 @@ layout: default
       {% elsif page.recovered == false %}none recovered
       {% else %}—{% endif %}</dd></div>
     <div><dt>MetDetect</dt>
-      <dd>{% if a %}{{ run.name }} <span class="fall-facts__src">{{ a.set }} fall · radar {{ a.radar }}</span>
+      <dd>{% if a %}{{ run.name }} <span class="fall-facts__src">{% if a.set == "test" %}test set, development result{% else %}training only, not in the headline numbers{% endif %} · radar {{ a.radar }}</span>
         {% else %}not run yet{% endif %}</dd></div>
   </dl>
+
+  {% if o %}
+  <section class="fall-sec" id="observed">
+    <h2>How it was observed</h2>
+    <ul class="obs-list">
+      {% if o.cameras %}<li><span class="tag tag--cam">Fireball cameras</span><span>{{ o.cameras.detail }}{% include fall-observed-src.html it=o.cameras %}</span></li>{% endif %}
+      {% if o.video %}<li>{% if o.video.typed == false %}<span class="tag tag--vidu">Video, type unknown</span>{% else %}<span class="tag tag--vid">Casual video</span>{% endif %}<span>{{ o.video.detail }}{% include fall-observed-src.html it=o.video %}</span></li>{% endif %}
+      {% if o.satellite %}<li><span class="tag tag--obs">Satellite</span><span>{{ o.satellite.detail }}{% include fall-observed-src.html it=o.satellite %}</span></li>{% endif %}
+      {% if o.seismic %}<li><span class="tag tag--obs">Seismic</span><span>{{ o.seismic.detail }}{% include fall-observed-src.html it=o.seismic %}</span></li>{% endif %}
+      {% if o.infrasound %}<li><span class="tag tag--obs">Infrasound</span><span>{{ o.infrasound.detail }}{% include fall-observed-src.html it=o.infrasound %}</span></li>{% endif %}
+      {% if o.witnesses %}<li><span class="tag tag--wit">Witnesses</span><span>{{ o.witnesses.detail }}{% include fall-observed-src.html it=o.witnesses %}</span></li>{% endif %}
+    </ul>
+    <p class="fall-note">
+      <strong>Fireball cameras</strong> are cameras built to record meteors, usually all-sky and calibrated.
+      <strong>Casual video</strong> is footage or photos from cameras that were not (dash cams, doorbell and security cameras, phones); where a source does not say what kind of camera, it is listed as video of unknown type.
+      Only what a source documents is listed; a missing label means nothing of that kind is documented, not that it did not exist.
+    </p>
+  </section>
+  {% endif %}
 
   {% if a %}
   <section class="fall-sec" id="automated">
     <h2>Automated detection</h2>
     <p>
       MetDetect searched the <strong>{{ a.radar }}</strong> radar around the fireball time.
-      {% if a.found %}It <strong>found the fall</strong>: the radar cells it reports are mostly the debris identified by hand.
-      {% elsif a.matched > 0 %}Its answer <strong>contains the debris but is mostly other echo</strong>, so it counts as a miss.
-      {% else %}It <strong>missed the fall</strong>: its answer contains none of the hand-identified debris{% if a.rank %} (the debris was its candidate number {{ a.rank }}){% endif %}.{% endif %}
+      {% if a.set != "test" %}This is a <strong>training fall</strong>: there are fewer than 10 hand-identified radar cells on {{ a.radar }}, too few for the headline numbers, so the fall only helps train MetDetect for the other falls (never for itself).
+      {% if a.matched > 0 %}Its answer still contains {{ a.matched }} of the {{ a.human_cells_searched }} hand-identified cells, but is mostly other echo.{% else %}Its answer contains none of the hand-identified cells.{% endif %}
+      {% elsif a.found %}It <strong>found the fall</strong>: its first pick, the echo it ranks most like falling debris, is the debris identified by hand{% if a.share %}, and the object grown from it holds {{ a.share | times: 100 | round }}% of the hand-identified cells{% endif %}.
+      {% elsif a.matched > 0 %}Its answer <strong>contains some of the debris but its first pick was another echo</strong>, so it counts as a miss.
+      {% else %}It <strong>missed the fall</strong>: its first pick was another echo and its answer contains none of the hand-identified debris{% if a.rank %} (the debris was its candidate number {{ a.rank }}){% else %} (no candidate matched the debris){% endif %}.{% endif %}
     </p>
     <ul class="fall-nums">
       <li><span class="v">{{ a.matched }}</span><span class="k">of the {{ a.human_cells_searched }} hand-identified cells on {{ a.radar }} found</span></li>
       <li><span class="v">{{ a.missed }}</span><span class="k">hand-identified cells missed</span></li>
       <li><span class="v">{{ a.extra }}</span><span class="k">cells reported that were not identified by hand</span></li>
+      {% if a.purity != nil and a.cells > 0 %}<li><span class="v">{{ a.purity | times: 100 | round }}%</span><span class="k">of the cells it reports were identified by hand (purity)</span></li>{% endif %}
     </ul>
     {% if m.figures.detection %}
     <figure class="fig fall-fig" data-lightbox data-full="{{ m.figures.detection | relative_url }}" data-cap="Automatic and hand-identified radar cells, {{ a.radar }}">
@@ -69,25 +97,36 @@ layout: default
       <figcaption>Each mark is one radar measurement cell on {{ a.radar }}. <span class="k-both">Blue</span>: found by MetDetect and identified by hand; <span class="k-auto">orange squares</span>: found only by MetDetect; <span class="k-human">green rings</span>: identified by hand, missed by MetDetect. Left: positions (the arrow points to the radar); right: height against time after the fireball.</figcaption>
     </figure>
     {% endif %}
-    <p class="fall-note">{{ run.name }}, {{ run.date | date: "%-d %b %Y" }}. {{ run.evaluation }}{% if a.set == "held-out" %} <strong>This fall was held out.</strong>{% endif %}{% if a.human_cells_not_loaded > 0 %} Hand-identified cells on {{ a.radar }} outside the data the search loads, not counted: {{ a.human_cells_not_loaded }}.{% endif %} The hand identification is the reference these numbers are graded against.</p>
+    <p class="fall-note">{{ run.name }}, {{ run.date | date: "%-d %b %Y" }}. {{ run.evaluation }}{% if a.set != "test" %} <strong>This fall is not in the headline numbers.</strong>{% endif %}{% if a.human_cells_not_loaded > 0 %} Hand-identified cells on {{ a.radar }} outside the data the search loads, not counted: {{ a.human_cells_not_loaded }}.{% endif %} The hand identification is the reference these numbers are graded against.</p>
   </section>
   {% endif %}
 
   {% assign df = m.darkflight %}
   <section class="fall-sec" id="dark-flight">
     <h2>Dark flight</h2>
-    {% if df %}
+    {% assign sm = m.figures.search_map %}
+    {% if df or sm %}
     <p>
       After the fireball goes dark, meteorites fall freely through the wind. Each radar cell is flown down to the
       ground through the winds of that day; the coloured areas show where stones of each mass most likely landed,
       and the black line runs from light to heavy stones (solid where the radar traced it, dashed where extended).
-      {% if df.auto and df.human %}The two maps use the same method and the same scale: one from MetDetect's cells, one from the cells identified by hand.{% if df.overlap %} Their 90% search areas for stones of 10 g and up overlap by <strong>{{ df.overlap | times: 100 | round }}%</strong> (shared area over combined area).{% endif %}{% endif %}
+      {% if df.auto and df.human %}The two maps use the same method and the same scale: one from MetDetect's cells, one from the cells identified by hand.{% if df.overlap %} Their 90% search areas for stones of 10 g and up overlap by <strong>{{ df.overlap | times: 100 | round }}%</strong> (shared area over combined area).{% endif %}
+      {% elsif df.overlap != nil and a.found == true and sm == nil %}Its 90% search area for stones of 10 g and up overlaps the one built the same way from the cells identified by hand by <strong>{{ df.overlap | times: 100 | round }}%</strong> (shared area over combined area).{% endif %}
+      {% if sm %}The map shows both: <strong>(a)</strong> from MetDetect's cells on {{ a.radar }}, <strong>(b)</strong> from the radar cells identified by hand{% if v.by %} by {{ v.by }}{% endif %} on every NEXRAD radar labelled, in the same frame and colour scale.
+      Each panel gives its search area for stones of 10 g and up (the 90% regions) and the recovered stones of 10 g and up inside it.{% if df.overlap != nil and a.found == true %} The two search areas overlap by <strong>{{ df.overlap | times: 100 | round }}%</strong> (shared area over combined area).{% endif %}{% endif %}
+      {% if a and a.found != true %}<strong>Because MetDetect's first pick was not the debris, {% if sm %}panel (a){% else %}the map below{% endif %} shows where the stones of that other echo would land{% if sm %}, if anywhere{% endif %}. It is not a search area for this fall.</strong>{% endif %}
     </p>
+    {% if sm %}
+    <figure class="fig fall-fig" data-lightbox data-full="{{ sm | relative_url }}" data-cap="Search map: (a) from MetDetect's cells, (b) from the cells identified by hand">
+      <img src="{{ sm | relative_url }}" alt="Two dark-flight search maps side by side: from MetDetect's radar cells and from the radar cells identified by hand, with recovered meteorites as stars" loading="lazy" width="{{ m.search_map_px[0] }}" height="{{ m.search_map_px[1] }}">
+      <figcaption>Pixel propagation: each radar cell's fragments carried to the ground through the wind at the fireball time. Colours are fixed per mass decade (colour bar); for each decade from 10 g up the 50% region is filled and the 90% region dashed. The fall line is solid where the radar constrains it and dashed where extrapolated. Gold stars: recovered meteorites with published positions, sized by mass.</figcaption>
+    </figure>
+    {% else %}
     <div class="fall-maps{% if df.auto and df.human %} fall-maps--two{% endif %}">
       {% if m.figures.darkflight_auto %}
       <figure class="fig fall-fig" data-lightbox data-full="{{ m.figures.darkflight_auto | relative_url }}" data-cap="Dark flight from MetDetect's automatic radar cells">
         <img src="{{ m.figures.darkflight_auto | relative_url }}" alt="Dark-flight map from the automatically detected radar cells" loading="lazy" width="{{ df.map_px[0] }}" height="{{ df.map_px[1] }}">
-        <figcaption><strong>From MetDetect's cells</strong> ({{ df.auto.cells }} cells, {{ a.radar | default: "one radar" }}).{% if df.auto.area_km2 %} Search area for stones of 10 g and up: {{ df.auto.area_km2 }} km².{% endif %}{% if df.auto.finds_counted %}{% if m.finds.kind == "position" %} Reported recovery site: {% if df.auto.finds_inside > 0 %}inside it{% else %}outside it{% endif %}.{% else %} Recovered meteorites inside it: {{ df.auto.finds_inside }} of {{ df.auto.finds_counted }}.{% endif %}{% endif %}{% if df.human %} Dotted: the search area from the hand identification.{% endif %}</figcaption>
+        <figcaption><strong>From MetDetect's cells</strong> ({{ df.auto.cells }} cells, {{ a.radar | default: "one radar" }}).{% if a.found != true %} This is where stones from MetDetect's wrong echo would land: <strong>not a search area for this fall.</strong>{% else %}{% if df.auto.area_km2 %} Search area for stones of 10 g and up: {{ df.auto.area_km2 }} km².{% endif %}{% if df.auto.finds_counted %}{% if m.finds.kind == "position" %} Reported recovery site: {% if df.auto.finds_inside > 0 %}inside it{% else %}outside it{% endif %}.{% else %} Recovered meteorites inside it: {{ df.auto.finds_inside }} of {{ df.auto.finds_counted }}.{% endif %}{% endif %}{% endif %}{% if df.human %} Dotted: the search area from the hand identification.{% endif %}</figcaption>
       </figure>
       {% endif %}
       {% if m.figures.darkflight_human %}
@@ -97,13 +136,16 @@ layout: default
       </figure>
       {% endif %}
     </div>
+    {% endif %}
     <p class="fall-note">
-      Pixel estimate, computed by P.&nbsp;Shober with MetDetect: winds from ERA5 (ECMWF), masses for an ordinary-chondrite
-      density over a range of shapes. Preliminary: it does not fit the fireball itself, so the heavy end of the line is an
+      Pixel estimate, computed by P.&nbsp;Shober with MetDetect: winds from ERA5 (ECMWF), {% if sm %}masses at the fall's assumed bulk density (on the colour bar){% else %}masses for an ordinary-chondrite
+      density over a range of shapes{% endif %}. Preliminary: it does not fit the fireball itself, so the heavy end of the line is an
       extrapolation.{% if m.finds %} {% if m.finds.kind == "position" %}The star marks the reported recovery site, since no positions of single stones are published{% else %}Stars mark recovered meteorites{% endif %}{% if m.finds.source %}; {% if m.finds.kind == "position" %}position{% else %}positions{% endif %} from {{ m.finds.source }}{% endif %}{% if m.finds.audited %}, checked against the source{% endif %}. They are drawn for comparison only and were never used to make the maps.{% unless m.finds.kind == "position" %} Counted stones are those of 10 g and up, or of unpublished mass.{% endunless %}{% endif %}
-      {% if df.context %}Town names: © OpenStreetMap contributors.{% endif %}
+      {% if df.context or sm %}{% if sm %}Villages and rivers{% else %}Town names{% endif %}: © OpenStreetMap contributors.{% endif %}
       {% if df.centre %}<a href="https://www.openstreetmap.org/?mlat={{ df.centre[0] }}&amp;mlon={{ df.centre[1] }}#map=12/{{ df.centre[0] }}/{{ df.centre[1] }}" rel="noopener">See this area on OpenStreetMap</a>, and always ask the landowner before searching.{% endif %}
     </p>
+    {% elsif a %}
+    <p class="fall-empty">MetDetect's first pick here was not the debris, and the object grown from it implies only stones under 10 g, so there is no search area for stones of 10 g and up and no dark-flight map.</p>
     {% else %}
     <p class="fall-empty">No dark-flight estimate yet for this fall.</p>
     {% endif %}

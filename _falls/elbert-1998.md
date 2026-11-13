@@ -15,4 +15,20 @@ meteorites:
 - name: Elbert
   metbull: 7822
   class: LL6
+fireball:
+  utc: '1998-01-11T07:11:13Z'
+  precision: second
+  source: US military satellite fireball release (Western Ontario archive)
+  url: https://aquarid.physics.uwo.ca/research/fireball/usaf/dod981.txt
+observed:
+  satellite:
+    detail: US military satellites detected a meteoroid between Denver and Grand Junction at the time witnesses saw it,
+      just after local midnight.
+    source: US military satellite fireball release (Western Ontario archive)
+    url: https://aquarid.physics.uwo.ca/research/fireball/usaf/dod981.txt
+  witnesses:
+    detail: Thousands of Front Range residents saw the fireball shortly after midnight, according to the Rocky Mountain
+      News.
+    source: Rocky Mountain News, 17 Jan 1998 (reposted)
+    url: https://www.qsl.net/ki0dz/hbmeteor.htm
 ---

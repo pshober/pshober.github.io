@@ -31,4 +31,28 @@ papers:
   title: 'Faster recovery, better science: meteorite fall events detected with weather radars and seismometers in 2012'
   venue: 44th Lunar and Planetary Science Conference, abstract 2935
   url: https://www.lpi.usra.edu/meetings/lpsc2013/pdf/2935.pdf
+fireball:
+  utc: '2012-04-22T14:51:12Z'
+  precision: second
+  source: Jenniskens et al. 2012, Science 338 (copy at astrochem.org)
+  url: https://astrochem.org/docs/Jenniskens%202012%20Sutter.pdf
+observed:
+  video:
+    detail: A private security camera near Lake Tahoe, plus public videos and photos from Johnsondale, Incline Village and
+      Rancho Haven.
+    source: Fries et al. 2013, LPSC abstract 2935 (security camera); Jenniskens et al. 2012, Science (videos, photos)
+    url: https://www.lpi.usra.edu/meetings/lpsc2013/pdf/2935.pdf
+  seismic:
+    detail: Eight seismograph stations recorded the air blast, and the Nevada quake network traced the fireball's path.
+    source: Jenniskens et al. 2012, Science; South Tahoe Now (Nevada Seismological Laboratory)
+    url: https://astrochem.org/docs/Jenniskens%202012%20Sutter.pdf
+  infrasound:
+    detail: Two international infrasound stations, about 770 and 1080 km away, recorded it; energy about 4 kilotons of TNT.
+    source: Jenniskens et al. 2012, Science
+    url: https://astrochem.org/docs/Jenniskens%202012%20Sutter.pdf
+  witnesses:
+    detail: Seen across California and Nevada in daylight; the American Meteor Society had over 100 reports early on, many
+      of a sonic boom.
+    source: American Meteor Society
+    url: https://amsmeteors.org/2012/04/daylight-fireball-over-california-nevada-april-22-2012
 ---

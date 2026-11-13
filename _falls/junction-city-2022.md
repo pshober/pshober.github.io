@@ -16,4 +16,19 @@ meteorites:
 - name: Junction City
   metbull: 83384
   class: L5
+observed:
+  cameras:
+    detail: Two dedicated all-sky meteor cameras in Georgia (AllSky7 stations at Covington and Crawfordville) recorded it
+      and solved its path.
+    source: AMS fireball log, event 6491-2022 (AllSky7 solution)
+    url: https://www.amsmeteors.org/fireballs/viewer/?legacy=2022-6491
+  video:
+    detail: Videos sent to AMS include a Nest home security camera, another security camera and a low-light camera in Tennessee.
+    source: AMS fireball log, event 6491-2022 (witness reports and videos)
+    url: https://www.amsmeteors.org/fireballs/viewer/?legacy=2022-6491
+  witnesses:
+    detail: 'AMS received 66 reports: Georgia 40, Alabama 12, Florida 6, Tennessee 5, South Carolina 3; one noted a delayed
+      sound.'
+    source: AMS fireball log, event 6491-2022 (66 reports)
+    url: https://www.amsmeteors.org/fireballs/viewer/?legacy=2022-6491
 ---

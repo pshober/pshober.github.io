@@ -16,4 +16,13 @@ meteorites:
 - name: Glendale
   metbull: 74989
   class: L6
+observed:
+  cameras:
+    detail: One American Meteor Society network camera, run by Mike Farmer, recorded it; no other dedicated camera found.
+    source: American Meteor Society blog post, 'Meteorite fall in Arizona on July 27th' (V. Perlerin, Aug 2018)
+    url: https://amsmeteors.org/2018/08/meteorite-fall-in-arizona-on-july-27th
+  witnesses:
+    detail: AMS received only 12 reports, mostly around Phoenix; storms hid it, and one witness heard a sonic boom.
+    source: American Meteor Society blog post, 'Meteorite fall in Arizona on July 27th'
+    url: https://amsmeteors.org/2018/08/meteorite-fall-in-arizona-on-july-27th
 ---

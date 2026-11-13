@@ -14,4 +14,13 @@ verification:
 recovered: true
 recovered_note: A stone of about 1 kg came through the roof of a house; The College of New Jersey identified it as an ordinary
   chondrite. We have not yet confirmed its official name.
+observed:
+  video:
+    detail: A public webcam (EarthCam) in New York City reportedly caught the daytime fireball.
+    source: Strewnify event page (unrefereed)
+    url: https://www.strewnify.com/y20230508_16z_18t/
+  witnesses:
+    detail: Only one report reached the American Meteor Society; the residents of the house heard the stone crash through.
+    source: Strewnify event page (AMS event 2507-2023)
+    url: https://www.strewnify.com/y20230508_16z_18t/
 ---

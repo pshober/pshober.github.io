@@ -32,4 +32,32 @@ papers:
   title: Spectroscopy of the Hamburg Meteorite, Michigan H4
   venue: The Planetary Science Journal 6, 240
   doi: 10.3847/psj/ae0a4f
+observed:
+  cameras:
+    detail: A NASA all-sky camera in Oberlin, Ohio recorded much of it through thin cloud; other network cameras saw two
+      flashes on clouds.
+    source: Brown et al. 2019, Meteoritics & Planetary Science (arXiv full text)
+    url: https://arxiv.org/pdf/1907.03008
+  video:
+    detail: 27 videos located despite heavy cloud, including home security cameras, a university rooftop camera and a railway
+      webcam.
+    source: Brown et al. 2019, Meteoritics & Planetary Science (arXiv full text)
+    url: https://arxiv.org/pdf/1907.03008
+  satellite:
+    detail: The GOES-16 weather satellite's lightning mapper (GLM) detected the two brightest flares of the breakup.
+    source: Brown et al. 2019, Meteoritics & Planetary Science (arXiv full text)
+    url: https://arxiv.org/pdf/1907.03008
+  seismic:
+    detail: Seismometers at seven stations in Michigan, Ohio and Ontario recorded the shock wave from the final breakup.
+    source: University of Michigan release on Hedlin et al. 2018 (EurekAlert)
+    url: https://eurekalert.org/news-releases/561068
+  infrasound:
+    detail: Infrasound stations near the fall and the ELFO array in Ontario recorded the sound wave.
+    source: Brown et al. 2019, Meteoritics & Planetary Science (arXiv full text)
+    url: https://arxiv.org/pdf/1907.03008
+  witnesses:
+    detail: More than 650 people reported it to the American Meteor Society from seven US states and Ontario; many heard
+      sonic booms.
+    source: Brown et al. 2019, Meteoritics & Planetary Science (arXiv full text)
+    url: https://arxiv.org/pdf/1907.03008
 ---

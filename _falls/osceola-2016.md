@@ -27,4 +27,19 @@ papers:
   title: Meteorite falls observed in U.S. weather radar data in 2015 and 2016 (to date)
   venue: 79th Annual Meeting of the Meteoritical Society, abstract 6536
   url: https://www.hou.usra.edu/meetings/metsoc2016/pdf/6536.pdf
+observed:
+  video:
+    detail: A driver's dash camera on Interstate 75 in Florida filmed the daytime fireball.
+    source: WUFT News, 21 Feb 2016
+    url: https://www.wuft.org/healthscience/2016-02-21/this-is-how-meteorite-searchers-found-those-that-landed-near-lake-city
+  seismic:
+    detail: A 2017 research abstract says seismometers (ground-motion sensors) also recorded the fireball and helped fix
+      its timing.
+    source: Gritsevich et al., 80th Meteoritical Society meeting, abstract 6188 (2017)
+    url: https://www.hou.usra.edu/meetings/metsoc2017/pdf/6188.pdf
+  witnesses:
+    detail: 134 people in Florida, Georgia and South Carolina reported it to the American Meteor Society; three heard sonic
+      booms.
+    source: NASA ARES Osceola page (cites AMS event 266 of 2016)
+    url: https://web.archive.org/web/20251226060517/https://ares.jsc.nasa.gov/meteorite-falls/events/osceola-florida
 ---

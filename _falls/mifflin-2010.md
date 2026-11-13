@@ -15,4 +15,25 @@ meteorites:
 - name: Mifflin
   metbull: 52090
   class: L5
+fireball:
+  utc: '2010-04-15T03:05:00Z'
+  precision: approx
+  source: Spaceweather.com news item, 15 April 2010 ("around 10:05 pm CDT")
+  url: https://spaceweather.com/archive.php?view=1&day=15&month=04&year=2010
+observed:
+  video:
+    detail: A rooftop webcam in Madison, a sheriff's dash cam in Elma, Iowa, and news video from a Milwaukee TV station
+      showed it.
+    source: Spaceweather.com news item, 16 April 2010
+    url: https://spaceweather.com/archive.php?view=1&day=16&month=04&year=2010
+  infrasound:
+    detail: Early infrasound (inaudible low-pitched sound) measurements put the blast energy near 20 tons of TNT, with large
+      uncertainty.
+    source: Spaceweather.com news item, 16 April 2010
+    url: https://spaceweather.com/archive.php?view=1&day=16&month=04&year=2010
+  witnesses:
+    detail: Sky watchers in Minnesota, Wisconsin, Iowa, Illinois and Missouri saw a brilliant green fireball; no report
+      count was found.
+    source: Spaceweather.com news item, 15 April 2010
+    url: https://spaceweather.com/archive.php?view=1&day=15&month=04&year=2010
 ---

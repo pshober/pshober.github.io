@@ -3,6 +3,7 @@
 $fall-auto: #3987e5;      // found by MetDetect
 $fall-human: #199e70;     // human-verified
 $fall-found: #ffc532;     // meteorites recovered (brand yellow)
+$fall-cam: #baaf67;       // dedicated fireball cameras (brand olive, so it is not read as "recovered")
 
 .falls .page-head { padding-bottom: 1rem; }
 .falls-cta { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.4rem; }
@@ -117,6 +118,15 @@ $fall-found: #ffc532;     // meteorites recovered (brand yellow)
 .tag--found { background: rgba($fall-found, 0.16); border-color: rgba($fall-found, 0.6); color: var(--accent-2); }
 .tag--miss { color: var(--muted); }
 .tag--pending { color: var(--accent-2); border-style: dashed; border-color: rgba($fall-found, 0.6); }
+.tag--train { color: var(--muted); border-style: dashed; }
+// how the fireball was observed: dedicated cameras are solid brand colour, casual video is deliberately plainer
+.obs-tags { display: flex; flex-wrap: wrap; gap: 0.25rem; list-style: none; padding: 0; margin: 0; }
+.tag--cam { background: rgba($fall-cam, 0.24); border-color: rgba($fall-cam, 0.85); color: var(--text); }
+.tag--vid { border-style: dashed; color: var(--muted); }
+.tag--vidu { border-style: dotted; color: var(--faint); }
+.tag--obs { background: rgba($fall-auto, 0.16); border-color: rgba($fall-auto, 0.6); }
+.tag--wit { color: var(--muted); }
+@media (min-width: 761px) { .falls-table .c-obs { min-width: 12rem; max-width: 17rem; } }
 
 // phones: each row becomes a card
 @media (max-width: 760px) {
@@ -144,6 +154,7 @@ $fall-found: #ffc532;     // meteorites recovered (brand yellow)
     text-transform: uppercase;
   }
   .falls-table .c-fall { grid-column: 1 / -1; order: -1; font-size: 1rem; }
+  .falls-table .c-obs { grid-column: 1 / -1; }
   .falls-table .c-fall::before { display: none; }
 }
 
@@ -219,6 +230,11 @@ $fall-found: #ffc532;     // meteorites recovered (brand yellow)
 .falls-steps h3 { font-size: 1rem; margin: 0.6rem 0 0.4rem; }
 .falls-steps p { color: var(--muted); font-size: 0.9rem; margin: 0; }
 .falls-sources { margin-top: 2.5rem; }
+.falls-results { margin-top: 2.2rem; scroll-margin-top: 1rem; }
+.falls-results > p { color: var(--muted); max-width: 75ch; }
+.falls-results__fig, .falls-pipeline { margin: 1.4rem 0 0.8rem; max-width: 1000px; }
+.falls-results__fig img, .falls-pipeline img { background: #fff; }
+.falls-results__fig figcaption, .falls-pipeline figcaption { text-align: left; }
 .falls-sources ul { color: var(--muted); font-size: 0.92rem; padding-left: 1.1rem; }
 .falls-sources li { margin-bottom: 0.35rem; }
 
@@ -276,6 +292,12 @@ $fall-found: #ffc532;     // meteorites recovered (brand yellow)
 .fall-list { padding-left: 1.1rem; color: var(--muted); }
 .fall-list li { margin-bottom: 0.4rem; }
 .fall-list a { color: var(--text); }
+.obs-list { list-style: none; padding: 0; margin: 0 0 0.8rem; display: grid; gap: 0.7rem; }
+.obs-list li { display: grid; grid-template-columns: 10.5rem 1fr; gap: 0.3rem 1rem; align-items: start; color: var(--muted); }
+.obs-list li .tag { justify-self: start; }
+.obs-list a { color: var(--text); }
+.obs-list__src { display: block; color: var(--faint); font-size: 0.82rem; }
+@media (max-width: $bp-md) { .obs-list li { grid-template-columns: 1fr; } }
 // caption keys: the colour sits in a swatch, the words stay in text colour
 .k-both::before, .k-auto::before, .k-human::before {
   content: "";

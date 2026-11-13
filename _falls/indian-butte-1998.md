@@ -17,4 +17,10 @@ meteorites:
 - name: Indian Butte
   metbull: 57486
   class: H5
+observed:
+  witnesses:
+    detail: A teenager saw a brilliant fireball plunge to Earth and investigated it for a month; no total witness count
+      was found.
+    source: Cronkite News (Arizona PBS), 2017, Indian Butte Meteorite, 1998 section
+    url: https://cronkitenews.azpbs.org/2017/06/12/rare-arizona-meteorite-receives-apache-name/
 ---

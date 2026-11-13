@@ -7,12 +7,13 @@ description: "Meteorite falls seen in weather radar: automatic detections by Met
 {% assign falls = site.falls | sort: "date" | reverse %}
 {% assign ev = site.data.metdetect.events %}
 {% assign run = site.data.metdetect.run %}
-{% assign n_verified = 0 %}{% assign n_rec = 0 %}{% assign n_run = 0 %}{% assign n_found = 0 %}
+{% assign n_verified = 0 %}{% assign n_rec = 0 %}{% assign n_run = 0 %}{% assign n_found = 0 %}{% assign n_cam = 0 %}
 {% for f in falls %}
   {% assign m = ev[f.key] %}
   {% if f.status == "verified" %}{% assign n_verified = n_verified | plus: 1 %}{% endif %}
   {% if f.recovered == true %}{% assign n_rec = n_rec | plus: 1 %}{% endif %}
-  {% if m.auto %}{% assign n_run = n_run | plus: 1 %}{% if m.auto.found %}{% assign n_found = n_found | plus: 1 %}{% endif %}{% endif %}
+  {% if m.auto.set == "test" %}{% assign n_run = n_run | plus: 1 %}{% if m.auto.found %}{% assign n_found = n_found | plus: 1 %}{% endif %}{% endif %}
+  {% if f.observed.cameras %}{% assign n_cam = n_cam | plus: 1 %}{% endif %}
 {% endfor %}
 <div class="container falls">
   <header class="page-head falls-head">
@@ -29,9 +30,10 @@ description: "Meteorite falls seen in weather radar: automatic detections by Met
 
   <ul class="stats falls-stats">
     <li class="stat"><span class="stat__num">{{ falls.size }}</span><span class="stat__label">falls</span></li>
-    <li class="stat"><span class="stat__num">{{ n_found }}<small>/{{ n_run }}</small></span><span class="stat__label">found by MetDetect</span></li>
+    <li class="stat"><span class="stat__num">{{ n_found }}<small>/{{ n_run }}</small></span><span class="stat__label">test falls found by MetDetect (development results)</span></li>
     <li class="stat"><span class="stat__num">{{ n_verified }}</span><span class="stat__label">human-verified</span></li>
     <li class="stat"><span class="stat__num">{{ n_rec }}</span><span class="stat__label">with meteorites recovered</span></li>
+    <li class="stat"><span class="stat__num">{{ n_cam }}</span><span class="stat__label">recorded by dedicated fireball cameras</span></li>
   </ul>
 
   <aside class="callout falls-credit">
@@ -52,6 +54,13 @@ description: "Meteorite falls seen in weather radar: automatic detections by Met
       <button type="button" class="chip" data-filter="det" data-value="verified" aria-pressed="false">Human-verified</button>
       <button type="button" class="chip" data-filter="det" data-value="pending" aria-pressed="false">Awaiting verification</button>
     </div>
+    <div class="falls-chips" role="group" aria-label="Observed by">
+      <button type="button" class="chip is-on" data-filter="obs" data-value="all" aria-pressed="true">All</button>
+      <button type="button" class="chip" data-filter="obs" data-value="cameras" aria-pressed="false">Dedicated fireball cameras</button>
+      <button type="button" class="chip" data-filter="obs" data-value="video" aria-pressed="false">Casual video</button>
+      <button type="button" class="chip" data-filter="obs" data-value="satellite" aria-pressed="false">Satellite</button>
+      <button type="button" class="chip" data-filter="obs" data-value="ground" aria-pressed="false">Seismic or infrasound</button>
+    </div>
     <div class="falls-chips" role="group" aria-label="Meteorites">
       <button type="button" class="chip is-on" data-filter="rec" data-value="all" aria-pressed="true">Any outcome</button>
       <button type="button" class="chip" data-filter="rec" data-value="yes" aria-pressed="false">Meteorites recovered</button>
@@ -66,6 +75,7 @@ description: "Meteorite falls seen in weather radar: automatic detections by Met
           <th scope="col" data-sort="date" aria-sort="descending"><button type="button">Date</button></th>
           <th scope="col">Time (UTC)</th>
           <th scope="col" data-sort="name"><button type="button">Fall</button></th>
+          <th scope="col" data-sort="obs"><button type="button">Observed by</button></th>
           <th scope="col" data-sort="auto"><button type="button">MetDetect</button></th>
           <th scope="col" data-sort="human"><button type="button">Human-verified</button></th>
           <th scope="col" data-sort="rec"><button type="button">Meteorites</button></th>
@@ -75,16 +85,27 @@ description: "Meteorite falls seen in weather radar: automatic detections by Met
       <tbody>
         {% for f in falls %}
         {% assign m = ev[f.key] %}
-        {% if m.auto %}{% if m.auto.found %}{% assign det = "found" %}{% else %}{% assign det = "missed" %}{% endif %}{% else %}{% assign det = "none" %}{% endif %}
+        {% assign fb = m.fireball | default: f.fireball %}
+        {% assign o = f.observed %}
+        {% assign obs_keys = "" %}
+        {% if o.cameras %}{% assign obs_keys = obs_keys | append: "cameras " %}{% endif %}
+        {% if o.video %}{% if o.video.typed == false %}{% assign obs_keys = obs_keys | append: "videounk " %}{% else %}{% assign obs_keys = obs_keys | append: "video " %}{% endif %}{% endif %}
+        {% if o.satellite %}{% assign obs_keys = obs_keys | append: "satellite " %}{% endif %}
+        {% if o.seismic or o.infrasound %}{% assign obs_keys = obs_keys | append: "ground " %}{% endif %}
+        {% if o.witnesses %}{% assign obs_keys = obs_keys | append: "witnesses " %}{% endif %}
+        {% assign obs_rank = 9 %}
+        {% if o.cameras %}{% assign obs_rank = 0 %}{% elsif o.satellite or o.seismic or o.infrasound %}{% assign obs_rank = 1 %}{% elsif o.video %}{% assign obs_rank = 2 %}{% elsif o.witnesses %}{% assign obs_rank = 3 %}{% endif %}
+        {% if m.auto %}{% if m.auto.set != "test" %}{% assign det = "training" %}{% elsif m.auto.found %}{% assign det = "found" %}{% else %}{% assign det = "missed" %}{% endif %}{% else %}{% assign det = "none" %}{% endif %}
         {% if f.recovered == true %}{% assign rec = "yes" %}{% elsif f.recovered == false %}{% assign rec = "no" %}{% else %}{% assign rec = "unknown" %}{% endif %}
-        <tr data-date="{{ f.date | date: '%Y-%m-%d' }}{% if m.fireball %}T{{ m.fireball.utc | slice: 11, 8 }}{% endif %}"
+        <tr data-date="{{ f.date | date: '%Y-%m-%d' }}{% if fb %}T{{ fb.utc | slice: 11, 8 }}{% endif %}"
             data-name="{{ f.title | downcase | escape }}" data-auto="{{ det }}" data-human="{{ f.status }}"
-            data-rec="{{ rec }}" data-papers="{{ f.papers.size | default: 0 }}"
-            data-q="{{ f.title | downcase | escape }} {{ f.place | downcase | escape }} {% for r in m.human.radars %}{{ r.radar | downcase }} {% endfor %}{% if m.auto %}{{ m.auto.radar | downcase }} {% endif %}{% for met in f.meteorites %}{{ met.name | downcase | escape }} {% endfor %}{{ f.date | date: '%Y' }}">
+            data-rec="{{ rec }}" data-papers="{{ f.papers.size | default: 0 }}" data-obs="{{ obs_keys | strip }}" data-obsrank="{{ obs_rank }}"
+            data-q="{{ f.title | downcase | escape }} {{ f.place | downcase | escape }} {% for r in m.human.radars %}{{ r.radar | downcase }} {% endfor %}{% if m.auto %}{{ m.auto.radar | downcase }} {% endif %}{% for met in f.meteorites %}{{ met.name | downcase | escape }} {% endfor %}{{ f.date | date: '%Y' }}{% if o.cameras %} {{ o.cameras.detail | downcase | escape }}{% endif %} {{ obs_keys }}">
           <td class="c-date" data-label="Date">{{ f.date | date: "%Y-%m-%d" }}</td>
-          <td class="c-time" data-label="Time (UTC)">{% if m.fireball %}{{ m.fireball.utc | slice: 11, 5 }}{% else %}<span class="muted" title="Fireball time not established">—</span>{% endif %}</td>
+          <td class="c-time" data-label="Time (UTC)">{% if fb %}{% if fb.precision == "approx" %}<span title="Approximate: rounded witness or news time" aria-label="approximately">~</span>{% endif %}{{ fb.utc | slice: 11, 5 }}{% else %}<span class="muted" title="Fireball time not established">—</span>{% endif %}</td>
           <td class="c-fall" data-label="Fall"><a href="{{ f.url | relative_url }}">{{ f.title }}</a><span class="falls-place">{{ f.place }}</span></td>
-          <td class="c-auto" data-label="MetDetect">{% if det == "found" %}<span class="tag tag--auto">Found</span>{% elsif det == "missed" %}<span class="tag tag--miss">Missed</span>{% else %}<span class="muted">not run</span>{% endif %}</td>
+          <td class="c-obs" data-label="Observed by">{% include fall-observed.html fall=f %}</td>
+          <td class="c-auto" data-label="MetDetect">{% if det == "found" %}<span class="tag tag--auto">Found</span><span class="falls-by">{{ m.auto.matched }} of {{ m.auto.human_cells_searched }} cells</span>{% elsif det == "missed" %}<span class="tag tag--miss">Missed</span><span class="falls-by">{% if m.auto.rank %}debris was candidate {{ m.auto.rank }}{% else %}no correct candidate{% endif %}</span>{% elsif det == "training" %}<span class="tag tag--train" title="Fewer than 10 hand-identified radar cells on the radar searched: used to train the method, not in the headline numbers">Training</span><span class="falls-by">not in headline</span>{% else %}<span class="muted">not run</span>{% endif %}</td>
           <td class="c-human" data-label="Human-verified">{% if f.status == "verified" %}<span class="tag tag--human">Yes</span> <span class="falls-by">{{ f.verification.by }}</span>{% else %}<span class="tag tag--pending">Pending</span>{% endif %}</td>
           <td class="c-rec" data-label="Meteorites">{% if rec == "yes" %}<span class="tag tag--found">Yes</span>{% for met in f.meteorites limit: 1 %} {% if met.metbull %}<a href="https://www.lpi.usra.edu/meteor/metbull.php?code={{ met.metbull }}" rel="noopener">{{ met.name }}</a>{% else %}{{ met.name }}{% endif %}{% endfor %}{% elsif rec == "no" %}<span class="muted">No</span>{% else %}<span class="muted">Unknown</span>{% endif %}</td>
           <td class="c-papers" data-label="Papers">{% if f.papers.size > 0 %}<a href="{{ f.url | relative_url }}#papers">{{ f.papers.size }}</a>{% else %}<span class="muted">0</span>{% endif %}</td>
@@ -94,12 +115,44 @@ description: "Meteorite falls seen in weather radar: automatic detections by Met
     </table>
   </div>
   <p class="falls-tablenote">
-    <strong>Time</strong>: the fireball, where an instrument or a published study pins it down.
-    <strong>MetDetect</strong>: the result of {{ run.name }} ({{ run.date | date: "%B %Y" }}), which searches one radar per fall;
-    "found" means the radar cells it reported are mostly the debris identified by hand.
+    <strong>Time</strong>: the fireball's time in UTC, from the source named on each fall's page (for the falls MetDetect searched, the end of the luminous flight; for the others the kind of time, such as first light or peak brightness, is named on the fall's page where the source says); ~ marks a rounded witness or news time, and a dash means no reliable time was found.
+    <strong>Observed by</strong>: how the fireball itself was recorded, as documented in the sources linked on each fall's page.
+    <span class="tag tag--cam">Fireball cameras</span> are cameras built to record meteors, usually all-sky and calibrated;
+    <span class="tag tag--vid">Casual video</span> is footage or photos from cameras that were not, such as dash cams, doorbell and security cameras and phones; <span class="tag tag--vidu">Video, type unknown</span> means the source does not say what kind of camera.
+    Satellite means the GOES lightning mapper or US government sensors; a missing label means nothing of that kind is documented, not that it did not exist.
+    <strong>MetDetect</strong>: the result of {{ run.name }} ({{ run.date | date: "%B %Y" }}), which searches one radar per fall.
+    <em>Found</em>: its first pick, the radar echo it ranks most like falling debris, is the debris identified by hand; the line below says how many of the hand-identified radar cells its grown object contains.
+    <em>Missed</em>: the first pick was another echo (the line below says where the debris ranked).
+    <em>Training</em>: fewer than 10 hand-identified radar cells on the radar searched, so the fall only trains the method and is not in the headline numbers.
+    Each fall was scored by a model trained without it, but the method was developed on these falls: these are development results, not a blind test.
     <strong>Human-verified</strong>: a person identified the fall's radar signatures by hand.
     <strong>Meteorites</strong>: the name links to the Meteoritical Bulletin.
   </p>
+
+  {% assign rs = run.results %}
+  {% if run.figures.results %}
+  <section class="falls-results" id="results" aria-labelledby="results-title">
+    <h2 id="results-title">How {{ run.name | replace: "MetDetect ", "" }} did</h2>
+    <p>MetDetect was run on {{ run.counts.falls }} falls, one radar each, every one by a model trained without it; {{ run.counts.falls | minus: run.counts.test }} are
+      used for training only and are not in the headline numbers.
+      On the {{ run.counts.test }} test falls its first pick was the debris {{ run.counts.found }} times. Its grown object holds a
+      median of {{ rs.median_share | times: 100 | round }}% of the hand-identified radar cells (the <em>share</em>; a missed fall counts as zero), and
+      most of what it holds was also identified by hand (the <em>purity</em>; median {{ rs.median_purity_found | times: 100 | round }}% over the falls found,
+      {{ rs.pooled_purity | times: 100 | round }}% pooled over the test falls).
+      Dark-flight search areas built from its cells overlap those built from the hand identification by a median of
+      {{ rs.median_overlap | times: 100 | round }}% over {{ rs.n_overlap }} falls (missed falls count as zero). The hand-built areas use every radar
+      Marc Fries labelled, MetDetect's use one, so part of the difference is the radar. {{ rs.stones_in }} of the {{ rs.stones_n }} recovered stones of 10&nbsp;g and up with
+      published positions lie inside MetDetect's areas ({{ rs.stones_falls }} falls; all inside on {{ rs.stones_falls_all_in }}), and all {{ rs.stones_n }} lie inside the hand-built ones.</p>
+    <figure class="fig falls-results__fig" data-lightbox data-full="{{ run.figures.results.path | relative_url }}" data-cap="How {{ run.name }} did on each fall">
+      <img src="{{ run.figures.results.path | relative_url }}" alt="For each of the {{ run.counts.falls }} falls, the share of the hand-identified radar cells that MetDetect's object contains and its purity; crosses mark the falls where its first pick was not the debris" loading="lazy" width="{{ run.figures.results.px[0] }}" height="{{ run.figures.results.px[1] }}">
+      <figcaption>One row per fall, sorted by share (names in bold: meteorites recovered). Left: the share of the fall's hand-identified radar measurements inside MetDetect's object. Right: the purity of the object. A cross marks a fall whose first pick was not the debris. Falls marked ‡ are training only.</figcaption>
+    </figure>
+    <p class="falls-tablenote">The search always returns a pick, also where no meteorite fell: MetDetect locates the debris of a known fall, it does not decide whether a fall happened.
+      On {{ rs.null_n }} checked windows with no meteorite fall that no model was trained on, the object grown from its pick added a median of {{ rs.null_median | round }} radar cells
+      (90th percentile {{ rs.null_p90 | round }}, maximum {{ rs.null_max | round }}); this is descriptive, MetDetect has no false-alarm test yet.
+      These are development results from {{ run.date | date: "%B %Y" }}; the sealed blind tests are still to come.</p>
+  </section>
+  {% endif %}
 
   {% include falls-inquiry.html %}
 
@@ -110,14 +163,20 @@ description: "Meteorite falls seen in weather radar: automatic detections by Met
         From there the stones fall in the dark for several minutes, drifting with the wind: the <em>dark flight</em>.</p></li>
       <li><h3>Weather radars see the stones</h3><p>NEXRAD radars scan the sky every few minutes. A shower of falling stones and dust can show up as faint,
         short-lived echoes that sink from one scan to the next, sometimes on several radars at once.</p></li>
-      <li><h3>MetDetect searches automatically</h3><p>Given the fireball time and a search window, MetDetect looks for new echo at the right height and time,
-        picks the candidate most like falling debris and grows it into the neighbouring radar cells. It was trained and
-        tested one fall at a time, never on the fall being scored.</p></li>
+      <li><h3>MetDetect searches automatically</h3><p>Given the fireball time and a search window, MetDetect keeps only the radar measurements where falling debris could be
+        at that height and time, proposes candidate echoes, ranks them, takes the one most like debris (its <em>first pick</em>) and grows it into the neighbouring radar cells.
+        Every search returns a pick: it locates the debris of a known fall, it does not decide whether one happened. Each fall is scored by a model trained without it.</p></li>
       <li><h3>A person verifies it</h3><p>Automatic detections stay <em>awaiting verification</em> until someone has checked the radar data by hand.
         The human-verified falls here were identified by Marc Fries (NASA ARES); MetDetect is graded against his identifications.</p></li>
       <li><h3>Dark flight gives a search map</h3><p>Each radar cell is flown down through the winds of that day, which shows where stones of each mass
         most likely landed. Recovered meteorites are drawn on the maps afterwards, as a check.</p></li>
     </ol>
+    {% if run.figures.pipeline %}
+    <figure class="fig falls-pipeline" data-lightbox data-full="{{ run.figures.pipeline.path | relative_url }}" data-cap="Inside MetDetect's automatic search ({{ run.name }})">
+      <img src="{{ run.figures.pipeline.path | relative_url }}" alt="The six steps of MetDetect's automatic search: inputs, keeping only where debris can be, proposing candidate echoes, ranking them, growing the pick, and the output" loading="lazy" width="{{ run.figures.pipeline.px[0] }}" height="{{ run.figures.pipeline.px[1] }}">
+      <figcaption>Inside step 3: the six stages of MetDetect's search in {{ run.name }}. Click to enlarge.</figcaption>
+    </figure>
+    {% endif %}
     <p>See a fall in 3D in the <a href="{{ '/metdetect-demo/' | relative_url }}">MetDetect demo</a>, or read about the
       <a href="{{ '/research/' | relative_url }}">research</a>.</p>
   </section>
@@ -127,7 +186,7 @@ description: "Meteorite falls seen in weather radar: automatic detections by Met
     <ul>
       <li><strong>Hand identifications of the radar signatures</strong>: Marc Fries, NASA ARES (Johnson Space Center), from his reports on NASA's Meteorite Falls website (archived copies).</li>
       <li><strong>Radar data</strong>: NOAA NEXRAD Level-II archive (NOAA Open Data Dissemination).</li>
-      <li><strong>Fireball times</strong>: the GOES Geostationary Lightning Mapper (NASA/SETI bolide database), American Meteor Society witness reports, video and published studies, as cited on each page.</li>
+      <li><strong>Fireball times and how each fireball was observed</strong>: the GOES Geostationary Lightning Mapper (NASA/SETI bolide database), NASA CNEOS, fireball-camera networks, American Meteor Society witness reports, video, seismic and infrasound studies and the published papers, as cited on each page.</li>
       <li><strong>Winds</strong>: ERA5 reanalysis (Copernicus Climate Change Service, ECMWF).</li>
       <li><strong>Meteorites</strong>: the Meteoritical Bulletin Database (The Meteoritical Society) and the publications listed on each page.</li>
       <li><strong>Map labels</strong>: © OpenStreetMap contributors.</li>

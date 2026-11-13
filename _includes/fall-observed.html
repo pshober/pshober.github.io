@@ -1,0 +1,15 @@
+{% comment %}
+  How a fireball was observed, as labels. include.fall: a fall document (_falls/<slug>.md) with an optional
+  `observed:` map of cameras / video / satellite / seismic / infrasound / witnesses, each {detail, source, url}.
+  Dedicated fireball cameras (built to record meteors) and casual video (dash, security, phone cameras) are kept
+  apart on purpose. A label appears only where a source documents it.
+{% endcomment %}
+{% assign o = include.fall.observed %}
+{% if o %}<ul class="obs-tags" role="list">
+  {% if o.cameras %}<li class="tag tag--cam" title="Dedicated fireball cameras: {{ o.cameras.detail | escape }}">Fireball cameras</li>{% endif %}
+  {% if o.video %}{% if o.video.typed == false %}<li class="tag tag--vidu" title="Video or photos, camera type not stated: {{ o.video.detail | escape }}">Video, type unknown</li>{% else %}<li class="tag tag--vid" title="Casual video, not meteor cameras: {{ o.video.detail | escape }}">Casual video</li>{% endif %}{% endif %}
+  {% if o.satellite %}<li class="tag tag--obs" title="{{ o.satellite.detail | escape }}">Satellite</li>{% endif %}
+  {% if o.seismic %}<li class="tag tag--obs" title="{{ o.seismic.detail | escape }}">Seismic</li>{% endif %}
+  {% if o.infrasound %}<li class="tag tag--obs" title="{{ o.infrasound.detail | escape }}">Infrasound</li>{% endif %}
+  {% if o.witnesses %}<li class="tag tag--wit" title="{{ o.witnesses.detail | escape }}">Witnesses</li>{% endif %}
+</ul>{% else %}<span class="muted" title="No observations documented yet">—</span>{% endif %}
