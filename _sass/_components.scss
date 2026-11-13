@@ -253,12 +253,19 @@
   font-size: 1.8rem; color: #fff; background: none; border: 0; cursor: pointer; line-height: 1;
 }
 
-// ── Floating "My asteroid" badge ─────────────────────────────────────────────
-.asteroid-fab {
+// ── Floating badges, bottom right: "Meteorite quiz" penguin above "My asteroid" ─
+.fab-stack {
   position: fixed;
   right: 1.1rem;
   bottom: 1.1rem;
   z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+.asteroid-fab,
+.quiz-fab {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -267,7 +274,9 @@
   transition: transform 0.15s ease;
 }
 .asteroid-fab img { width: 64px; height: auto; }
-.asteroid-fab span {
+.quiz-fab img { width: 58px; height: auto; }
+.asteroid-fab span,
+.quiz-fab span {
   background: var(--yellow);
   color: var(--accent-ink);
   font-weight: 700;
@@ -278,10 +287,17 @@
   border-radius: 999px;
   white-space: nowrap;
 }
-.asteroid-fab:hover { transform: translateY(-3px); text-decoration: none; }
+.asteroid-fab:hover,
+.quiz-fab:hover { transform: translateY(-3px); text-decoration: none; }
 @media (max-width: $bp-md) {
-  .asteroid-fab { right: 0.7rem; bottom: 0.7rem; }
+  .fab-stack { right: 0.7rem; bottom: 0.7rem; gap: 0.6rem; }
   .asteroid-fab img { width: 46px; }
+  .quiz-fab img { width: 42px; }
+}
+// Phones: the penguin goes icon-only so the two badges cover less of the page
+@media (max-width: $bp-sm) {
+  .quiz-fab span { display: none; }
+  .quiz-fab img { width: 38px; }
 }
 
 // ── Page header ──────────────────────────────────────────────────────────────

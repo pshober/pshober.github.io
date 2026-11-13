@@ -12,13 +12,20 @@
     {{ content }}
   </main>
 
-  {% unless page.url == '/asteroid/' %}
-  <a class="asteroid-fab" href="{{ '/asteroid/' | relative_url }}"
-     title="Where is asteroid (33964) Patrickshober right now?">
-    <img src="{{ '/assets/img/brand/icon-asteroid.webp' | relative_url }}" alt="" width="216" height="224">
-    <span>My asteroid</span>
-  </a>
-  {% endunless %}
+  <div class="fab-stack">
+    <a class="quiz-fab" href="{{ '/ansmet-quiz/' | relative_url }}" aria-label="Meteorite quiz"
+       title="Meteorite or Earth rock? A photo quiz built from Antarctic meteorite field photos">
+      <img src="{{ '/assets/img/brand/icon-penguin.svg' | relative_url }}" alt="" width="96" height="96">
+      <span>Meteorite quiz</span>
+    </a>
+    {% unless page.url == '/asteroid/' %}
+    <a class="asteroid-fab" href="{{ '/asteroid/' | relative_url }}"
+       title="Where is asteroid (33964) Patrickshober right now?">
+      <img src="{{ '/assets/img/brand/icon-asteroid.webp' | relative_url }}" alt="" width="216" height="224">
+      <span>My asteroid</span>
+    </a>
+    {% endunless %}
+  </div>
 
   {% include footer.html %}
 
