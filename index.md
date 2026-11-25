@@ -1,7 +1,7 @@
 ---
 layout: home
 role: "Planetary scientist · NASA Postdoctoral Fellow, Johnson Space Center"
-lead: "Meteorites are most of what we know about how the solar system formed — and a biased sample of it. I work out what that bias is, using fireball cameras, weather radar and telescopic surveys."
+lead: "Using fireball cameras, weather radar, and telescopic surveys, I try to better understand the history and the layout of material in the solar system."
 ---
 
 I'm a planetary scientist at NASA Johnson Space Center, in the **Astromaterials
